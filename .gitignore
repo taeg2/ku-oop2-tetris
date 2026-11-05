@@ -1,0 +1,29 @@
+# ===== 빌드 결과물 =====
+# 빌드하면 다시 생기고, 내 PC 경로가 들어 있으며, 빌드할 때마다 바뀜
+build/
+out/
+CMakeUserPresets.json
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ww]in32/
+*.obj
+*.exe
+*.ilk
+*.pdb
+*.idb
+*.tlog
+*.log
+*.lastbuildstate
+*.recipe
+
+# ===== 개인 설정 =====
+# 내 PC에서만 쓰는 디버거 설정, 창 배치, IntelliSense 캐시
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+
+# ===== Claude Code =====
+.claude/

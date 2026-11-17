@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="854" height="419" viewBox="0 0 854 419">
+<rect x="0" y="0" width="854" height="419" rx="8" fill="#0C0C0C"/>
+<rect x="0" y="0" width="854" height="30" rx="8" fill="#2b2b2b"/>
+<rect x="0" y="22" width="854" height="8" fill="#2b2b2b"/>
+<text x="14" y="20" fill="#dddddd" font-size="12" font-family="'Segoe UI', 'Malgun Gothic', sans-serif">core.exe - 프롤로그</text>
+<g xml:space="preserve" style="white-space:pre" font-family="Consolas, 'D2Coding', 'Malgun Gothic', monospace" font-size="14">
+<text x="14.0" y="115.5" fill="#CCCCCC" font-weight="normal" textLength="438.6" lengthAdjust="spacingAndGlyphs">                             기억을 맞추는 테트리스</text>
+<text x="14.0" y="191.5" fill="#CCCCCC" font-weight="normal" textLength="610.6" lengthAdjust="spacingAndGlyphs">        &quot;아버지는 가끔 앨범을 펼쳐 놓고 같은 사진을 오래 바라보십니다.&quot;</text>
+<text x="14.0" y="229.5" fill="#CCCCCC" font-weight="normal" textLength="636.4" lengthAdjust="spacingAndGlyphs">     &quot;어느 날, 어린아이의 사진을 가리키며 물으셨어요. &#x27;이 아이는 누구니?&#x27;&quot;</text>
+<text x="14.0" y="267.5" fill="#CCCCCC" font-weight="normal" textLength="584.8" lengthAdjust="spacingAndGlyphs">           &quot;아버지의 가장 오래된 기억부터, 한 장씩 다시 찾아봅시다.&quot;</text>
+<text x="14.0" y="343.5" fill="#CCCCCC" font-weight="normal" textLength="576.2" lengthAdjust="spacingAndGlyphs">            줄을 3줄 지울 때마다 가족사진 조각이 하나씩 채워집니다.</text>
+<text x="14.0" y="400.5" fill="#767676" font-weight="normal" textLength="369.8" lengthAdjust="spacingAndGlyphs">                                    [Enter]</text>
+</g>
+</svg>

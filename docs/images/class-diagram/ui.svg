@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="781" height="608" viewBox="-20 -20 781 608">
+<rect x="-20" y="-20" width="781" height="608" fill="#ffffff"/>
+<path d="M 0 0 L 110 0 L 110 26 L 741 26 L 741 568 L 0 568 Z" fill="#e1d5e7" stroke="none"/>
+<path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 741 26 L 741 568 L 0 568 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">ui/</text>
+<path d="M 258.0 384.0 L 142.0 384.0 Q 132.0 384.0 132.0 374.0 L 132.0 271.0" fill="none" stroke="#555555"/>
+<polygon points="132.0,259.0 138.5,271.0 125.5,271.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 370.0 305.0 L 370.0 270.0 Q 370.0 265.0 375.0 265.0 L 375.0 265.0 Q 380.0 265.0 380.0 260.0 L 380.0 226.0" fill="none" stroke="#555555"/>
+<polygon points="380.0,214.0 386.5,226.0 373.5,226.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 308.0 528.0 L 278.0 528.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="288.0,523.0 278.0,528.0 288.0,533.0" fill="none" stroke="#555555"/>
+<path d="M 486.0 173.0 L 498.5 173.0 Q 506.0 173.0 506.0 180.5 L 506.0 183.0 Q 506.0 188.0 511.0 188.0 L 516.0 188.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="506.0,193.0 516.0,188.0 506.0,183.0" fill="none" stroke="#555555"/>
+<path d="M 132.0 259.0 L 132.0 374.0 Q 132.0 384.0 142.0 384.0 L 217.0 384.0 Q 227.0 384.0 227.0 394.0 L 227.0 508.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="222.0,498.0 227.0,508.0 232.0,498.0" fill="none" stroke="#555555"/>
+<path d="M 244.0 196.0 L 362.0 196.0 Q 372.0 196.0 372.0 206.0 L 372.0 508.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="367.0,498.0 372.0,508.0 377.0,498.0" fill="none" stroke="#555555"/>
+<path d="M 244.0 196.0 L 505.0 196.0 Q 515.0 196.0 515.0 206.0 L 515.0 508.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="510.0,498.0 515.0,508.0 520.0,498.0" fill="none" stroke="#555555"/>
+<path d="M 320.0 66.0 L 142.0 66.0 Q 132.0 66.0 132.0 76.0 L 132.0 132.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="127.0,122.0 132.0,132.0 137.0,122.0" fill="none" stroke="#555555"/>
+<path d="M 370.0 86.0 L 370.0 104.0 Q 370.0 109.0 375.0 109.0 L 375.0 109.0 Q 380.0 109.0 380.0 114.0 L 380.0 132.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="375.0,122.0 380.0,132.0 385.0,122.0" fill="none" stroke="#555555"/>
+<rect x="320" y="46" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="370.0" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">Game</text>
+<rect x="20" y="132" width="224" height="127" fill="#ffffff" stroke="#000000"/>
+<line x1="20" y1="172" x2="244" y2="172" stroke="#000000"/>
+<text x="132.0" y="148.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="132.0" y="163.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Renderer</text>
+<text x="28.0" y="189.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ beginFrame()</text>
+<text x="28.0" y="204.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawPlay(field, session)</text>
+<text x="28.0" y="219.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawStory(lines)</text>
+<text x="28.0" y="234.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawAlbum(album, newPhotoIndex)</text>
+<text x="28.0" y="249.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ endFrame()</text>
+<rect x="274" y="132" width="212" height="82" fill="#ffffff" stroke="#000000"/>
+<line x1="274" y1="172" x2="486" y2="172" stroke="#000000"/>
+<text x="380.0" y="148.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="380.0" y="163.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">InputSource</text>
+<text x="282.0" y="189.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ getActions() : vector&lt;Action&gt;</text>
+<text x="282.0" y="204.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ poll()</text>
+<rect x="516" y="132" width="205" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="516" y1="172" x2="721" y2="172" stroke="#000000"/>
+<text x="618.5" y="148.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">«enum»</text>
+<text x="618.5" y="163.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Action</text>
+<text x="524.0" y="189.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">MoveLeft, MoveRight, SoftDrop,</text>
+<text x="524.0" y="204.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">HardDrop, Rotate,</text>
+<text x="524.0" y="219.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">UseMedicine1, UseMedicine2,</text>
+<text x="524.0" y="234.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">Confirm, Quit</text>
+<rect x="258" y="305" width="224" height="157" fill="#ffffff" stroke="#000000"/>
+<line x1="258" y1="345" x2="482" y2="345" stroke="#000000"/>
+<text x="370.0" y="329.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">ConsoleIO</text>
+<text x="266.0" y="362.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getActions() : vector&lt;Action&gt;</text>
+<text x="266.0" y="377.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ poll()</text>
+<text x="266.0" y="392.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ beginFrame()</text>
+<text x="266.0" y="407.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawPlay(field, session)</text>
+<text x="266.0" y="422.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawStory(lines)</text>
+<text x="266.0" y="437.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawAlbum(album, newPhotoIndex)</text>
+<text x="266.0" y="452.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ endFrame()</text>
+<rect x="176" y="508" width="102" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="227.0" y="532.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">PlayField</text>
+<rect x="308" y="508" width="127" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="371.5" y="532.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">StageSession</text>
+<rect x="465" y="508" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="515.0" y="532.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">Album</text>
+</svg>

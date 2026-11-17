@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="339" height="525" viewBox="-20 -20 339 525">
+<rect x="-20" y="-20" width="339" height="525" fill="#ffffff"/>
+<path d="M 0 0 L 110 0 L 110 26 L 299 26 L 299 485 L 0 485 Z" fill="#f5f5f5" stroke="none"/>
+<path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 299 26 L 299 485 L 0 485 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">board/</text>
+<path d="M 122.0 66.0 L 140.0 66.0" fill="none" stroke="#555555"/>
+<polygon points="152.0,66.0 140.0,72.5 140.0,59.5" fill="#ffffff" stroke="#555555"/>
+<path d="M 71.0 100.0 L 71.0 108.0 Q 71.0 116.0 79.0 116.0 L 142.0 116.0 Q 150.0 116.0 150.0 124.0 L 150.0 132.0" fill="none" stroke="#555555"/>
+<polygon points="71.0,86.0 66.5,93.0 71.0,100.0 75.5,93.0" fill="#555555" stroke="#555555"/>
+<path d="M 150.0 379.0 L 150.0 425.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="145.0,415.0 150.0,425.0 155.0,415.0" fill="none" stroke="#555555"/>
+<path d="M 216.0 86.0 L 216.0 99.0 Q 216.0 109.0 206.0 109.0 L 160.0 109.0 Q 150.0 109.0 150.0 119.0 L 150.0 132.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="145.0,122.0 150.0,132.0 155.0,122.0" fill="none" stroke="#555555"/>
+<rect x="20" y="46" width="102" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="71.0" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">PlayField</text>
+<rect x="152" y="46" width="127" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="215.5" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">EffectTarget</text>
+<rect x="34" y="132" width="231" height="247" fill="#ffffff" stroke="#000000"/>
+<line x1="34" y1="172" x2="265" y2="172" stroke="#000000"/>
+<text x="149.5" y="156.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Board</text>
+<text x="42.0" y="189.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getWidth() : int</text>
+<text x="42.0" y="204.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getHeight() : int</text>
+<text x="42.0" y="219.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isInside(cell) : bool</text>
+<text x="42.0" y="234.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isEmpty(cell) : bool</text>
+<text x="42.0" y="249.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSymbolAt(cell) : char</text>
+<text x="42.0" y="264.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ canPlace(cells) : bool</text>
+<text x="42.0" y="279.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFullLines() : vector&lt;int&gt;</text>
+<text x="42.0" y="294.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFilledCells() : vector&lt;Point&gt;</text>
+<text x="42.0" y="309.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ lockCells(cells, symbol)</text>
+<text x="42.0" y="324.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearLines(rows)</text>
+<text x="42.0" y="339.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearBottomLine()</text>
+<text x="42.0" y="354.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearCells(cells)</text>
+<text x="42.0" y="369.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<rect x="100" y="425" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="150.0" y="449.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">Point</text>
+</svg>

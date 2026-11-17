@@ -1,0 +1,426 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1856" height="2149" viewBox="-20 -20 1856 2149">
+<rect x="-20" y="-20" width="1856" height="2149" fill="#ffffff"/>
+<path d="M 0 0 L 110 0 L 110 26 L 679 26 L 679 336 L 0 336 Z" fill="#dae8fc" stroke="none"/>
+<path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 679 26 L 679 336 L 0 336 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">flow/</text>
+<path d="M 729 0 L 839 0 L 839 26 L 1470 26 L 1470 396 L 729 396 Z" fill="#e1d5e7" stroke="none"/>
+<path d="M 729 26 L 729 0 L 839 0 L 839 26 M 729 26 L 1470 26 L 1470 396 L 729 396 Z" fill="none" stroke="#666666"/>
+<text x="739.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">ui/</text>
+<path d="M 0 446 L 110 446 L 110 472 L 569 472 L 569 962 L 0 962 Z" fill="#d5e8d4" stroke="none"/>
+<path d="M 0 472 L 0 446 L 110 446 L 110 472 M 0 472 L 569 472 L 569 962 L 0 962 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="464.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">stage/</text>
+<path d="M 619 446 L 729 446 L 729 472 L 1260 472 L 1260 887 L 619 887 Z" fill="#f8cecc" stroke="none"/>
+<path d="M 619 472 L 619 446 L 729 446 L 729 472 M 619 472 L 1260 472 L 1260 887 L 619 887 Z" fill="none" stroke="#666666"/>
+<text x="629.0" y="464.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">boss/</text>
+<path d="M 1310 446 L 1420 446 L 1420 472 L 1816 472 L 1816 827 L 1310 827 Z" fill="#ffe6cc" stroke="none"/>
+<path d="M 1310 472 L 1310 446 L 1420 446 L 1420 472 M 1310 472 L 1816 472 L 1816 827 L 1310 827 Z" fill="none" stroke="#666666"/>
+<text x="1320.0" y="464.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">medicine/</text>
+<path d="M 0 1012 L 110 1012 L 110 1038 L 519 1038 L 519 1573 L 0 1573 Z" fill="#fff2cc" stroke="none"/>
+<path d="M 0 1038 L 0 1012 L 110 1012 L 110 1038 M 0 1038 L 519 1038 L 519 1573 L 0 1573 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="1030.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">play/</text>
+<path d="M 569 1012 L 679 1012 L 679 1038 L 840 1038 L 840 1325 L 569 1325 Z" fill="#f5f5f5" stroke="none"/>
+<path d="M 569 1038 L 569 1012 L 679 1012 L 679 1038 M 569 1038 L 840 1038 L 840 1325 L 569 1325 Z" fill="none" stroke="#666666"/>
+<text x="579.0" y="1030.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">board/</text>
+<path d="M 0 1623 L 110 1623 L 110 1649 L 920 1649 L 920 2007 L 0 2007 Z" fill="#d0cee2" stroke="none"/>
+<path d="M 0 1649 L 0 1623 L 110 1623 L 110 1649 M 0 1649 L 920 1649 L 920 2007 L 0 2007 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="1641.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">block/</text>
+<path d="M 970 1623 L 1080 1623 L 1080 1649 L 1228 1649 L 1228 1801 L 970 1801 Z" fill="#f5f5f5" stroke="none"/>
+<path d="M 970 1649 L 970 1623 L 1080 1623 L 1080 1649 M 970 1649 L 1228 1649 L 1228 1801 L 970 1801 Z" fill="none" stroke="#666666"/>
+<text x="980.0" y="1641.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">common/</text>
+<path d="M 70.0 1947.0 L 70.0 1937.0 Q 70.0 1927.0 80.0 1927.0 L 138.0 1927.0 Q 140.0 1927.0 140.0 1929.0 L 140.0 1929.0 Q 140.0 1931.0 142.0 1931.0 L 209.0 1931.0 Q 218.0 1931.0 218.0 1922.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 200.0 1947.0 L 200.0 1936.0 Q 200.0 1927.0 209.0 1927.0 L 211.0 1927.0 Q 218.0 1927.0 218.0 1920.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 330.0 1947.0 L 330.0 1937.0 Q 330.0 1927.0 320.0 1927.0 L 262.0 1927.0 Q 260.0 1927.0 260.0 1929.0 L 260.0 1929.0 Q 260.0 1931.0 258.0 1931.0 L 227.0 1931.0 Q 218.0 1931.0 218.0 1922.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 410.0 1967.0 L 228.0 1967.0 Q 218.0 1967.0 218.0 1957.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 540.0 1967.0 L 228.0 1967.0 Q 218.0 1967.0 218.0 1957.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 670.0 1967.0 L 228.0 1967.0 Q 218.0 1967.0 218.0 1957.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 800.0 1967.0 L 228.0 1967.0 Q 218.0 1967.0 218.0 1957.0 L 218.0 1913.0" fill="none" stroke="#555555"/>
+<polygon points="218.0,1901.0 224.5,1913.0 211.5,1913.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 616.0 1710.0 L 634.0 1710.0" fill="none" stroke="#555555"/>
+<polygon points="646.0,1710.0 634.0,1716.5 634.0,1703.5" fill="#ffffff" stroke="#555555"/>
+<path d="M 148.0 1231.0 L 148.0 1219.0 Q 148.0 1211.0 156.0 1211.0 L 157.0 1211.0 Q 164.0 1211.0 164.0 1204.0 L 164.0 1197.0" fill="none" stroke="#555555"/>
+<polygon points="164.0,1185.0 170.5,1197.0 157.5,1197.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 164.0 724.0 L 164.0 876.0 Q 164.0 886.0 174.0 886.0 L 359.0 886.0 Q 369.0 886.0 369.0 896.0 L 369.0 1046.0" fill="none" stroke="#555555"/>
+<polygon points="369.0,1058.0 362.5,1046.0 375.5,1046.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 832.0 804.0 L 930.0 804.0 Q 940.0 804.0 940.0 794.0 L 940.0 706.0" fill="none" stroke="#555555"/>
+<polygon points="940.0,694.0 946.5,706.0 933.5,706.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 949.0 740.0 L 949.0 724.5 Q 949.0 720.0 944.5 720.0 L 944.5 720.0 Q 940.0 720.0 940.0 715.5 L 940.0 706.0" fill="none" stroke="#555555"/>
+<polygon points="940.0,694.0 946.5,706.0 933.5,706.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 1066.0 774.0 L 950.0 774.0 Q 940.0 774.0 940.0 764.0 L 940.0 706.0" fill="none" stroke="#555555"/>
+<polygon points="940.0,694.0 946.5,706.0 933.5,706.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 1548.0 759.0 L 1655.0 759.0 Q 1665.0 759.0 1665.0 749.0 L 1665.0 601.0" fill="none" stroke="#555555"/>
+<polygon points="1665.0,589.0 1671.5,601.0 1658.5,601.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 1687.0 710.0 L 1687.0 665.0 Q 1687.0 655.0 1677.0 655.0 L 1675.0 655.0 Q 1665.0 655.0 1665.0 645.0 L 1665.0 601.0" fill="none" stroke="#555555"/>
+<polygon points="1665.0,589.0 1671.5,601.0 1658.5,601.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 988.0 298.0 L 871.0 298.0 Q 861.0 298.0 861.0 288.0 L 861.0 185.0" fill="none" stroke="#555555"/>
+<polygon points="861.0,173.0 867.5,185.0 854.5,185.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 1100.0 219.0 L 1100.0 183.5 Q 1100.0 179.0 1104.5 179.0 L 1104.5 179.0 Q 1109.0 179.0 1109.0 174.5 L 1109.0 140.0" fill="none" stroke="#555555"/>
+<polygon points="1109.0,128.0 1115.5,140.0 1102.5,140.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 213.0 253.0 L 407.0 253.0 Q 417.0 253.0 417.0 243.0 L 417.0 170.0" fill="none" stroke="#555555"/>
+<polygon points="417.0,158.0 423.5,170.0 410.5,170.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 340.0 204.0 L 340.0 194.0 Q 340.0 184.0 350.0 184.0 L 410.0 184.0 Q 417.0 184.0 417.0 177.0 L 417.0 170.0" fill="none" stroke="#555555"/>
+<polygon points="417.0,158.0 423.5,170.0 410.5,170.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 563.0 204.0 L 563.0 194.0 Q 563.0 184.0 553.0 184.0 L 448.0 184.0 Q 446.0 184.0 446.0 186.0 L 446.0 186.0 Q 446.0 188.0 444.0 188.0 L 426.0 188.0 Q 417.0 188.0 417.0 179.0 L 417.0 170.0" fill="none" stroke="#555555"/>
+<polygon points="417.0,158.0 423.5,170.0 410.5,170.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 389.0 1785.0 L 678.0 1785.0 Q 688.0 1785.0 688.0 1775.0 L 688.0 1735.0 Q 688.0 1725.0 698.0 1725.0 L 990.0 1725.0" fill="none" stroke="#555555"/>
+<polygon points="375.0,1785.0 382.0,1789.5 389.0,1785.0 382.0,1780.5" fill="#555555" stroke="#555555"/>
+<path d="M 390.0 1710.0 L 382.0 1710.0 Q 374.0 1710.0 374.0 1718.0 L 374.0 1771.0 Q 374.0 1781.0 384.0 1781.0 L 393.0 1781.0 Q 395.0 1781.0 395.0 1783.0 L 395.0 1783.0 Q 395.0 1785.0 393.0 1785.0 L 375.0 1785.0" fill="none" stroke="#555555"/>
+<polygon points="404.0,1710.0 397.0,1705.5 390.0,1710.0 397.0,1714.5" fill="#555555" stroke="#555555"/>
+<path d="M 290.0 1392.0 L 428.0 1392.0 Q 438.0 1392.0 438.0 1382.0 L 438.0 1191.0 Q 438.0 1181.0 448.0 1181.0 L 589.0 1181.0" fill="none" stroke="#555555"/>
+<polygon points="276.0,1392.0 283.0,1396.5 290.0,1392.0 283.0,1387.5" fill="#555555" stroke="#555555"/>
+<path d="M 290.0 1392.0 L 298.0 1392.0 Q 306.0 1392.0 306.0 1384.0 L 306.0 1309.0" fill="none" stroke="#555555"/>
+<polygon points="276.0,1392.0 283.0,1396.5 290.0,1392.0 283.0,1387.5" fill="#555555" stroke="#555555"/>
+<path d="M 148.0 1567.0 L 148.0 1606.0 Q 148.0 1616.0 158.0 1616.0 L 208.0 1616.0 Q 218.0 1616.0 218.0 1626.0 L 218.0 1669.0" fill="none" stroke="#555555"/>
+<polygon points="148.0,1553.0 143.5,1560.0 148.0,1567.0 152.5,1560.0" fill="#555555" stroke="#555555"/>
+<path d="M 164.0 738.0 L 164.0 752.5 Q 164.0 754.0 162.5 754.0 L 162.5 754.0 Q 161.0 754.0 161.0 755.5 L 161.0 770.0" fill="none" stroke="#555555"/>
+<polygon points="164.0,724.0 159.5,731.0 164.0,738.0 168.5,731.0" fill="#555555" stroke="#555555"/>
+<path d="M 563.0 593.0 L 834.0 593.0" fill="none" stroke="#555555"/>
+<polygon points="549.0,593.0 556.0,597.5 563.0,593.0 556.0,588.5" fill="#555555" stroke="#555555"/>
+<path d="M 1540.0 578.0 L 1548.0 578.0 Q 1556.0 578.0 1556.0 570.0 L 1556.0 541.0" fill="none" stroke="#555555"/>
+<polygon points="1526.0,578.0 1533.0,582.5 1540.0,578.0 1533.0,573.5" fill="#555555" stroke="#555555"/>
+<path d="M 304.0 95.0 L 316.5 95.0 Q 320.0 95.0 320.0 98.5 L 320.0 102.0" fill="none" stroke="#555555"/>
+<polygon points="290.0,95.0 297.0,99.5 304.0,95.0 297.0,90.5" fill="#555555" stroke="#555555"/>
+<path d="M 820.0 1181.0 L 1089.0 1181.0 Q 1099.0 1181.0 1099.0 1191.0 L 1099.0 1669.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="1094.0,1659.0 1099.0,1669.0 1104.0,1659.0" fill="none" stroke="#555555"/>
+<path d="M 276.0 1392.0 L 742.0 1392.0 Q 752.0 1392.0 752.0 1402.0 L 752.0 1669.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="747.0,1659.0 752.0,1669.0 757.0,1659.0" fill="none" stroke="#555555"/>
+<path d="M 276.0 1392.0 L 359.0 1392.0 Q 369.0 1392.0 369.0 1382.0 L 369.0 1155.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="374.0,1165.0 369.0,1155.0 364.0,1165.0" fill="none" stroke="#555555"/>
+<path d="M 257.0 1122.0 L 413.0 1122.0 Q 423.0 1122.0 423.0 1132.0 L 423.0 1171.0 Q 423.0 1181.0 433.0 1181.0 L 589.0 1181.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="579.0,1186.0 589.0,1181.0 579.0,1176.0" fill="none" stroke="#555555"/>
+<path d="M 164.0 724.0 L 164.0 970.0 Q 164.0 978.0 156.0 978.0 L 156.0 978.0 Q 148.0 978.0 148.0 986.0 L 148.0 1231.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="143.0,1221.0 148.0,1231.0 153.0,1221.0" fill="none" stroke="#555555"/>
+<path d="M 307.0 608.0 L 319.5 608.0 Q 327.0 608.0 327.0 600.5 L 327.0 598.0 Q 327.0 593.0 332.0 593.0 L 337.0 593.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="327.0,598.0 337.0,593.0 327.0,588.0" fill="none" stroke="#555555"/>
+<path d="M 307.0 608.0 L 820.0 608.0 Q 830.0 608.0 830.0 598.0 L 830.0 588.0 Q 830.0 578.0 840.0 578.0 L 1352.0 578.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="1342.0,583.0 1352.0,578.0 1342.0,573.0" fill="none" stroke="#555555"/>
+<path d="M 409.0 770.0 L 409.0 742.0 Q 409.0 732.0 419.0 732.0 L 433.0 732.0 Q 443.0 732.0 443.0 722.0 L 443.0 694.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="448.0,704.0 443.0,694.0 438.0,704.0" fill="none" stroke="#555555"/>
+<path d="M 834.0 593.0 L 174.0 593.0 Q 164.0 593.0 164.0 603.0 L 164.0 1058.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="159.0,1048.0 164.0,1058.0 169.0,1048.0" fill="none" stroke="#555555"/>
+<path d="M 1556.0 541.0 L 174.0 541.0 Q 164.0 541.0 164.0 551.0 L 164.0 1058.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="159.0,1048.0 164.0,1058.0 169.0,1048.0" fill="none" stroke="#555555"/>
+<path d="M 1215.0 87.0 L 1227.5 87.0 Q 1235.0 87.0 1235.0 94.5 L 1235.0 97.0 Q 1235.0 102.0 1240.0 102.0 L 1245.0 102.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="1235.0,107.0 1245.0,102.0 1235.0,97.0" fill="none" stroke="#555555"/>
+<path d="M 749.0 110.0 L 158.0 110.0 Q 148.0 110.0 148.0 120.0 L 148.0 1231.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="143.0,1221.0 148.0,1231.0 153.0,1221.0" fill="none" stroke="#555555"/>
+<path d="M 749.0 110.0 L 174.0 110.0 Q 164.0 110.0 164.0 120.0 L 164.0 492.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="159.0,482.0 164.0,492.0 169.0,482.0" fill="none" stroke="#555555"/>
+<path d="M 749.0 110.0 L 419.0 110.0 Q 409.0 110.0 409.0 120.0 L 409.0 770.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="404.0,760.0 409.0,770.0 414.0,760.0" fill="none" stroke="#555555"/>
+<path d="M 513.0 102.0 L 627.0 102.0 Q 631.0 102.0 631.0 106.0 L 631.0 106.0 Q 631.0 110.0 635.0 110.0 L 749.0 110.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="739.0,115.0 749.0,110.0 739.0,105.0" fill="none" stroke="#555555"/>
+<path d="M 290.0 95.0 L 512.5 95.0 Q 520.0 95.0 520.0 102.5 L 520.0 102.5 Q 520.0 110.0 527.5 110.0 L 749.0 110.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="739.0,115.0 749.0,110.0 739.0,105.0" fill="none" stroke="#555555"/>
+<path d="M 290.0 95.0 L 643.0 95.0 Q 647.0 95.0 647.0 91.0 L 647.0 91.0 Q 647.0 87.0 651.0 87.0 L 1003.0 87.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="993.0,92.0 1003.0,87.0 993.0,82.0" fill="none" stroke="#555555"/>
+<path d="M 340.0 316.0 L 340.0 394.0 Q 340.0 404.0 330.0 404.0 L 174.0 404.0 Q 164.0 404.0 164.0 414.0 L 164.0 492.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="159.0,482.0 164.0,492.0 169.0,482.0" fill="none" stroke="#555555"/>
+<path d="M 340.0 316.0 L 340.0 764.0 Q 340.0 774.0 330.0 774.0 L 158.0 774.0 Q 148.0 774.0 148.0 784.0 L 148.0 1231.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="143.0,1221.0 148.0,1231.0 153.0,1221.0" fill="none" stroke="#555555"/>
+<path d="M 563.0 316.0 L 563.0 533.0 Q 563.0 543.0 553.0 543.0 L 419.0 543.0 Q 409.0 543.0 409.0 553.0 L 409.0 770.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="404.0,760.0 409.0,770.0 414.0,760.0" fill="none" stroke="#555555"/>
+<path d="M 563.0 316.0 L 563.0 394.0 Q 563.0 404.0 553.0 404.0 L 453.0 404.0 Q 443.0 404.0 443.0 414.0 L 443.0 492.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="438.0,482.0 443.0,492.0 448.0,482.0" fill="none" stroke="#555555"/>
+<rect x="166" y="46" width="124" height="97" fill="#ffffff" stroke="#000000"/>
+<line x1="166" y1="86" x2="290" y2="86" stroke="#000000"/>
+<text x="228.0" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Game</text>
+<text x="174.0" y="103.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isOver() : bool</text>
+<text x="174.0" y="118.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ run()</text>
+<text x="174.0" y="133.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ step(elapsedMs)</text>
+<rect x="320" y="46" width="193" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="320" y1="86" x2="513" y2="86" stroke="#000000"/>
+<text x="416.5" y="62.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="416.5" y="77.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Scene</text>
+<text x="328.0" y="103.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ isFinished() : bool</text>
+<text x="328.0" y="118.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ render(renderer)</text>
+<text x="328.0" y="133.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ enter()</text>
+<text x="328.0" y="148.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ update(elapsedMs, actions)</text>
+<rect x="20" y="204" width="193" height="97" fill="#ffffff" stroke="#000000"/>
+<line x1="20" y1="244" x2="213" y2="244" stroke="#000000"/>
+<text x="116.5" y="228.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">StoryScene</text>
+<text x="28.0" y="261.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isFinished() : bool</text>
+<text x="28.0" y="276.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ render(renderer)</text>
+<text x="28.0" y="291.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs, actions)</text>
+<rect x="243" y="204" width="193" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="243" y1="244" x2="436" y2="244" stroke="#000000"/>
+<text x="339.5" y="228.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">PlayScene</text>
+<text x="251.0" y="261.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isFinished() : bool</text>
+<text x="251.0" y="276.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ render(renderer)</text>
+<text x="251.0" y="291.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ enter()</text>
+<text x="251.0" y="306.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs, actions)</text>
+<rect x="466" y="204" width="193" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="466" y1="244" x2="659" y2="244" stroke="#000000"/>
+<text x="562.5" y="228.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">AlbumScene</text>
+<text x="474.0" y="261.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isFinished() : bool</text>
+<text x="474.0" y="276.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ render(renderer)</text>
+<text x="474.0" y="291.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ enter()</text>
+<text x="474.0" y="306.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs, actions)</text>
+<rect x="749" y="46" width="224" height="127" fill="#ffffff" stroke="#000000"/>
+<line x1="749" y1="86" x2="973" y2="86" stroke="#000000"/>
+<text x="861.0" y="62.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="861.0" y="77.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Renderer</text>
+<text x="757.0" y="103.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ beginFrame()</text>
+<text x="757.0" y="118.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawPlay(field, session)</text>
+<text x="757.0" y="133.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawStory(lines)</text>
+<text x="757.0" y="148.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ drawAlbum(album, newPhotoIndex)</text>
+<text x="757.0" y="163.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ endFrame()</text>
+<rect x="1003" y="46" width="212" height="82" fill="#ffffff" stroke="#000000"/>
+<line x1="1003" y1="86" x2="1215" y2="86" stroke="#000000"/>
+<text x="1109.0" y="62.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="1109.0" y="77.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">InputSource</text>
+<text x="1011.0" y="103.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ getActions() : vector&lt;Action&gt;</text>
+<text x="1011.0" y="118.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ poll()</text>
+<rect x="1245" y="46" width="205" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="1245" y1="86" x2="1450" y2="86" stroke="#000000"/>
+<text x="1347.5" y="62.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">«enum»</text>
+<text x="1347.5" y="77.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Action</text>
+<text x="1253.0" y="103.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">MoveLeft, MoveRight, SoftDrop,</text>
+<text x="1253.0" y="118.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">HardDrop, Rotate,</text>
+<text x="1253.0" y="133.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">UseMedicine1, UseMedicine2,</text>
+<text x="1253.0" y="148.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">Confirm, Quit</text>
+<rect x="988" y="219" width="224" height="157" fill="#ffffff" stroke="#000000"/>
+<line x1="988" y1="259" x2="1212" y2="259" stroke="#000000"/>
+<text x="1100.0" y="243.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">ConsoleIO</text>
+<text x="996.0" y="276.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getActions() : vector&lt;Action&gt;</text>
+<text x="996.0" y="291.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ poll()</text>
+<text x="996.0" y="306.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ beginFrame()</text>
+<text x="996.0" y="321.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawPlay(field, session)</text>
+<text x="996.0" y="336.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawStory(lines)</text>
+<text x="996.0" y="351.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ drawAlbum(album, newPhotoIndex)</text>
+<text x="996.0" y="366.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ endFrame()</text>
+<rect x="20" y="492" width="287" height="232" fill="#ffffff" stroke="#000000"/>
+<line x1="20" y1="532" x2="307" y2="532" stroke="#000000"/>
+<text x="163.5" y="516.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">StageSession</text>
+<text x="28.0" y="549.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getStage() : const Stage&amp;</text>
+<text x="28.0" y="564.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getProgress() : const PhotoProgress&amp;</text>
+<text x="28.0" y="579.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getMedicines() : const MedicineInventory&amp;</text>
+<text x="28.0" y="594.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isCleared() : bool</text>
+<text x="28.0" y="609.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isFailed() : bool</text>
+<text x="28.0" y="624.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ start()</text>
+<text x="28.0" y="639.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ restart()</text>
+<text x="28.0" y="654.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs)</text>
+<text x="28.0" y="669.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ useMedicine(index)</text>
+<text x="28.0" y="684.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ onPieceLocked()</text>
+<text x="28.0" y="699.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ onLinesCleared(count)</text>
+<text x="28.0" y="714.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ onGameOver()</text>
+<rect x="337" y="492" width="212" height="202" fill="#ffffff" stroke="#000000"/>
+<line x1="337" y1="532" x2="549" y2="532" stroke="#000000"/>
+<text x="443.0" y="516.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Stage</text>
+<text x="345.0" y="549.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getNumber() : int</text>
+<text x="345.0" y="564.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getTitle() : string</text>
+<text x="345.0" y="579.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPhotoPartCount() : int</text>
+<text x="345.0" y="594.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getBlockTheme() : string</text>
+<text x="345.0" y="609.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPhotoPart(index) : string</text>
+<text x="345.0" y="624.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getAlbumCaption() : string</text>
+<text x="345.0" y="639.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getBoss() : const Boss&amp;</text>
+<text x="345.0" y="654.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ appearBoss()</text>
+<text x="345.0" y="669.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ disappearBoss()</text>
+<text x="345.0" y="684.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ updateBoss(elapsedMs, target)</text>
+<rect x="52" y="770" width="218" height="172" fill="#ffffff" stroke="#000000"/>
+<line x1="52" y1="810" x2="270" y2="810" stroke="#000000"/>
+<text x="161.0" y="794.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">PhotoProgress</text>
+<text x="60.0" y="827.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFilledPieceCount() : int</text>
+<text x="60.0" y="842.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPieceCount() : int</text>
+<text x="60.0" y="857.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getClearedLines() : int</text>
+<text x="60.0" y="872.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getLinesUntilNextPiece() : int</text>
+<text x="60.0" y="887.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isHalfFilled() : bool</text>
+<text x="60.0" y="902.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isComplete() : bool</text>
+<text x="60.0" y="917.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ addClearedLines(count)</text>
+<text x="60.0" y="932.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<rect x="300" y="770" width="218" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="300" y1="810" x2="518" y2="810" stroke="#000000"/>
+<text x="409.0" y="794.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Album</text>
+<text x="308.0" y="827.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPhotoCount() : int</text>
+<text x="308.0" y="842.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPhoto(index) : const Stage&amp;</text>
+<text x="308.0" y="857.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ addPhoto(stage)</text>
+<text x="308.0" y="872.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clear()</text>
+<rect x="834" y="492" width="212" height="202" fill="#ffffff" stroke="#000000"/>
+<line x1="834" y1="532" x2="1046" y2="532" stroke="#000000"/>
+<text x="940.0" y="508.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="940.0" y="523.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Boss</text>
+<text x="842.0" y="549.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getName() : string</text>
+<text x="842.0" y="564.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isActive() : bool</text>
+<text x="842.0" y="579.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getMsUntilNextGimmick() : int</text>
+<text x="842.0" y="594.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ hidesCell(cell) : bool</text>
+<text x="842.0" y="609.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ appear()</text>
+<text x="842.0" y="624.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ disappear()</text>
+<text x="842.0" y="639.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs, target)</text>
+<text x="842.0" y="654.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<text x="842.0" y="669.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># onUpdate(elapsedMs)</text>
+<text x="842.0" y="684.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># resetGimmick()</text>
+<rect x="639" y="740" width="193" height="127" fill="#ffffff" stroke="#000000"/>
+<line x1="639" y1="780" x2="832" y2="780" stroke="#000000"/>
+<text x="735.5" y="764.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">DarknessBoss</text>
+<text x="647.0" y="797.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ hidesCell(cell) : bool</text>
+<text x="647.0" y="812.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getDarkRemainingMs() : int</text>
+<text x="647.0" y="827.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<text x="647.0" y="842.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># onUpdate(elapsedMs)</text>
+<text x="647.0" y="857.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># resetGimmick()</text>
+<rect x="862" y="740" width="174" height="67" fill="#ffffff" stroke="#000000"/>
+<line x1="862" y1="780" x2="1036" y2="780" stroke="#000000"/>
+<text x="949.0" y="764.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">ShapeShiftBoss</text>
+<text x="870.0" y="797.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<rect x="1066" y="740" width="174" height="67" fill="#ffffff" stroke="#000000"/>
+<line x1="1066" y1="780" x2="1240" y2="780" stroke="#000000"/>
+<text x="1153.0" y="764.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">ForgetBoss</text>
+<text x="1074.0" y="797.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<rect x="1352" y="492" width="174" height="172" fill="#ffffff" stroke="#000000"/>
+<line x1="1352" y1="532" x2="1526" y2="532" stroke="#000000"/>
+<text x="1439.0" y="516.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">MedicineInventory</text>
+<text x="1360.0" y="549.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCount() : int</text>
+<text x="1360.0" y="564.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCapacity() : int</text>
+<text x="1360.0" y="579.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isFull() : bool</text>
+<text x="1360.0" y="594.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getName(index) : string</text>
+<text x="1360.0" y="609.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ add(medicine)</text>
+<text x="1360.0" y="624.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ use(index, target)</text>
+<text x="1360.0" y="639.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clear()</text>
+<text x="1360.0" y="654.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ restoreFrom(other)</text>
+<rect x="1556" y="492" width="218" height="97" fill="#ffffff" stroke="#000000"/>
+<line x1="1556" y1="532" x2="1774" y2="532" stroke="#000000"/>
+<text x="1665.0" y="508.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="1665.0" y="523.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Medicine</text>
+<text x="1564.0" y="549.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getName() : string</text>
+<text x="1564.0" y="564.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ clone() : unique_ptr&lt;Medicine&gt;</text>
+<text x="1564.0" y="579.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ applyTo(target)</text>
+<rect x="1330" y="710" width="218" height="97" fill="#ffffff" stroke="#000000"/>
+<line x1="1330" y1="750" x2="1548" y2="750" stroke="#000000"/>
+<text x="1439.0" y="734.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">BluePill</text>
+<text x="1338.0" y="767.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getDurationMs() : int</text>
+<text x="1338.0" y="782.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clone() : unique_ptr&lt;Medicine&gt;</text>
+<text x="1338.0" y="797.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ applyTo(target)</text>
+<rect x="1578" y="710" width="218" height="82" fill="#ffffff" stroke="#000000"/>
+<line x1="1578" y1="750" x2="1796" y2="750" stroke="#000000"/>
+<text x="1687.0" y="734.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">RedPill</text>
+<text x="1586.0" y="767.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clone() : unique_ptr&lt;Medicine&gt;</text>
+<text x="1586.0" y="782.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ applyTo(target)</text>
+<rect x="70" y="1058" width="187" height="127" fill="#ffffff" stroke="#000000"/>
+<line x1="70" y1="1098" x2="257" y2="1098" stroke="#000000"/>
+<text x="163.5" y="1074.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="163.5" y="1089.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">EffectTarget</text>
+<text x="78.0" y="1115.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ getBoard() : const Board&amp;</text>
+<text x="78.0" y="1130.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ removeCells(cells)</text>
+<text x="78.0" y="1145.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ removeBottomLine()</text>
+<text x="78.0" y="1160.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ transformCurrentPiece()</text>
+<text x="78.0" y="1175.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ slowDown(durationMs)</text>
+<rect x="288" y="1058" width="161" height="97" fill="#ffffff" stroke="#000000"/>
+<line x1="288" y1="1098" x2="449" y2="1098" stroke="#000000"/>
+<text x="368.5" y="1074.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="368.5" y="1089.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">PlayListener</text>
+<text x="296.0" y="1115.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ onPieceLocked()</text>
+<text x="296.0" y="1130.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ onLinesCleared(count)</text>
+<text x="296.0" y="1145.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ onGameOver()</text>
+<rect x="20" y="1231" width="256" height="322" fill="#ffffff" stroke="#000000"/>
+<line x1="20" y1="1271" x2="276" y2="1271" stroke="#000000"/>
+<text x="148.0" y="1255.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">PlayField</text>
+<text x="28.0" y="1288.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getBoard() : const Board&amp;</text>
+<text x="28.0" y="1303.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCurrentPiece() : const Tetromino&amp;</text>
+<text x="28.0" y="1318.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getNextPiece() : const Tetromino&amp;</text>
+<text x="28.0" y="1333.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSpeed() : const FallSpeed&amp;</text>
+<text x="28.0" y="1348.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isGameOver() : bool</text>
+<text x="28.0" y="1363.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ setListener(listener)</text>
+<text x="28.0" y="1378.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ moveLeft()</text>
+<text x="28.0" y="1393.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ moveRight()</text>
+<text x="28.0" y="1408.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ rotate()</text>
+<text x="28.0" y="1423.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ softDrop()</text>
+<text x="28.0" y="1438.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ hardDrop()</text>
+<text x="28.0" y="1453.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs)</text>
+<text x="28.0" y="1468.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ speedUp()</text>
+<text x="28.0" y="1483.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<text x="28.0" y="1498.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ removeCells(cells)</text>
+<text x="28.0" y="1513.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ removeBottomLine()</text>
+<text x="28.0" y="1528.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ transformCurrentPiece()</text>
+<text x="28.0" y="1543.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ slowDown(durationMs)</text>
+<rect x="306" y="1231" width="193" height="157" fill="#ffffff" stroke="#000000"/>
+<line x1="306" y1="1271" x2="499" y2="1271" stroke="#000000"/>
+<text x="402.5" y="1255.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">FallSpeed</text>
+<text x="314.0" y="1288.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFallIntervalMs() : int</text>
+<text x="314.0" y="1303.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getLevel() : int</text>
+<text x="314.0" y="1318.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSlowRemainingMs() : int</text>
+<text x="314.0" y="1333.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ speedUp()</text>
+<text x="314.0" y="1348.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ slowDown(durationMs)</text>
+<text x="314.0" y="1363.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs)</text>
+<text x="314.0" y="1378.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<rect x="589" y="1058" width="231" height="247" fill="#ffffff" stroke="#000000"/>
+<line x1="589" y1="1098" x2="820" y2="1098" stroke="#000000"/>
+<text x="704.5" y="1082.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Board</text>
+<text x="597.0" y="1115.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getWidth() : int</text>
+<text x="597.0" y="1130.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getHeight() : int</text>
+<text x="597.0" y="1145.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isInside(cell) : bool</text>
+<text x="597.0" y="1160.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isEmpty(cell) : bool</text>
+<text x="597.0" y="1175.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSymbolAt(cell) : char</text>
+<text x="597.0" y="1190.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ canPlace(cells) : bool</text>
+<text x="597.0" y="1205.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFullLines() : vector&lt;int&gt;</text>
+<text x="597.0" y="1220.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFilledCells() : vector&lt;Point&gt;</text>
+<text x="597.0" y="1235.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ lockCells(cells, symbol)</text>
+<text x="597.0" y="1250.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearLines(rows)</text>
+<text x="597.0" y="1265.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearBottomLine()</text>
+<text x="597.0" y="1280.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearCells(cells)</text>
+<text x="597.0" y="1295.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<rect x="62" y="1669" width="313" height="232" fill="#ffffff" stroke="#000000"/>
+<line x1="62" y1="1709" x2="375" y2="1709" stroke="#000000"/>
+<text x="218.5" y="1685.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="218.5" y="1700.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">Tetromino</text>
+<text x="70.0" y="1726.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCells() : vector&lt;Point&gt;</text>
+<text x="70.0" y="1741.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCellsAfterMove(dRow, dCol) : vector&lt;Point&gt;</text>
+<text x="70.0" y="1756.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCellsAfterRotate() : vector&lt;Point&gt;</text>
+<text x="70.0" y="1771.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getPosition() : Point</text>
+<text x="70.0" y="1786.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getRotation() : int</text>
+<text x="70.0" y="1801.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ getBoxSize() : int</text>
+<text x="70.0" y="1816.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ getSymbol() : char</text>
+<text x="70.0" y="1831.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ clone() : unique_ptr&lt;Tetromino&gt;</text>
+<text x="70.0" y="1846.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ moveBy(dRow, dCol)</text>
+<text x="70.0" y="1861.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ moveTo(position)</text>
+<text x="70.0" y="1876.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ rotateClockwise()</text>
+<text x="70.0" y="1891.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222"># getBaseShape() : vector&lt;Point&gt;</text>
+<rect x="404" y="1669" width="212" height="82" fill="#ffffff" stroke="#000000"/>
+<line x1="404" y1="1709" x2="616" y2="1709" stroke="#000000"/>
+<text x="510.0" y="1693.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">BagPieceGenerator</text>
+<text x="412.0" y="1726.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ peekNext() : const Tetromino&amp;</text>
+<text x="412.0" y="1741.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ advance()</text>
+<rect x="646" y="1669" width="212" height="82" fill="#ffffff" stroke="#000000"/>
+<line x1="646" y1="1709" x2="858" y2="1709" stroke="#000000"/>
+<text x="752.0" y="1685.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">«abstract»</text>
+<text x="752.0" y="1700.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="italic" text-anchor="middle" fill="#000000">PieceGenerator</text>
+<text x="654.0" y="1726.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ peekNext() : const Tetromino&amp;</text>
+<text x="654.0" y="1741.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#222">+ advance()</text>
+<rect x="20" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="70.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">IBlock</text>
+<rect x="150" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="200.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">OBlock</text>
+<rect x="280" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="330.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">TBlock</text>
+<rect x="410" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="460.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">SBlock</text>
+<rect x="540" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="590.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">ZBlock</text>
+<rect x="670" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="720.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">JBlock</text>
+<rect x="800" y="1947" width="100" height="40" fill="#ffffff" stroke="#000000"/>
+<text x="850.0" y="1971.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">LBlock</text>
+<rect x="990" y="1669" width="218" height="112" fill="#ffffff" stroke="#000000"/>
+<line x1="990" y1="1709" x2="1208" y2="1709" stroke="#000000"/>
+<text x="1099.0" y="1693.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Point</text>
+<text x="998.0" y="1726.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getRow() : int</text>
+<text x="998.0" y="1741.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getCol() : int</text>
+<text x="998.0" y="1756.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ translated(dRow, dCol) : Point</text>
+<text x="998.0" y="1771.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ operator==(Point) : bool</text>
+<path d="M 0 2031 L 546 2031 L 560 2045 L 560 2109 L 0 2109 Z" fill="#fff9db" stroke="#b59f3b"/>
+<path d="M 546 2031 L 546 2045 L 560 2045" fill="none" stroke="#b59f3b"/>
+<text x="12.0" y="2051.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="start" fill="#222">범례</text>
+<path d="M 12.0 2071.0 L 60.0 2071.0" fill="none" stroke="#555555"/>
+<polygon points="72.0,2071.0 60.0,2077.5 60.0,2064.5" fill="#ffffff" stroke="#555555"/>
+<text x="80.0" y="2075.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">상속 (자식 → 부모)</text>
+<path d="M 208.0 2071.0 L 254.0 2071.0" fill="none" stroke="#555555"/>
+<polygon points="194.0,2071.0 201.0,2075.5 208.0,2071.0 201.0,2066.5" fill="#555555" stroke="#555555"/>
+<text x="262.0" y="2075.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">소유 (함께 생성·소멸)</text>
+<path d="M 376.0 2071.0 L 436.0 2071.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="426.0,2076.0 436.0,2071.0 426.0,2066.0" fill="none" stroke="#555555"/>
+<text x="444.0" y="2075.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">참조·사용</text>
+<text x="12.0" y="2097.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="10.5" font-weight="normal" font-style="normal" text-anchor="start" fill="#555">기울임꼴 함수 = 순수 가상 함수,  + public,  # protected,  점선 상자 = 다른 패키지의 클래스</text>
+</svg>

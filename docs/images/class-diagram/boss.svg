@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="685" height="538" viewBox="-20 -20 685 538">
+<rect x="-20" y="-20" width="685" height="538" fill="#ffffff"/>
+<rect x="0" y="0" width="645" height="498" rx="8" fill="#fdeceb" stroke="#a8a8a8"/>
+<text x="12.0" y="19.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="start" fill="#333">boss/  보스</text>
+<line x1="152.5" y1="365.0" x2="174.5" y2="330.0" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="181.4,319.0 180.4,333.7 168.5,326.3" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
+<line x1="318.3" y1="365.0" x2="301.2" y2="330.6" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="295.5,319.0 307.5,327.5 295.0,333.8" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
+<line x1="492.0" y1="365.0" x2="364.2" y2="288.7" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="353.0,282.0 367.8,282.7 360.6,294.7" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
+<line x1="308.8" y1="84.4" x2="293.7" y2="116.0" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="315.8,70.0 307.3,74.8 308.8,84.4 317.3,79.6" fill="#4d4d4d"/>
+<line x1="353.0" y1="169.6" x2="415.2" y2="142.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
+<polyline points="407.2,151.0 415.2,142.0 403.1,141.9" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
+<rect x="276" y="44" width="92" height="26" rx="3" fill="#ffffff" stroke="#9a9a9a" stroke-dasharray="5 3"/>
+<rect x="276" y="44" width="92" height="26" rx="3" fill="#f7f7f7" stroke="#9a9a9a" stroke-dasharray="5 3"/>
+<text x="322.0" y="61.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#777">Stage</text>
+<rect x="137" y="116" width="216" height="203" rx="3" fill="#ffffff" stroke="#555"/>
+<rect x="137" y="116" width="216" height="39" rx="3" fill="#f5b8b2" stroke="#555"/>
+<text x="245.0" y="129.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="10" font-weight="normal" font-style="italic" text-anchor="middle" fill="#444">«abstract»</text>
+<text x="245.0" y="145.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="italic" text-anchor="middle" fill="#111">Boss</text>
+<text x="147.0" y="173.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getName() : string</text>
+<text x="147.0" y="188.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isActive() : bool</text>
+<text x="147.0" y="203.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getMsUntilNextGimmick() : int</text>
+<text x="147.0" y="218.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ hidesCell(cell) : bool</text>
+<text x="147.0" y="233.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ appear()</text>
+<text x="147.0" y="248.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ disappear()</text>
+<text x="147.0" y="263.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ update(elapsedMs, target)</text>
+<text x="147.0" y="278.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="italic" text-anchor="start" fill="#5a3e9b"># activateGimmick(target)</text>
+<text x="147.0" y="293.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># onUpdate(elapsedMs)</text>
+<text x="147.0" y="308.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># resetGimmick()</text>
+<rect x="381" y="116" width="127" height="26" rx="3" fill="#ffffff" stroke="#9a9a9a" stroke-dasharray="5 3"/>
+<rect x="381" y="116" width="127" height="26" rx="3" fill="#f7f7f7" stroke="#9a9a9a" stroke-dasharray="5 3"/>
+<text x="444.5" y="133.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#777">EffectTarget</text>
+<rect x="18" y="365" width="197" height="115" rx="3" fill="#ffffff" stroke="#555"/>
+<rect x="18" y="365" width="197" height="26" rx="3" fill="#f5b8b2" stroke="#555"/>
+<text x="116.5" y="382.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#111">DarknessBoss</text>
+<text x="28.0" y="409.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ hidesCell(cell) : bool</text>
+<text x="28.0" y="424.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getDarkRemainingMs() : int</text>
+<text x="28.0" y="439.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<text x="28.0" y="454.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># onUpdate(elapsedMs)</text>
+<text x="28.0" y="469.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># resetGimmick()</text>
+<rect x="243" y="365" width="178" height="55" rx="3" fill="#ffffff" stroke="#555"/>
+<rect x="243" y="365" width="178" height="26" rx="3" fill="#f5b8b2" stroke="#555"/>
+<text x="332.0" y="382.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#111">ShapeShiftBoss</text>
+<text x="253.0" y="409.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+<rect x="449" y="365" width="178" height="55" rx="3" fill="#ffffff" stroke="#555"/>
+<rect x="449" y="365" width="178" height="26" rx="3" fill="#f5b8b2" stroke="#555"/>
+<text x="538.0" y="382.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#111">ForgetBoss</text>
+<text x="459.0" y="409.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222"># activateGimmick(target)</text>
+</svg>

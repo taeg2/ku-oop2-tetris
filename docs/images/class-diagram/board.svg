@@ -1,38 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="333" height="481" viewBox="-20 -20 333 481">
-<rect x="-20" y="-20" width="333" height="481" fill="#ffffff"/>
-<rect x="0" y="0" width="293" height="441" rx="8" fill="#f2f2f2" stroke="#a8a8a8"/>
-<text x="12.0" y="19.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="start" fill="#333">board/  보드</text>
-<line x1="120.0" y1="57.0" x2="135.0" y2="57.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="148.0,57.0 135.0,64.0 135.0,50.0" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
-<line x1="81.1" y1="84.6" x2="94.9" y2="116.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="74.7,70.0 72.9,79.5 81.1,84.6 83.0,75.1" fill="#4d4d4d"/>
-<line x1="146.2" y1="351.0" x2="146.0" y2="397.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="141.1,386.0 146.0,397.0 151.1,386.0" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="206.7" y1="70.0" x2="189.8" y2="116.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="188.9,103.9 189.8,116.0 198.3,107.4" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<rect x="18" y="44" width="102" height="26" rx="3" fill="#ffffff" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<rect x="18" y="44" width="102" height="26" rx="3" fill="#f7f7f7" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<text x="69.0" y="61.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#777">PlayField</text>
-<rect x="148" y="44" width="127" height="26" rx="3" fill="#ffffff" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<rect x="148" y="44" width="127" height="26" rx="3" fill="#f7f7f7" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<text x="211.5" y="61.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#777">EffectTarget</text>
-<rect x="29" y="116" width="235" height="235" rx="3" fill="#ffffff" stroke="#555"/>
-<rect x="29" y="116" width="235" height="26" rx="3" fill="#d6d6d6" stroke="#555"/>
-<text x="146.5" y="133.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#111">Board</text>
-<text x="39.0" y="160.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getWidth() : int</text>
-<text x="39.0" y="175.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getHeight() : int</text>
-<text x="39.0" y="190.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isInside(cell) : bool</text>
-<text x="39.0" y="205.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isEmpty(cell) : bool</text>
-<text x="39.0" y="220.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSymbolAt(cell) : char</text>
-<text x="39.0" y="235.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ canPlace(cells) : bool</text>
-<text x="39.0" y="250.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFullLines() : vector&lt;int&gt;</text>
-<text x="39.0" y="265.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFilledCells() : vector&lt;Point&gt;</text>
-<text x="39.0" y="280.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ lockCells(cells, symbol)</text>
-<text x="39.0" y="295.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearLines(rows)</text>
-<text x="39.0" y="310.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearBottomLine()</text>
-<text x="39.0" y="325.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearCells(cells)</text>
-<text x="39.0" y="340.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
-<rect x="100" y="397" width="92" height="26" rx="3" fill="#ffffff" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<rect x="100" y="397" width="92" height="26" rx="3" fill="#f7f7f7" stroke="#9a9a9a" stroke-dasharray="5 3"/>
-<text x="146.0" y="414.0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif" font-size="13" font-weight="bold" font-style="normal" text-anchor="middle" fill="#777">Point</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="339" height="525" viewBox="-20 -20 339 525">
+<rect x="-20" y="-20" width="339" height="525" fill="#ffffff"/>
+<path d="M 0 0 L 110 0 L 110 26 L 299 26 L 299 485 L 0 485 Z" fill="#f5f5f5" stroke="none"/>
+<path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 299 26 L 299 485 L 0 485 Z" fill="none" stroke="#666666"/>
+<text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">board/</text>
+<line x1="122.0" y1="66.0" x2="139.0" y2="66.0" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="152.0,66.0 139.0,73.0 139.0,59.0" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
+<line x1="85.4" y1="100.8" x2="98.3" y2="132.0" stroke="#4d4d4d" stroke-width="1.2"/>
+<polygon points="79.3,86.0 77.3,95.5 85.4,100.8 87.4,91.3" fill="#4d4d4d"/>
+<line x1="149.8" y1="379.0" x2="149.9" y2="425.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
+<polyline points="144.9,414.0 149.9,425.0 154.9,414.0" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
+<line x1="208.5" y1="86.0" x2="192.5" y2="132.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
+<polyline points="191.4,120.0 192.5,132.0 200.9,123.3" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
+<rect x="20" y="46" width="102" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="71.0" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">PlayField</text>
+<rect x="152" y="46" width="127" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="215.5" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">EffectTarget</text>
+<rect x="34" y="132" width="231" height="247" fill="#ffffff" stroke="#000000"/>
+<line x1="34" y1="172" x2="265" y2="172" stroke="#000000"/>
+<text x="149.5" y="156.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#000000">Board</text>
+<text x="42.0" y="189.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getWidth() : int</text>
+<text x="42.0" y="204.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getHeight() : int</text>
+<text x="42.0" y="219.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isInside(cell) : bool</text>
+<text x="42.0" y="234.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ isEmpty(cell) : bool</text>
+<text x="42.0" y="249.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getSymbolAt(cell) : char</text>
+<text x="42.0" y="264.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ canPlace(cells) : bool</text>
+<text x="42.0" y="279.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFullLines() : vector&lt;int&gt;</text>
+<text x="42.0" y="294.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ getFilledCells() : vector&lt;Point&gt;</text>
+<text x="42.0" y="309.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ lockCells(cells, symbol)</text>
+<text x="42.0" y="324.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearLines(rows)</text>
+<text x="42.0" y="339.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearBottomLine()</text>
+<text x="42.0" y="354.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ clearCells(cells)</text>
+<text x="42.0" y="369.0" font-family="Consolas, Menlo, 'D2Coding', monospace" font-size="11" font-weight="normal" font-style="normal" text-anchor="start" fill="#222">+ reset()</text>
+<rect x="100" y="425" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
+<text x="150.0" y="449.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">Point</text>
 </svg>

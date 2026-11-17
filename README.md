@@ -15,10 +15,7 @@ C++로 구현한 콘솔 테트리스 게임입니다. 객체 지향 설계(OCP, 
 4. [실행 화면](#실행-화면)
 5. [클래스 다이어그램](#클래스-다이어그램)
 6. [프로젝트 구조](#프로젝트-구조)
-7. [설계 원칙](#설계-원칙)
-8. [게임 설정 바꾸기](#게임-설정-바꾸기)
-9. [개발 규칙](#개발-규칙)
-10. [알려진 제한 사항](#알려진-제한-사항)
+7. [게임 설정 바꾸기](#게임-설정-바꾸기)
 
 ---
 
@@ -142,10 +139,7 @@ cmake -S . -B build && cmake --build build
 
 ## 클래스 다이어그램
 
-![전체 클래스 다이어그램](docs/images/class-diagram/overview.svg)
-
-- 패키지별 그림과 설명: **[docs/class-diagram.md](docs/class-diagram.md)**
-- draw.io 원본: [docs/oop-tetris-class-diagram.drawio](docs/oop-tetris-class-diagram.drawio) ([app.diagrams.net](https://app.diagrams.net)에서 열 수 있습니다. 전체 1장 + 패키지별 9장)
+[클래스 다이어그램 보기 (docs/class-diagram.md)](docs/class-diagram.md)
 
 ---
 
@@ -174,33 +168,6 @@ ku-oop2-tetris/
 
 ---
 
-## 설계 원칙
-
-자세한 규칙은 [개발 컨벤션](docs/CONVENTION.md)에 있습니다.
-
-### OCP — 새 종류는 클래스를 추가해서 넣는다
-
-| 추가하고 싶은 것 | 하는 일 | 기존 코드 수정 |
-|---|---|---|
-| 새 블록 모양 | `Tetromino`를 상속한 클래스 추가 | `main`의 원형 목록에 한 줄 |
-| 새 보스 | `Boss`를 상속해 `activateGimmick()` 구현 | `main`에서 스테이지에 넘기기 |
-| 새 약 | `Medicine`을 상속해 `applyTo()`, `clone()` 구현 | `main`의 지급 목록에 한 줄 |
-| 새 장면 | `Scene`을 상속한 클래스 추가 | `main`의 장면 목록에 한 줄 |
-| 그래픽 화면 | `Renderer`, `InputSource`를 구현한 클래스 추가 | `main`에서 `ConsoleIO` 대신 넘기기 |
-
-### DIP — 추상 클래스에 의존한다
-
-- 게임 로직은 `PieceGenerator`, `EffectTarget`, `PlayListener`, `Boss`, `Medicine`, `Renderer`, `InputSource`, `Scene` 같은 추상 클래스로만 다른 객체를 사용합니다.
-- 구체 클래스를 만드는 코드는 `main.cpp` 한 곳에 모았습니다.
-- Windows·Mac 전용 코드는 `ConsoleIO` 한 클래스에만 있습니다.
-
-### CQS — 조회와 변경을 나눈다
-
-- 상태를 읽는 함수는 모두 `const`이고 값을 돌려줍니다. 상태를 바꾸는 함수는 모두 `void`입니다.
-- 예: 블록을 실제로 움직이지 않고 움직인 결과만 알려 주는 `Tetromino::getCellsAfterMove()`, 다음 블록을 확인하는 `peekNext()`와 넘기는 `advance()`
-
----
-
 ## 게임 설정 바꾸기
 
 기획안에서 아직 정해지지 않은 수치는 [`tetris/core/main.cpp`](tetris/core/main.cpp) 맨 위의 설정 상수에 모아 두었습니다. 숫자만 바꾸고 다시 빌드하면 됩니다.
@@ -217,18 +184,3 @@ ku-oop2-tetris/
 
 보스의 이름, 발동 주기, 지속 시간은 같은 파일의 `makeStages()`에서 바꿉니다.
 
----
-
-## 개발 규칙
-
-- [개발 컨벤션](docs/CONVENTION.md): PR 규칙, 브랜치 전략, 커밋 메시지, 클래스 작성(OCP·DIP), CQS, 코드 스타일, 빌드 환경
-- 팀원마다 개인 브랜치(`이름/main`)를 만들고, 그 아래 `이름/feature/…`, `이름/fix/…` 브랜치에서 개발한 뒤 PR로 합칩니다.
-- 커밋 메시지: `feat`, `fix`, `refactor`, `docs`, `chore` 중 하나로 시작합니다. (예: `feat: Board에 줄 삭제 기능 추가`)
-
----
-
-## 알려진 제한 사항
-
-- Mac용 키 입력 코드(`termios`)는 아직 Mac에서 빌드·실행해 확인하지 않았습니다.
-- 기획안 9장의 미정 사항(보스 이름, 약 획득 방식·보유 한도, 속도 수치)은 가정값으로 넣어 두었습니다.
-- 창 크기가 바뀌는 상황은 처리하지 않습니다. 창을 충분히 크게 연 뒤 실행해 주세요.

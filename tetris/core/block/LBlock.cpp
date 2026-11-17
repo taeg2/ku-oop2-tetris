@@ -1,4 +1,4 @@
-#include "LBlock.h"
+#include "block/LBlock.h"
 
 int LBlock::getBoxSize() const {
     return 3;

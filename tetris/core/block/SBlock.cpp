@@ -1,4 +1,4 @@
-#include "SBlock.h"
+#include "block/SBlock.h"
 
 int SBlock::getBoxSize() const {
     return 3;

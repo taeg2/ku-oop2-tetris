@@ -1,4 +1,4 @@
-#include "OBlock.h"
+#include "block/OBlock.h"
 
 int OBlock::getBoxSize() const {
     return 2;

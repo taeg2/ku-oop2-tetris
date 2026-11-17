@@ -1,4 +1,4 @@
-#include "Tetromino.h"
+#include "block/Tetromino.h"
 
 namespace {
     const int rotationStateCount = 4;

@@ -1,4 +1,4 @@
-#include "Point.h"
+#include "common/Point.h"
 
 Point::Point() : row(0), col(0) {}
 

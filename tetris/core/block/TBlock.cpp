@@ -1,4 +1,4 @@
-#include "TBlock.h"
+#include "block/TBlock.h"
 
 int TBlock::getBoxSize() const {
     return 3;

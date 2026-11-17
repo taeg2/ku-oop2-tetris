@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Tetromino.h"
+#include "block/Tetromino.h"
 
 // 네모(O) 블록. 회전 상자 2x2 안에서 처음 모양은 다음과 같다.
 //   OO

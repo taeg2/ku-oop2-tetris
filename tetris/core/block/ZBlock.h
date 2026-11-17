@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Tetromino.h"
+#include "block/Tetromino.h"
 
-// J 블록. 회전 상자 3x3 안에서 처음 모양은 다음과 같다.
-//   J..
-//   JJJ
+// Z 블록. 회전 상자 3x3 안에서 처음 모양은 다음과 같다.
+//   ZZ.
+//   .ZZ
 //   ...
-class JBlock : public Tetromino {
+class ZBlock : public Tetromino {
 public:
     int getBoxSize() const override;
     char getSymbol() const override;

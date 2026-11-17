@@ -1,4 +1,4 @@
-#include "JBlock.h"
+#include "block/JBlock.h"
 
 int JBlock::getBoxSize() const {
     return 3;

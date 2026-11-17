@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include "Point.h"
+#include "common/Point.h"
 
 // 테트로미노(4칸 블록)의 추상 클래스.
 // 블록 종류마다 다른 것(모양, 회전 상자 크기, 기호)만 자식 클래스가 정하고,

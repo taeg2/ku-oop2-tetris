@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Tetromino.h"
+#include "block/Tetromino.h"
 
-// T 블록. 회전 상자 3x3 안에서 처음 모양은 다음과 같다.
-//   .T.
-//   TTT
+// S 블록. 회전 상자 3x3 안에서 처음 모양은 다음과 같다.
+//   .SS
+//   SS.
 //   ...
-class TBlock : public Tetromino {
+class SBlock : public Tetromino {
 public:
     int getBoxSize() const override;
     char getSymbol() const override;

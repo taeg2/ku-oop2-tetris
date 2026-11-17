@@ -1,4 +1,4 @@
-#include "IBlock.h"
+#include "block/IBlock.h"
 
 int IBlock::getBoxSize() const {
     return 4;

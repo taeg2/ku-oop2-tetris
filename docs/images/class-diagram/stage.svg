@@ -3,22 +3,22 @@
 <path d="M 0 0 L 110 0 L 110 26 L 748 26 L 748 718 L 0 718 Z" fill="#d5e8d4" stroke="none"/>
 <path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 748 26 L 748 718 L 0 718 Z" fill="none" stroke="#666666"/>
 <text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">stage/</text>
-<line x1="295.9" y1="132.0" x2="301.7" y2="98.8" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="304.0,86.0 308.6,100.0 294.8,97.6" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
-<line x1="198.8" y1="377.8" x2="179.8" y2="410.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="207.0,364.0 198.2,368.1 198.8,377.8 207.6,373.7" fill="#4d4d4d"/>
-<line x1="374.0" y1="628.0" x2="374.0" y2="658.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="374.0,612.0 368.5,620.0 374.0,628.0 379.5,620.0" fill="#4d4d4d"/>
-<line x1="402.0" y1="66.0" x2="371.0" y2="66.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="382.0,61.0 371.0,66.0 382.0,71.0" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="388.6" y1="132.0" x2="433.5" y2="86.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="429.4,97.4 433.5,86.0 422.2,90.4" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="318.9" y1="364.0" x2="336.2" y2="410.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="327.6,401.5 336.2,410.0 337.0,397.9" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="419.0" y1="194.3" x2="478.6" y2="172.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="470.0,180.5 478.6,172.0 466.5,171.2" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="510.0" y1="486.0" x2="480.0" y2="491.5" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="489.9,484.6 480.0,491.5 491.7,494.5" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
+<path d="M 276.0 132.0 L 276.0 122.0 Q 276.0 112.0 286.0 112.0 L 301.0 112.0 Q 308.0 112.0 308.0 105.0 L 308.0 98.0" fill="none" stroke="#555555"/>
+<polygon points="308.0,86.0 314.5,98.0 301.5,98.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 276.0 378.0 L 276.0 386.0 Q 276.0 394.0 268.0 394.0 L 137.0 394.0 Q 129.0 394.0 129.0 402.0 L 129.0 410.0" fill="none" stroke="#555555"/>
+<polygon points="276.0,364.0 271.5,371.0 276.0,378.0 280.5,371.0" fill="#555555" stroke="#555555"/>
+<path d="M 374.0 626.0 L 374.0 658.0" fill="none" stroke="#555555"/>
+<polygon points="374.0,612.0 369.5,619.0 374.0,626.0 378.5,619.0" fill="#555555" stroke="#555555"/>
+<path d="M 402.0 66.0 L 371.0 66.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="381.0,61.0 371.0,66.0 381.0,71.0" fill="none" stroke="#555555"/>
+<path d="M 276.0 132.0 L 276.0 119.0 Q 276.0 109.0 286.0 109.0 L 443.0 109.0 Q 453.0 109.0 453.0 99.0 L 453.0 86.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="458.0,96.0 453.0,86.0 448.0,96.0" fill="none" stroke="#555555"/>
+<path d="M 276.0 364.0 L 276.0 377.0 Q 276.0 387.0 286.0 387.0 L 364.0 387.0 Q 374.0 387.0 374.0 397.0 L 374.0 410.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="369.0,400.0 374.0,410.0 379.0,400.0" fill="none" stroke="#555555"/>
+<path d="M 419.0 248.0 L 429.0 248.0 Q 439.0 248.0 439.0 238.0 L 439.0 156.5 Q 439.0 152.0 443.5 152.0 L 448.0 152.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="438.0,157.0 448.0,152.0 438.0,147.0" fill="none" stroke="#555555"/>
+<path d="M 510.0 466.0 L 500.0 466.0 Q 490.0 466.0 490.0 476.0 L 490.0 506.0 Q 490.0 511.0 485.0 511.0 L 480.0 511.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="490.0,506.0 480.0,511.0 490.0,516.0" fill="none" stroke="#555555"/>
 <rect x="244" y="46" width="127" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
 <text x="307.5" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">PlayListener</text>
 <rect x="402" y="46" width="102" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>

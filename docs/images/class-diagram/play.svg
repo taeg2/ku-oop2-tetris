@@ -3,28 +3,28 @@
 <path d="M 0 0 L 110 0 L 110 26 L 692 26 L 692 733 L 0 733 Z" fill="#fff2cc" stroke="none"/>
 <path d="M 0 26 L 0 0 L 110 0 L 110 26 M 0 26 L 692 26 L 692 733 L 0 733 Z" fill="none" stroke="#666666"/>
 <text x="10.0" y="18.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" font-weight="bold" font-style="normal" text-anchor="start" fill="#000000">play/</text>
-<line x1="279.0" y1="305.0" x2="270.3" y2="271.6" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="267.0,259.0 277.1,269.8 263.6,273.3" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
-<line x1="471.8" y1="86.0" x2="465.7" y2="119.2" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="463.4,132.0 458.9,118.0 472.6,120.5" fill="#ffffff" stroke="#4d4d4d" stroke-width="1.2"/>
-<line x1="391.5" y1="641.9" x2="404.0" y2="673.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="385.5,627.0 383.4,636.5 391.5,641.9 393.6,632.4" fill="#4d4d4d"/>
-<line x1="464.2" y1="419.6" x2="479.0" y2="414.8" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="449.0,424.5 458.3,427.3 464.2,419.6 454.9,416.8" fill="#4d4d4d"/>
-<line x1="289.9" y1="642.8" x2="284.5" y2="673.0" stroke="#4d4d4d" stroke-width="1.2"/>
-<polygon points="292.6,627.0 285.8,633.9 289.9,642.8 296.7,635.8" fill="#4d4d4d"/>
-<line x1="193.0" y1="387.4" x2="124.1" y2="345.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="136.0,346.5 124.1,345.0 130.8,355.0" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="396.3" y1="305.0" x2="431.8" y2="229.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="431.7,241.1 431.8,229.0 422.6,236.8" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="271.1" y1="259.0" x2="405.5" y2="673.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="397.4,664.1 405.5,673.0 406.9,661.0" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="467.8" y1="86.0" x2="383.2" y2="305.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="382.5,292.9 383.2,305.0 391.8,296.5" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="209.5" y1="86.0" x2="226.7" y2="132.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="218.2,123.5 226.7,132.0 227.5,119.9" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
-<line x1="319.4" y1="86.0" x2="290.5" y2="132.0" stroke="#7a7a7a" stroke-width="1.1" stroke-dasharray="6 4"/>
-<polyline points="292.1,120.0 290.5,132.0 300.6,125.4" fill="none" stroke="#7a7a7a" stroke-width="1.1"/>
+<path d="M 321.0 305.0 L 321.0 295.0 Q 321.0 285.0 311.0 285.0 L 258.0 285.0 Q 251.0 285.0 251.0 278.0 L 251.0 271.0" fill="none" stroke="#555555"/>
+<polygon points="251.0,259.0 257.5,271.0 244.5,271.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 476.0 86.0 L 476.0 96.0 Q 476.0 106.0 466.0 106.0 L 462.0 106.0 Q 455.0 106.0 455.0 113.0 L 455.0 120.0" fill="none" stroke="#555555"/>
+<polygon points="455.0,132.0 448.5,120.0 461.5,120.0" fill="#ffffff" stroke="#555555"/>
+<path d="M 321.0 641.0 L 321.0 649.0 Q 321.0 657.0 329.0 657.0 L 404.0 657.0 Q 412.0 657.0 412.0 665.0 L 412.0 673.0" fill="none" stroke="#555555"/>
+<polygon points="321.0,627.0 316.5,634.0 321.0,641.0 325.5,634.0" fill="#555555" stroke="#555555"/>
+<path d="M 463.0 466.0 L 471.0 466.0 Q 479.0 466.0 479.0 458.0 L 479.0 384.0" fill="none" stroke="#555555"/>
+<polygon points="449.0,466.0 456.0,470.5 463.0,466.0 456.0,461.5" fill="#555555" stroke="#555555"/>
+<path d="M 321.0 641.0 L 321.0 649.0 Q 321.0 657.0 313.0 657.0 L 289.0 657.0 Q 281.0 657.0 281.0 665.0 L 281.0 673.0" fill="none" stroke="#555555"/>
+<polygon points="321.0,627.0 316.5,634.0 321.0,641.0 325.5,634.0" fill="#555555" stroke="#555555"/>
+<path d="M 193.0 466.0 L 183.0 466.0 Q 173.0 466.0 173.0 456.0 L 173.0 330.0 Q 173.0 325.0 168.0 325.0 L 163.0 325.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="173.0,320.0 163.0,325.0 173.0,330.0" fill="none" stroke="#555555"/>
+<path d="M 321.0 305.0 L 321.0 277.0 Q 321.0 267.0 331.0 267.0 L 445.0 267.0 Q 455.0 267.0 455.0 257.0 L 455.0 229.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="460.0,239.0 455.0,229.0 450.0,239.0" fill="none" stroke="#555555"/>
+<path d="M 344.0 196.0 L 402.0 196.0 Q 412.0 196.0 412.0 206.0 L 412.0 673.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="407.0,663.0 412.0,673.0 417.0,663.0" fill="none" stroke="#555555"/>
+<path d="M 476.0 86.0 L 476.0 186.0 Q 476.0 196.0 466.0 196.0 L 331.0 196.0 Q 321.0 196.0 321.0 206.0 L 321.0 305.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="316.0,295.0 321.0,305.0 326.0,295.0" fill="none" stroke="#555555"/>
+<path d="M 202.0 86.0 L 202.0 99.0 Q 202.0 109.0 212.0 109.0 L 241.0 109.0 Q 251.0 109.0 251.0 119.0 L 251.0 132.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="246.0,122.0 251.0,132.0 256.0,122.0" fill="none" stroke="#555555"/>
+<path d="M 332.0 86.0 L 332.0 99.0 Q 332.0 109.0 322.0 109.0 L 261.0 109.0 Q 251.0 109.0 251.0 119.0 L 251.0 132.0" fill="none" stroke="#555555" stroke-dasharray="6 4"/>
+<polyline points="246.0,122.0 251.0,132.0 256.0,122.0" fill="none" stroke="#555555"/>
 <rect x="152" y="46" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>
 <text x="202.0" y="70.0" font-family="Helvetica, Arial, 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" font-weight="bold" font-style="normal" text-anchor="middle" fill="#888888">Boss</text>
 <rect x="282" y="46" width="100" height="40" fill="#ffffff" stroke="#999999" stroke-dasharray="5 3"/>

@@ -31,154 +31,154 @@
         <mxCell id="overview_pkg_common" value="common/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#f5f5f5;strokeColor=#666666;">
           <mxGeometry x="970" y="1623" width="258" height="178" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e0" value="" parent="1" edge="1" source="overview_IBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e0" value="" parent="1" edge="1" source="overview_IBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e1" value="" parent="1" edge="1" source="overview_OBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e1" value="" parent="1" edge="1" source="overview_OBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e2" value="" parent="1" edge="1" source="overview_TBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e2" value="" parent="1" edge="1" source="overview_TBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e3" value="" parent="1" edge="1" source="overview_SBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e3" value="" parent="1" edge="1" source="overview_SBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e4" value="" parent="1" edge="1" source="overview_ZBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e4" value="" parent="1" edge="1" source="overview_ZBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e5" value="" parent="1" edge="1" source="overview_JBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e5" value="" parent="1" edge="1" source="overview_JBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e6" value="" parent="1" edge="1" source="overview_LBlock" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e6" value="" parent="1" edge="1" source="overview_LBlock" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e7" value="" parent="1" edge="1" source="overview_BagPieceGenerator" target="overview_PieceGenerator" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e7" value="" parent="1" edge="1" source="overview_BagPieceGenerator" target="overview_PieceGenerator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e8" value="" parent="1" edge="1" source="overview_PlayField" target="overview_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e8" value="" parent="1" edge="1" source="overview_PlayField" target="overview_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e9" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e9" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e10" value="" parent="1" edge="1" source="overview_DarknessBoss" target="overview_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e10" value="" parent="1" edge="1" source="overview_DarknessBoss" target="overview_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e11" value="" parent="1" edge="1" source="overview_ShapeShiftBoss" target="overview_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e11" value="" parent="1" edge="1" source="overview_ShapeShiftBoss" target="overview_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e12" value="" parent="1" edge="1" source="overview_ForgetBoss" target="overview_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e12" value="" parent="1" edge="1" source="overview_ForgetBoss" target="overview_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e13" value="" parent="1" edge="1" source="overview_BluePill" target="overview_Medicine" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e13" value="" parent="1" edge="1" source="overview_BluePill" target="overview_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e14" value="" parent="1" edge="1" source="overview_RedPill" target="overview_Medicine" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e14" value="" parent="1" edge="1" source="overview_RedPill" target="overview_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e15" value="" parent="1" edge="1" source="overview_ConsoleIO" target="overview_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e15" value="" parent="1" edge="1" source="overview_ConsoleIO" target="overview_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e16" value="" parent="1" edge="1" source="overview_ConsoleIO" target="overview_InputSource" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e16" value="" parent="1" edge="1" source="overview_ConsoleIO" target="overview_InputSource" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e17" value="" parent="1" edge="1" source="overview_StoryScene" target="overview_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e17" value="" parent="1" edge="1" source="overview_StoryScene" target="overview_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e18" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e18" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e19" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e19" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e20" value="" parent="1" edge="1" source="overview_Tetromino" target="overview_Point" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e20" value="" parent="1" edge="1" source="overview_Tetromino" target="overview_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e21" value="" parent="1" edge="1" source="overview_BagPieceGenerator" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e21" value="" parent="1" edge="1" source="overview_BagPieceGenerator" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e22" value="" parent="1" edge="1" source="overview_PlayField" target="overview_Board" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e22" value="" parent="1" edge="1" source="overview_PlayField" target="overview_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e23" value="" parent="1" edge="1" source="overview_PlayField" target="overview_FallSpeed" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e23" value="" parent="1" edge="1" source="overview_PlayField" target="overview_FallSpeed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e24" value="" parent="1" edge="1" source="overview_PlayField" target="overview_Tetromino" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e24" value="" parent="1" edge="1" source="overview_PlayField" target="overview_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e25" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PhotoProgress" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e25" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PhotoProgress" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e26" value="" parent="1" edge="1" source="overview_Stage" target="overview_Boss" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e26" value="" parent="1" edge="1" source="overview_Stage" target="overview_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e27" value="" parent="1" edge="1" source="overview_MedicineInventory" target="overview_Medicine" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e27" value="" parent="1" edge="1" source="overview_MedicineInventory" target="overview_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e28" value="" parent="1" edge="1" source="overview_Game" target="overview_Scene" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="overview_e28" value="" parent="1" edge="1" source="overview_Game" target="overview_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e29" value="" parent="1" edge="1" source="overview_Board" target="overview_Point" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e29" value="" parent="1" edge="1" source="overview_Board" target="overview_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e30" value="" parent="1" edge="1" source="overview_PlayField" target="overview_PieceGenerator" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e30" value="" parent="1" edge="1" source="overview_PlayField" target="overview_PieceGenerator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e31" value="" parent="1" edge="1" source="overview_PlayField" target="overview_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e31" value="" parent="1" edge="1" source="overview_PlayField" target="overview_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e32" value="" parent="1" edge="1" source="overview_EffectTarget" target="overview_Board" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e32" value="" parent="1" edge="1" source="overview_EffectTarget" target="overview_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e33" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e33" value="" parent="1" edge="1" source="overview_StageSession" target="overview_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e34" value="" parent="1" edge="1" source="overview_StageSession" target="overview_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e34" value="" parent="1" edge="1" source="overview_StageSession" target="overview_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e35" value="" parent="1" edge="1" source="overview_StageSession" target="overview_MedicineInventory" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e35" value="" parent="1" edge="1" source="overview_StageSession" target="overview_MedicineInventory" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e36" value="" parent="1" edge="1" source="overview_Album" target="overview_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e36" value="" parent="1" edge="1" source="overview_Album" target="overview_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e37" value="" parent="1" edge="1" source="overview_Boss" target="overview_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e37" value="" parent="1" edge="1" source="overview_Boss" target="overview_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e38" value="" parent="1" edge="1" source="overview_Medicine" target="overview_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e38" value="" parent="1" edge="1" source="overview_Medicine" target="overview_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e39" value="" parent="1" edge="1" source="overview_InputSource" target="overview_Action" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e39" value="" parent="1" edge="1" source="overview_InputSource" target="overview_Action" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e40" value="" parent="1" edge="1" source="overview_Renderer" target="overview_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e40" value="" parent="1" edge="1" source="overview_Renderer" target="overview_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e41" value="" parent="1" edge="1" source="overview_Renderer" target="overview_StageSession" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e41" value="" parent="1" edge="1" source="overview_Renderer" target="overview_StageSession" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e42" value="" parent="1" edge="1" source="overview_Renderer" target="overview_Album" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e42" value="" parent="1" edge="1" source="overview_Renderer" target="overview_Album" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e43" value="" parent="1" edge="1" source="overview_Scene" target="overview_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e43" value="" parent="1" edge="1" source="overview_Scene" target="overview_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e44" value="" parent="1" edge="1" source="overview_Game" target="overview_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e44" value="" parent="1" edge="1" source="overview_Game" target="overview_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e45" value="" parent="1" edge="1" source="overview_Game" target="overview_InputSource" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e45" value="" parent="1" edge="1" source="overview_Game" target="overview_InputSource" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e46" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_StageSession" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e46" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_StageSession" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e47" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e47" value="" parent="1" edge="1" source="overview_PlayScene" target="overview_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e48" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Album" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e48" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Album" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="overview_e49" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="overview_e49" value="" parent="1" edge="1" source="overview_AlbumScene" target="overview_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="overview_Game" value="Game" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;">
@@ -396,10 +396,10 @@
         <mxCell id="common_pkg_common" value="common/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#f5f5f5;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="272" height="264" as="geometry" />
         </mxCell>
-        <mxCell id="common_e0" value="" parent="1" edge="1" source="common_Tetromino" target="common_Point" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="common_e0" value="" parent="1" edge="1" source="common_Tetromino" target="common_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="common_e1" value="" parent="1" edge="1" source="common_Board" target="common_Point" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="common_e1" value="" parent="1" edge="1" source="common_Board" target="common_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="common_Tetromino" value="Tetromino" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -425,34 +425,34 @@
         <mxCell id="block_pkg_block" value="block/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#d0cee2;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="1026" height="700" as="geometry" />
         </mxCell>
-        <mxCell id="block_e0" value="" parent="1" edge="1" source="block_IBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e0" value="" parent="1" edge="1" source="block_IBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e1" value="" parent="1" edge="1" source="block_OBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e1" value="" parent="1" edge="1" source="block_OBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e2" value="" parent="1" edge="1" source="block_TBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e2" value="" parent="1" edge="1" source="block_TBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e3" value="" parent="1" edge="1" source="block_SBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e3" value="" parent="1" edge="1" source="block_SBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e4" value="" parent="1" edge="1" source="block_ZBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e4" value="" parent="1" edge="1" source="block_ZBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e5" value="" parent="1" edge="1" source="block_JBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e5" value="" parent="1" edge="1" source="block_JBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e6" value="" parent="1" edge="1" source="block_LBlock" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e6" value="" parent="1" edge="1" source="block_LBlock" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e7" value="" parent="1" edge="1" source="block_BagPieceGenerator" target="block_PieceGenerator" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="block_e7" value="" parent="1" edge="1" source="block_BagPieceGenerator" target="block_PieceGenerator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e8" value="" parent="1" edge="1" source="block_Tetromino" target="block_Point" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="block_e8" value="" parent="1" edge="1" source="block_Tetromino" target="block_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="block_e9" value="" parent="1" edge="1" source="block_BagPieceGenerator" target="block_Tetromino" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="block_e9" value="" parent="1" edge="1" source="block_BagPieceGenerator" target="block_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="block_Point" value="Point" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -529,16 +529,16 @@
         <mxCell id="board_pkg_board" value="board/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#f5f5f5;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="299" height="485" as="geometry" />
         </mxCell>
-        <mxCell id="board_e0" value="" parent="1" edge="1" source="board_PlayField" target="board_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="board_e0" value="" parent="1" edge="1" source="board_PlayField" target="board_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="board_e1" value="" parent="1" edge="1" source="board_PlayField" target="board_Board" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="board_e1" value="" parent="1" edge="1" source="board_PlayField" target="board_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="board_e2" value="" parent="1" edge="1" source="board_Board" target="board_Point" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="board_e2" value="" parent="1" edge="1" source="board_Board" target="board_Point" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="board_e3" value="" parent="1" edge="1" source="board_EffectTarget" target="board_Board" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="board_e3" value="" parent="1" edge="1" source="board_EffectTarget" target="board_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="board_PlayField" value="PlayField" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -567,37 +567,37 @@
         <mxCell id="play_pkg_play" value="play/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#fff2cc;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="692" height="733" as="geometry" />
         </mxCell>
-        <mxCell id="play_e0" value="" parent="1" edge="1" source="play_PlayField" target="play_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="play_e0" value="" parent="1" edge="1" source="play_PlayField" target="play_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e1" value="" parent="1" edge="1" source="play_StageSession" target="play_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="play_e1" value="" parent="1" edge="1" source="play_StageSession" target="play_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e2" value="" parent="1" edge="1" source="play_PlayField" target="play_Board" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="play_e2" value="" parent="1" edge="1" source="play_PlayField" target="play_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e3" value="" parent="1" edge="1" source="play_PlayField" target="play_FallSpeed" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="play_e3" value="" parent="1" edge="1" source="play_PlayField" target="play_FallSpeed" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e4" value="" parent="1" edge="1" source="play_PlayField" target="play_Tetromino" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="play_e4" value="" parent="1" edge="1" source="play_PlayField" target="play_Tetromino" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e5" value="" parent="1" edge="1" source="play_PlayField" target="play_PieceGenerator" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e5" value="" parent="1" edge="1" source="play_PlayField" target="play_PieceGenerator" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e6" value="" parent="1" edge="1" source="play_PlayField" target="play_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e6" value="" parent="1" edge="1" source="play_PlayField" target="play_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e7" value="" parent="1" edge="1" source="play_EffectTarget" target="play_Board" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e7" value="" parent="1" edge="1" source="play_EffectTarget" target="play_Board" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e8" value="" parent="1" edge="1" source="play_StageSession" target="play_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e8" value="" parent="1" edge="1" source="play_StageSession" target="play_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e9" value="" parent="1" edge="1" source="play_Boss" target="play_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e9" value="" parent="1" edge="1" source="play_Boss" target="play_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="play_e10" value="" parent="1" edge="1" source="play_Medicine" target="play_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="play_e10" value="" parent="1" edge="1" source="play_Medicine" target="play_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="play_Boss" value="Boss" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -653,28 +653,28 @@
         <mxCell id="stage_pkg_stage" value="stage/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#d5e8d4;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="748" height="718" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e0" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="stage_e0" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e1" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PhotoProgress" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="stage_e1" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PhotoProgress" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e2" value="" parent="1" edge="1" source="stage_Stage" target="stage_Boss" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="stage_e2" value="" parent="1" edge="1" source="stage_Stage" target="stage_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e3" value="" parent="1" edge="1" source="stage_PlayField" target="stage_PlayListener" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="stage_e3" value="" parent="1" edge="1" source="stage_PlayField" target="stage_PlayListener" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e4" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="stage_e4" value="" parent="1" edge="1" source="stage_StageSession" target="stage_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e5" value="" parent="1" edge="1" source="stage_StageSession" target="stage_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="stage_e5" value="" parent="1" edge="1" source="stage_StageSession" target="stage_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e6" value="" parent="1" edge="1" source="stage_StageSession" target="stage_MedicineInventory" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="stage_e6" value="" parent="1" edge="1" source="stage_StageSession" target="stage_MedicineInventory" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="stage_e7" value="" parent="1" edge="1" source="stage_Album" target="stage_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="stage_e7" value="" parent="1" edge="1" source="stage_Album" target="stage_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="stage_PlayListener" value="PlayListener" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -724,19 +724,19 @@
         <mxCell id="boss_pkg_boss" value="boss/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#f8cecc;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="641" height="527" as="geometry" />
         </mxCell>
-        <mxCell id="boss_e0" value="" parent="1" edge="1" source="boss_DarknessBoss" target="boss_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="boss_e0" value="" parent="1" edge="1" source="boss_DarknessBoss" target="boss_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="boss_e1" value="" parent="1" edge="1" source="boss_ShapeShiftBoss" target="boss_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="boss_e1" value="" parent="1" edge="1" source="boss_ShapeShiftBoss" target="boss_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="boss_e2" value="" parent="1" edge="1" source="boss_ForgetBoss" target="boss_Boss" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="boss_e2" value="" parent="1" edge="1" source="boss_ForgetBoss" target="boss_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="boss_e3" value="" parent="1" edge="1" source="boss_Stage" target="boss_Boss" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="boss_e3" value="" parent="1" edge="1" source="boss_Stage" target="boss_Boss" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="boss_e4" value="" parent="1" edge="1" source="boss_Boss" target="boss_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="boss_e4" value="" parent="1" edge="1" source="boss_Boss" target="boss_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="boss_Stage" value="Stage" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -780,19 +780,19 @@
         <mxCell id="medicine_pkg_medicine" value="medicine/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#ffe6cc;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="619" height="467" as="geometry" />
         </mxCell>
-        <mxCell id="medicine_e0" value="" parent="1" edge="1" source="medicine_BluePill" target="medicine_Medicine" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="medicine_e0" value="" parent="1" edge="1" source="medicine_BluePill" target="medicine_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="medicine_e1" value="" parent="1" edge="1" source="medicine_RedPill" target="medicine_Medicine" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="medicine_e1" value="" parent="1" edge="1" source="medicine_RedPill" target="medicine_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="medicine_e2" value="" parent="1" edge="1" source="medicine_MedicineInventory" target="medicine_Medicine" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="medicine_e2" value="" parent="1" edge="1" source="medicine_MedicineInventory" target="medicine_Medicine" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="medicine_e3" value="" parent="1" edge="1" source="medicine_StageSession" target="medicine_MedicineInventory" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="medicine_e3" value="" parent="1" edge="1" source="medicine_StageSession" target="medicine_MedicineInventory" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="medicine_e4" value="" parent="1" edge="1" source="medicine_Medicine" target="medicine_EffectTarget" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="medicine_e4" value="" parent="1" edge="1" source="medicine_Medicine" target="medicine_EffectTarget" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="medicine_StageSession" value="StageSession" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -836,31 +836,31 @@
         <mxCell id="ui_pkg_ui" value="ui/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#e1d5e7;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="741" height="568" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e0" value="" parent="1" edge="1" source="ui_ConsoleIO" target="ui_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="ui_e0" value="" parent="1" edge="1" source="ui_ConsoleIO" target="ui_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e1" value="" parent="1" edge="1" source="ui_ConsoleIO" target="ui_InputSource" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="ui_e1" value="" parent="1" edge="1" source="ui_ConsoleIO" target="ui_InputSource" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e2" value="" parent="1" edge="1" source="ui_StageSession" target="ui_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e2" value="" parent="1" edge="1" source="ui_StageSession" target="ui_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e3" value="" parent="1" edge="1" source="ui_InputSource" target="ui_Action" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e3" value="" parent="1" edge="1" source="ui_InputSource" target="ui_Action" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e4" value="" parent="1" edge="1" source="ui_Renderer" target="ui_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e4" value="" parent="1" edge="1" source="ui_Renderer" target="ui_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e5" value="" parent="1" edge="1" source="ui_Renderer" target="ui_StageSession" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e5" value="" parent="1" edge="1" source="ui_Renderer" target="ui_StageSession" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e6" value="" parent="1" edge="1" source="ui_Renderer" target="ui_Album" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e6" value="" parent="1" edge="1" source="ui_Renderer" target="ui_Album" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e7" value="" parent="1" edge="1" source="ui_Game" target="ui_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e7" value="" parent="1" edge="1" source="ui_Game" target="ui_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ui_e8" value="" parent="1" edge="1" source="ui_Game" target="ui_InputSource" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="ui_e8" value="" parent="1" edge="1" source="ui_Game" target="ui_InputSource" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ui_Game" value="Game" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;dashed=1;fontColor=#888888;strokeColor=#999999;">
@@ -910,55 +910,55 @@
         <mxCell id="flow_pkg_flow" value="flow/" parent="1" vertex="1" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=26;tabPosition=left;html=1;verticalAlign=top;align=left;spacingLeft=10;spacingTop=2;fontSize=14;fillColor=#dae8fc;strokeColor=#666666;">
           <mxGeometry x="0" y="0" width="679" height="565" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e0" value="" parent="1" edge="1" source="flow_StoryScene" target="flow_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="flow_e0" value="" parent="1" edge="1" source="flow_StoryScene" target="flow_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e1" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="flow_e1" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e2" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Scene" style="edgeStyle=none;rounded=0;html=1;endArrow=block;endFill=0;endSize=12;strokeColor=#4d4d4d;">
+        <mxCell id="flow_e2" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=block;endFill=0;endSize=12;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e3" value="" parent="1" edge="1" source="flow_Game" target="flow_Scene" style="edgeStyle=none;rounded=0;html=1;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;strokeColor=#4d4d4d;">
+        <mxCell id="flow_e3" value="" parent="1" edge="1" source="flow_Game" target="flow_Scene" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;startArrow=diamondThin;startFill=1;startSize=14;endArrow=none;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e4" value="" parent="1" edge="1" source="flow_StageSession" target="flow_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e4" value="" parent="1" edge="1" source="flow_StageSession" target="flow_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e5" value="" parent="1" edge="1" source="flow_StageSession" target="flow_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e5" value="" parent="1" edge="1" source="flow_StageSession" target="flow_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e6" value="" parent="1" edge="1" source="flow_Album" target="flow_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e6" value="" parent="1" edge="1" source="flow_Album" target="flow_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e7" value="" parent="1" edge="1" source="flow_Renderer" target="flow_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e7" value="" parent="1" edge="1" source="flow_Renderer" target="flow_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e8" value="" parent="1" edge="1" source="flow_Renderer" target="flow_StageSession" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e8" value="" parent="1" edge="1" source="flow_Renderer" target="flow_StageSession" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e9" value="" parent="1" edge="1" source="flow_Renderer" target="flow_Album" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e9" value="" parent="1" edge="1" source="flow_Renderer" target="flow_Album" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e10" value="" parent="1" edge="1" source="flow_Scene" target="flow_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e10" value="" parent="1" edge="1" source="flow_Scene" target="flow_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e11" value="" parent="1" edge="1" source="flow_Game" target="flow_Renderer" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e11" value="" parent="1" edge="1" source="flow_Game" target="flow_Renderer" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e12" value="" parent="1" edge="1" source="flow_Game" target="flow_InputSource" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e12" value="" parent="1" edge="1" source="flow_Game" target="flow_InputSource" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e13" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_StageSession" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e13" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_StageSession" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e14" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_PlayField" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e14" value="" parent="1" edge="1" source="flow_PlayScene" target="flow_PlayField" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e15" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Album" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e15" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Album" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="flow_e16" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Stage" style="edgeStyle=none;rounded=0;html=1;endArrow=open;endFill=0;endSize=10;dashed=1;strokeColor=#7a7a7a;">
+        <mxCell id="flow_e16" value="" parent="1" edge="1" source="flow_AlbumScene" target="flow_Stage" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;jettySize=auto;orthogonalLoop=1;strokeColor=#555555;endArrow=open;endFill=0;endSize=10;dashed=1;">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="flow_Game" value="Game" parent="1" vertex="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;swimlaneFillColor=#ffffff;">

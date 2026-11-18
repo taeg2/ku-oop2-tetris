@@ -1,0 +1,73 @@
+// Font.h - 5x5 pixel font, typed by hand. text() draws with an optional 1 px shadow below.
+#pragma once
+#include "Art.h"
+
+class Font {
+public:
+    static const char* glyph(char ch) {
+        switch (ch) {
+        case 'A': return ".###." "#...#" "#####" "#...#" "#...#";
+        case 'B': return "####." "#...#" "####." "#...#" "####.";
+        case 'C': return ".####" "#...." "#...." "#...." ".####";
+        case 'D': return "####." "#...#" "#...#" "#...#" "####.";
+        case 'E': return "#####" "#...." "####." "#...." "#####";
+        case 'F': return "#####" "#...." "####." "#...." "#....";
+        case 'G': return ".####" "#...." "#..##" "#...#" ".####";
+        case 'H': return "#...#" "#...#" "#####" "#...#" "#...#";
+        case 'I': return "#####" "..#.." "..#.." "..#.." "#####";
+        case 'K': return "#...#" "#..#." "###.." "#..#." "#...#";
+        case 'L': return "#...." "#...." "#...." "#...." "#####";
+        case 'M': return "#...#" "##.##" "#.#.#" "#...#" "#...#";
+        case 'N': return "#...#" "##..#" "#.#.#" "#..##" "#...#";
+        case 'O': return ".###." "#...#" "#...#" "#...#" ".###.";
+        case 'P': return "####." "#...#" "####." "#...." "#....";
+        case 'R': return "####." "#...#" "####." "#..#." "#...#";
+        case 'S': return ".####" "#...." ".###." "....#" "####.";
+        case 'T': return "#####" "..#.." "..#.." "..#.." "..#..";
+        case 'U': return "#...#" "#...#" "#...#" "#...#" ".###.";
+        case 'W': return "#...#" "#...#" "#.#.#" "##.##" "#...#";
+        case 'Y': return "#...#" ".#.#." "..#.." "..#.." "..#..";
+        case 'X': return "#...#" ".#.#." "..#.." ".#.#." "#...#";
+        case '0': return ".###." "#..##" "#.#.#" "##..#" ".###.";
+        case '1': return "..#.." ".##.." "..#.." "..#.." ".###.";
+        case '2': return "####." "....#" ".###." "#...." "#####";
+        case '3': return "####." "....#" ".###." "....#" "####.";
+        case '4': return "#..#." "#..#." "#####" "...#." "...#.";
+        case '5': return "#####" "#...." "####." "....#" "####.";
+        case '6': return ".###." "#...." "####." "#...#" ".###.";
+        case '7': return "#####" "...#." "..#.." ".#..." ".#...";
+        case '8': return ".###." "#...#" ".###." "#...#" ".###.";
+        case '9': return ".###." "#...#" ".####" "....#" ".###.";
+        case '/': return "....#" "...#." "..#.." ".#..." "#....";
+        case '!': return "..#.." "..#.." "..#.." "....." "..#..";
+        case 'J': return "....#" "....#" "....#" "#...#" ".###.";
+        case 'V': return "#...#" "#...#" "#...#" ".#.#." "..#..";
+        case 'Q': return ".###." "#...#" "#.#.#" "#..#." ".##.#";
+        case 'Z': return "#####" "...#." "..#.." ".#..." "#####";
+        case '\'': return "..#.." "..#.." "....." "....." ".....";
+        case '.': return "....." "....." "....." "....." "..#..";
+        case ',': return "....." "....." "....." "..#.." ".#...";
+        case '?': return ".###." "#...#" "..##." "....." "..#..";
+        case '&': return ".##.." "#..#." ".##.#" "#..#." ".##.#";
+        case '-': return "....." "....." ".###." "....." ".....";
+        default:  return nullptr;
+        }
+    }
+    static int width(const std::string& s) { return (int)s.size() * 6 - 1; }
+    static void draw(Frame& f, const std::string& s, int x, int y, uint8_t c, int shadow = -1) {
+        for (size_t k = 0; k < s.size(); ++k) {
+            const char* g = glyph(s[k]);
+            if (!g) continue;
+            for (int i = 0; i < 25; ++i)
+                if (g[i] == '#') {
+                    int px = x + (int)k * 6 + i % 5, py = y + i / 5;
+                    if (shadow >= 0) f.set(px, py + 1, (uint8_t)shadow);
+                }
+            for (int i = 0; i < 25; ++i)
+                if (g[i] == '#') f.set(x + (int)k * 6 + i % 5, y + i / 5, c);
+        }
+    }
+    static void center(Frame& f, const std::string& s, int cx, int y, uint8_t c, int shadow = -1) {
+        draw(f, s, cx - width(s) / 2, y, c, shadow);
+    }
+};

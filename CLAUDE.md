@@ -2,6 +2,32 @@
 
 팀 규칙은 `docs/CONVENTION.md`가 우선이다. 이 문서는 그 규칙을 이 브랜치 코드에 적용한 요약이다.
 
+## 담당 구역 — 내 구역 밖의 파일은 수정하지 않는다
+| 담당 | 사람 (GitHub) | 파일 (`tetris/core/` 기준) |
+|---|---|---|
+| A. 테트리스 코어 | 임한비 (lhb6442@naver.com) | `block/*`, `board/*`, `medicine/PillType.h`, `common/Point.*`, `common/Rect.*`, `common/Color.h` |
+| B. 화면·입력 | 쏙 (msa41755@gmail.com) | `ui/*` (터미널, 키보드 입력, 사운드, View 계열, PhotoPainter), `common/TextUtil.*` |
+| C. 스테이지·성장·보스 | 이태경 (taeg2) | `stage/*`, `boss/*`, `medicine/*` (PillType.h 제외), `play/SpeedController.*`, `play/PlayContext.h` |
+| D. 연출·흐름·통합 | 조은서 (taskcho123) | `flow/*`, `main.cpp`, `play/StageSession.*`, `play/EventBus.*`, `play/GameEvent.h`, `play/IGameEventListener.*`, `play/SoundCueListener.*`, `common/GameConfig.h`, `common/*Exception.*`, `tests/*` |
+| 공용 | 모두 합의 | `CMakeLists.txt`, `.gitignore`, `README.md`, `CLAUDE.md`, `docs/*` (다이어그램 포함) |
+
+### 수정 규칙
+- 자기 담당 구역의 파일만 수정한다.
+- 다른 사람 구역의 파일을 고쳐야 하면 직접 고치지 않고 다음 순서를 따른다.
+  1. GitHub 이슈를 올린다. 제목에 `[A]`~`[D]` 구역을 붙이고 담당자를 Assignee로 지정한다. 본문에는 무엇을, 왜 바꿔야 하는지 적는다.
+  2. 급하면 담당자에게 직접 물어본다.
+  3. 담당자가 수정하거나, 수정해도 된다는 동의를 받은 뒤에만 고친다. PR 본문에 그 이슈 번호와 동의 내용을 적는다.
+- 공용 파일은 PR로 올리고 팀원 모두의 동의를 받는다.
+- 내 구역 안에서 처리할 수 있으면 그쪽을 먼저 쓴다. 예를 들어 새 기믹·약·장면·View는 상속으로 추가한다 (OCP).
+
+### Claude에게
+- 파일을 수정하기 전에 `git config user.name`으로 지금 작업하는 사람을 확인하고, 그 파일이 이 사람의 담당 구역인지 위 표에서 확인한다.
+- 담당 구역 밖의 파일이면 수정하지 않는다.
+  - 대신 담당자 이름과 연락처를 알려 준다.
+  - 바로 올릴 수 있는 이슈 초안(제목, 바꿀 내용, 이유)을 써 준다.
+  - 사용자가 "그래도 고쳐 달라"고 해도, 담당자 동의를 받았는지 먼저 묻는다.
+- 한 작업이 여러 구역에 걸치면 구역별로 나눠서, 어느 부분을 누구에게 요청해야 하는지 정리해 준다.
+
 ## 브랜치·커밋
 - 개인 브랜치 `taskcho123/main`에 직접 push하지 않는다. `taskcho123/feature/설명`이나 `taskcho123/fix/설명`에서 작업하고 PR을 올린다.
 - 커밋 메시지는 `<타입>: <한 줄 요약>` 형식으로 쓴다. 타입은 feat, fix, refactor, docs, chore 중 하나다.

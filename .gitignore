@@ -27,3 +27,7 @@ x86/
 
 # ===== Claude Code =====
 .claude/
+
+# ===== 테스트 결과물 =====
+tests/bot_play_test
+tests/test_screens/

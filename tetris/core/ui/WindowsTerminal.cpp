@@ -23,7 +23,7 @@ std::wstring toUtf16(const std::u32string& text) {
     }
     return out;
 }
-}  // namespace
+}
 
 void WindowsTerminal::open(int width, int height) {
     m_output = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -81,6 +81,17 @@ void WindowsTerminal::write(Point pos, const std::u32string& text, Color fg, Col
     const std::wstring wide = toUtf16(text);
     DWORD written = 0;
     WriteConsoleW(out, wide.c_str(), static_cast<DWORD>(wide.size()), &written, nullptr);
+}
+
+void WindowsTerminal::writeRaw(Point pos, const std::string& bytes) {
+    HANDLE out = static_cast<HANDLE>(m_output);
+    DWORD mode = 0;
+    if (GetConsoleMode(out, &mode) && !(mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {
+        SetConsoleMode(out, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+    }
+    SetConsoleCursorPosition(out, COORD{static_cast<SHORT>(pos.x), static_cast<SHORT>(pos.y)});
+    DWORD written = 0;
+    WriteFile(out, bytes.data(), static_cast<DWORD>(bytes.size()), &written, nullptr);
 }
 
 void WindowsTerminal::flush() {

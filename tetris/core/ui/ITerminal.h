@@ -14,4 +14,5 @@ public:
     virtual void clearScreen() = 0;
     virtual void write(Point pos, const std::u32string& text, Color fg, Color bg) = 0;
     virtual void flush() = 0;
+    virtual void writeRaw(Point, const std::string&) {}  // 이스케이프 시퀀스(Sixel 이미지)를 그대로 내보낸다. 기본은 아무것도 안 함
 };

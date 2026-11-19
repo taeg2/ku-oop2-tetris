@@ -34,8 +34,9 @@ public:
     void drawCentered(int y, const std::string& text, Color fg, Color bg = Color::Black);
     void fill(const Rect& area, Color bg);
     void frame(const Rect& area, Color color);  // 테두리를 색칠된 칸으로 그린다
+    void drawImage(Point pos, const std::string& sixel);  // Sixel 이미지를 pos 칸에 그린다. 글자 버퍼와 따로 present()에서 출력된다
 
-    void clear();        // 백 버퍼 비우기
+    void clear();
     void present();      // 바뀐 줄만 터미널에 반영
     void clearScreen();  // 터미널 화면 전체 지우기
 
@@ -54,4 +55,5 @@ private:
     std::vector<Glyph> m_back;
     std::vector<Glyph> m_front;
     bool m_forceRedraw = true;
+    std::vector<std::pair<Point, std::string>> m_images;
 };

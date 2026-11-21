@@ -11,6 +11,7 @@ public:
     void clearScreen() override;
     void write(Point pos, const std::u32string& text, Color fg, Color bg) override;
     void flush() override;
+    void writeRaw(Point pos, const std::string& bytes) override;
 
 private:
     static int ansiIndex(Color color);

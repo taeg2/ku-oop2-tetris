@@ -1,93 +1,143 @@
-# ui — Stage 1 화면 (담당 B: 쏙)
+# ui — Finished screens and what each teammate must do (Owner B: Ssok)
 
-Stage 1 플레이 화면, 라운드를 고르는 앨범, 집 오프닝을 그리는 View들이다.
-그림은 모두 코드와 직접 입력한 픽셀 맵으로만 그렸다. 이미지 파일은 불러오지 않는다.
+Every picture in the game (opening, 12 rounds, album, house, ending) is already in `tetris/core/ui/`.
+All art is drawn with code or hand-typed pixel maps only. No image files are loaded (professor's rule).
+This document lists **what ui has ready** and **what each owner still has to do**.
 
-## 화면 출력
+---
 
-- 그림 한 장은 480 x 270 픽셀(`Frame`), 색은 프레임마다 최대 256색이다.
-- `SixelEncoder`가 2배로 키워 Sixel로 바꾸고, `Console::drawImage()`로 넘긴다.
-- `Console::present()`가 글자 버퍼를 출력한 뒤 `ITerminal::writeRaw()`로 이미지를 내보낸다.
-- Sixel을 지원하는 터미널이 필요하다 (Windows Terminal 1.22 이상).
-- 애니메이션은 100ms에 한 프레임이다 (`kFrameMs`).
+## 1. Game flow (as drawn)
 
-## View 3개
+```
+[House opening]  PrologueView.start(0)
+  The old man takes his medicine on the living-room sofa and falls asleep -> wakes up as a child
+  -> his daughter says "We're heading out for a bit" and leaves
+  -> candy (medicine) in the kitchen -> album in the library
+[Album]    AlbumView.open(0, -1) -> pick a photo (round)
+[Stage 1]  Lake / Kitchen / Beach / Bedroom (boss)       -> album -> PrologueView.start(1) (sandwich)
+[Stage 2]  Classroom / Soccer / Uni / Interview (boss)   -> album -> PrologueView.start(2) (burger)
+[Stage 3]  Office / Wedding / Nursery / Today (boss)     -> last album page
+[Ending]   EndingView.start()
+  He puts the album down -> his daughter and son come in: "Dad, how do you feel now?"
+  -> "...Better. Much better." -> THE END
+```
 
-| View | 쓰는 장면 | 하는 일 |
+## 2. What ui has ready
+
+| Group | Classes | Notes |
 |---|---|---|
-| `StageArtView` | PlayScene | 라운드 4개(호수, 부엌, 해변, 침실)를 StageSession을 읽어서 그린다 |
-| `AlbumView` | AlbumScene | 걸린 사진으로 다음 라운드를 고른다. 고르기 전에는 나갈 수 없다 |
-| `PrologueView` | PrologueScene | 집 오프닝. 음식을 먹고 서재에서 앨범을 집으면 끝난다 |
+| Play screen | `StageArtView` | Draws the round by reading `StageSession`. While `wantsPause()` is true a cutscene is playing, so stop the falling block |
+| Rounds (Stage 1) | `LakeRound`, `KitchenRound`, `BeachRound`, `BedroomRound` | Bedroom is the boss |
+| Rounds (Stage 2) | `ClassroomRound`, `SoccerRound`, `UniRound`, `InterviewRound` | Interview is the boss |
+| Rounds (Stage 3) | `OfficeRound`, `WeddingRound`, `NurseryRound`, `FadingRound` | Today (FadingRound) is the final boss |
+| Album | `AlbumView`, `AlbumScreen` | 3 pages, 12 slots. When a round is cleared, its memory item flies into the album |
+| House | `PrologueView`, `HouseScene`, `HouseRooms` | `start(0)` opening, `start(1)` sandwich, `start(2)` burger |
+| Ending | `EndingView` | The final scene with his children in the library |
+| Menu | `MenuView` | Esc during play: RESUME, MEMORY BOOK, SETTINGS, QUIT TO TITLE, drawn over the dimmed game |
+| Settings | `SettingsView` | Sound ON/OFF switch and the full list of controls |
+| Memory Book | `MemoryBookView` | Progress of the whole run: all 12 memories, which are remembered, which round is being played now |
+| Shared art | `RoundScene` (round base class), `LivingRoom`, `MenuArt.h`, `Stage2UI.h`, `Stage3Art.h` | |
 
-### StageArtView
+### Lines each round's art uses (`goal()`)
 
-```cpp
-StageArtView art({0, 0}, session, config::kLinesPerPiece);
-session.subscribe(art);
-art.update(dtMs);
-if (!art.wantsPause()) { /* 블록 진행 */ }
-art.draw(console);
-```
+| Round | Lines | Round | Lines | Round | Lines |
+|---|---|---|---|---|---|
+| Lake | 10 | Classroom | 10 | Office | 10 |
+| Kitchen | 10 | Soccer | 10 | Wedding | 10 |
+| Beach | 10 | Uni | 12 | Nursery | 10 |
+| Bedroom (boss) | 20 | Interview (boss) | 20 | Today (boss) | 25 (part 1: 10 + part 2: 15) |
 
-- `LinesCleared` 이벤트를 받아 그림을 진행한다. 실제 줄 수를 라운드의 그림 칸 수(`goal()`, 보통 10, 침실은 20)로 비율 환산한다.
-- `PieceFilled` 이벤트를 받으면 끝 연출(페이드)이 끝난 뒤 다음 라운드로 넘어간다.
-- `wantsPause()`가 true인 동안은 연출 중이므로 블록을 멈춘다.
+`StageArtView` scales the real number of cleared lines to these steps. If the real line counts match this table, the art moves exactly one step per line.
 
-### AlbumView
-
-```cpp
-album.open(0, clearedRound);
-album.handle(command);
-album.update(dtMs);
-if (album.hasPick()) { int round = album.takePick(); }
-if (album.stageFinished()) { /* Stage 2 오프닝으로 */ }
-album.draw(console);
-```
-
-- `open(stage, clearedRound)`: 처음 열 때 `clearedRound`는 -1이다.
-- `takePick()`은 `stage * 4 + 칸` 번호를 돌려준다.
-- Stage 1의 네 칸이 다 차면 4초 뒤 앨범이 페이지를 넘기고 "Eat something first..." 쪽지를 보여 준 뒤 `stageFinished()`가 true가 된다.
-
-| 키 | 동작 |
-|---|---|
-| 좌우 | 사진 고르기 |
-| Enter / Space | 사진 크게 보기, CANCEL 또는 PLAY 누르기 |
-| 위 / 아래 | CANCEL / PLAY 선택 |
-| Esc | 크게 보기 닫기 |
-
-### PrologueView
+### How to use
 
 ```cpp
-prologue.start(0);
-prologue.handle(command);
-prologue.update(dtMs);
-if (prologue.finished()) { /* 앨범 열기 */ }
-prologue.draw(console);
+// House
+prologue.start(stage);           // 0: opening, 1: sandwich, 2: burger
+prologue.handle(command); prologue.update(dtMs); prologue.draw(console);
+if (prologue.finished()) { /* open the album */ }
+
+// Album
+album.open(stage, clearedRound); // first time: clearedRound = -1
+if (album.hasPick()) { int round = album.takePick(); }   // stage * 4 + slot
+if (album.stageFinished()) { /* next house scene or the ending */ }
+
+// Menu (call open() right after the game screen was drawn; it copies that picture as the background)
+menu.open(art.frame());
+menu.handle(command); menu.update(dtMs); menu.draw(console);
+switch (menu.choice()) {
+    case MenuView::Choice::Resume:      /* back to the game (menu is already closed) */ break;
+    case MenuView::Choice::MemoryBook:  book.open(remembered, currentSlot, art.frame()); menu.clearChoice(); break;
+    case MenuView::Choice::Settings:    settings.open(soundOn, art.frame()); menu.clearChoice(); break;
+    case MenuView::Choice::QuitToTitle: /* go to the title */ break;
+    default: break;
+}
+// Settings: when it closes, read settings.soundOn() and swap BeepSoundPlayer / MuteSoundPlayer
+settings.handle(command); if (!settings.isOpen()) { soundOn = settings.soundOn(); }
+// Memory Book: remembered = 12 bools (stage * 4 + slot), currentSlot = round being played or -1
+book.handle(command); if (!book.isOpen()) { /* back to the menu */ }
+
+// Ending
+ending.start();
+ending.handle(command); ending.update(dtMs); ending.draw(console);
+if (ending.finished()) { /* game over */ }
 ```
 
-- `start(0)`: 아이가 주인공. 딸이 문 앞에서 인사하고 나가고, 부엌의 사탕을 먹으면 비틀거린다. 서재 의자 위의 앨범을 집는다.
-- `start(1)`: Stage 1이 끝난 뒤. 중학생이 된 주인공이 부엌의 샌드위치를 먹고("tastes weird") 서재에서 앨범을 다시 집는다.
-- 방향키로 걷고, Enter / Space로 대화를 넘기거나 음식과 앨범을 집는다.
+---
 
-## 파일
+## 3. What each teammate must do
 
-| 묶음 | 파일 |
-|---|---|
-| View | `StageArtView`, `AlbumView`, `PrologueView` |
-| 라운드 | `RoundScene`(부모), `LakeRound`, `KitchenRound`, `BeachRound`, `BedroomRound`, `BedroomArt.h`, `BedroomPaint.h` |
-| 앨범 | `AlbumScreen` |
-| 집 | `HouseScene`, `HouseRooms` |
-| 게임 상태 읽기 | `PlayStateReader`(인터페이스), `SessionPlayState`(StageSession 어댑터), `EmptyPlayState`(빈 보드) |
-| 그리기 도구 | `PixelArt.h`, `PixelFont.h`, `ToyBlocks.h`, `People.h`, `SixelEncoder.h` |
-| 출력 | `Console`, `ITerminal`, `AnsiTerminal`, `WindowsTerminal` (이미지 출력 함수 추가) |
+### D. Joeunseo (scenes, flow, integration) — `flow/*`, `common/GameConfig.h`
 
-## 새 라운드 추가 (OCP)
+The scenes in `flow/` do not use the ui Views yet. Connect them like this so the art shows up in the game.
 
-1. `RoundScene`을 상속하고 `drawBackground`, `drawNext`, `drawHud`를 구현한다.
-2. 필요하면 `goal()`, `onLinesCleared()`, `endingDone()`, `playing()`을 재정의한다.
-3. `StageArtView`와 `AlbumView` 생성자의 라운드 목록에 추가한다.
+1. `PrologueScene` -> use `PrologueView`. The game starts with `start(0)` (the old-man opening is already inside it; there is no separate opening to connect).
+2. `AlbumScene` -> use `AlbumView`. Pass the round picked with `takePick()` to the play scene.
+3. `PlayScene` -> use `StageArtView`. Subscribe it with `session.subscribe(art)` and stop the falling block while `wantsPause()` is true.
+4. When a stage ends (`album.stageFinished()`), open `PrologueView.start(1)`; after Stage 2, open `start(2)`.
+5. After the Stage 3 album, show `EndingView` instead of the current text ending (`EndingScene`).
+6. Set the per-round line counts in `GameConfig.h` to match the table in section 2 (right now every round uses `kLinesPerPiece = 3`).
+7. Menu: in `PlayScene`'s `Paused` phase, show `MenuView` instead of the current pause text and act on `choice()` (see the example in section 2). Esc on the menu means RESUME.
+8. Settings: keep one `soundOn` value for the whole game. When `SettingsView` closes, swap the sound player between `BeepSoundPlayer` and `MuteSoundPlayer` (both already exist; the concrete objects are made in `main.cpp`).
+9. Memory Book: keep which of the 12 rounds are cleared for the whole run (the album already tracks the same thing) and pass it to `MemoryBookView::open()` together with the round being played.
 
-## 다른 구역이 할 일
+### C. Taegyeong Lee (stages, growth, bosses) — `stage/*`, `boss/*`, `medicine/*`
 
-- D (연출·흐름): 장면에서 위 View를 소유하고 그리기, EventBus 구독, 라운드 끝 -> 앨범 -> 다음 라운드 흐름.
-- C (스테이지·보스): 라운드별 규칙 기믹 (침실 얼룩, 블록 빼앗기, 좌우 반전 등).
+The art acts as if the rules below exist, but **the real board does not change yet**. These rules need to be made.
+
+1. **Bosses appear only in round 4 of each stage**: Bedroom (Stage 1), Interview (Stage 2), Today (Stage 3). Register them in `StageCatalog` that way.
+2. Interview (Stage 2 boss): odd-shaped blocks (`ShapeShiftGimmick`), ending with the screen turning white.
+3. Today (Stage 3 boss), part 1, busy adult life (10 lines):
+   - Lines 2, 5, 8: **Bills** — clear the bottom 2 rows with no points; the rows above drop down (`Board::clearRow()` twice).
+   - Lines 1, 7, 10: **Faster** — blocks fall faster (`SpeedController`). Shredded paper piles up as 1x1 blocks; right now this is only drawn, so pieces pass through it. To make them real 1x1 blocks, use a single-cell function from A.
+   - Line 4: **Deadline**; lines 3, 6, 9: **Years go by** (art only, no rule).
+4. Today, part 2, old man (15 lines):
+   - From line 4: **Forgetting** — stacked blocks disappear one by one and never come back (`Board::setHidden`, `ForgetGimmick`). Right now ui only hides them in the picture.
+   - Line 8: **Blur** (no rule needed if the art is enough).
+   - Line 12: **Static** — the board looks frozen but the block keeps falling (handled by the art, no rule).
+5. Pills: connect the pill counter in the art (`Stage2UI::pills`) to the counts in `Inventory`.
+
+### A. Hanbi Lim (Tetris core) — `block/*`, `board/*`
+
+1. (Only if C makes the 1x1 paper blocks real) `Board` needs a function that places a single cell, e.g. `void addCell(Point pos, TetrominoType type)`.
+2. Otherwise, ui needs no changes in the core.
+
+### Everyone — shared files
+
+1. Add the new classes to `docs/class_diagram.drawio` (in the `ui` group): the rounds `ClassroomRound`, `SoccerRound`, `UniRound`, `InterviewRound`, `OfficeRound`, `WeddingRound`, `NurseryRound`, `FadingRound` (inheriting `RoundScene`), and the views `EndingView`, `MenuView`, `SettingsView`, `MemoryBookView` (inheriting `View`), plus `LivingRoom`.
+2. It is a shared file, so open a PR and get everyone's approval.
+
+### B. Ssok (screen and input) — remaining
+
+1. Add the 8 Stage 2 and 3 rounds to `StageArtView` (right now it only has the 4 Stage 1 rounds).
+2. After D connects everything, play the real game to the end once and fix any art that is off.
+
+---
+
+## 4. Rules checked
+
+- No files outside my area (`ui/*`) were changed.
+- `cmake --build build` has no warnings; `bash tests/run_test.sh` passes.
+- No image files are loaded. Screen text is ASCII only. Dialogue boxes have no name tags.
+- One class per `.h`/`.cpp`, `#pragma once`, private member variables, `override` on overrides, no raw `new`/`delete`.
+- Output is Sixel, so Windows Terminal 1.22 or later is required.

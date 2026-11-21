@@ -1,14 +1,30 @@
 #include "ui/AlbumView.h"
 #include <algorithm>
 #include "ui/BeachRound.h"
+#include "ui/ClassroomRound.h"
 #include "ui/BedroomRound.h"
 #include "ui/KitchenRound.h"
 #include "ui/LakeRound.h"
+#include "ui/SoccerRound.h"
+#include "ui/UniRound.h"
+#include "ui/InterviewRound.h"
+#include "ui/OfficeRound.h"
+#include "ui/WeddingRound.h"
+#include "ui/NurseryRound.h"
+#include "ui/FadingRound.h"
 AlbumView::AlbumView(Point origin) : View(origin) {
     m_previews.push_back(std::make_unique<LakeRound>());
     m_previews.push_back(std::make_unique<KitchenRound>());
     m_previews.push_back(std::make_unique<BeachRound>());
     m_previews.push_back(std::make_unique<BedroomRound>());
+    m_previews.push_back(std::make_unique<ClassroomRound>());
+    m_previews.push_back(std::make_unique<SoccerRound>());
+    m_previews.push_back(std::make_unique<UniRound>());
+    m_previews.push_back(std::make_unique<InterviewRound>());
+    m_previews.push_back(std::make_unique<OfficeRound>());
+    m_previews.push_back(std::make_unique<WeddingRound>());
+    m_previews.push_back(std::make_unique<NurseryRound>());
+    m_previews.push_back(std::make_unique<FadingRound>());
 }
 void AlbumView::open(int stage, int clearedRound) {
     m_album.setStage(stage);
@@ -41,8 +57,8 @@ void AlbumView::update(int dtMs) {
         m_accMs -= kFrameMs;
         ++m_t;
         if (!m_album.isOpen()) continue;
-        // Stage 1 네 칸이 다 차면 4초 뒤 페이지를 넘긴다
-        if (m_album.stage() == 0 && m_album.stageComplete() && !m_album.flipping() && m_t - m_album.openedAt() >= 40) m_album.startFlip(m_t);
+        // 스테이지 네 칸이 다 차면 4초 뒤 다음 페이지로 넘긴다
+        if (m_album.stage() < AlbumScreen::STAGES - 1 && m_album.stageComplete() && !m_album.flipping() && m_t - m_album.openedAt() >= 40) m_album.startFlip(m_t);
         if (m_album.flipDone(m_t)) { m_album.close(); m_album.endFlip(); m_stageFinished = true; }
     }
 }
@@ -51,7 +67,7 @@ void AlbumView::render() const {
     std::fill(m_frame.px.begin(), m_frame.px.end(), 0);
     if (m_album.inDetail()) {
         int want = m_album.stage() * AlbumScreen::SLOTS + m_album.selected();
-        if (want < (int)m_previews.size()) {
+        if (want < (int)m_previews.size() && m_previews[(std::size_t)want]) {
             if (m_shown != want) { m_shown = want; m_previews[(std::size_t)want]->reset(); }
             std::fill(m_preview.px.begin(), m_preview.px.end(), 0);
             m_previews[(std::size_t)want]->draw(m_preview, m_empty, 0, 40 + m_t % 400);

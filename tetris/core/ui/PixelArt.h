@@ -26,7 +26,7 @@ inline RGB mix(RGB a, RGB b, float t) {
 }
 struct Frame {
     using Pts = std::vector<std::pair<int,int>>;
-    static const int W = 480, H = 270;
+    static constexpr int W = 480, H = 270;
     std::vector<uint8_t> px;
     Frame() : px(W * H, 0) {}
     void set(int x, int y, uint8_t c) {

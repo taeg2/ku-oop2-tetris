@@ -9,7 +9,7 @@
 #include "ui/SixelEncoder.h"
 #include "ui/View.h"
 // 라운드를 고르는 앨범 화면. 라운드가 끝날 때마다 열리고, 라운드를 고르기 전에는 닫을 수 없다
-// Stage 1을 다 깨면 스스로 페이지를 넘기고 stageFinished()가 true가 된다
+// 스테이지를 다 깨면 스스로 페이지를 넘기고 stageFinished()가 true가 된다. 이후 PrologueView::start(새 stage)로 집 장면을 연다
 class AlbumView : public View {
 public:
     static constexpr int kScale = 2;

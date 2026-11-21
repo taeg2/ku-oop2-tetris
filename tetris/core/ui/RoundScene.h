@@ -37,6 +37,8 @@ protected:
     static void drawSign(Frame& f, int x, int y, int w, const char* label);
     static void drawMemoryBook(Frame& f, int x, int y);
     static void drawCommonUI(Frame& f);
+    using ItemDraw = void (*)(Frame& f, int x, int y, int t);
+    static void flyToBook(Frame& f, int m, int sx, int sy, ItemDraw item, const char* label, int t);  // m: 연출 시작 후 프레임, 26프레임 동안 sx,sy에서 앨범으로 날아간다
     const PlayStateReader& state() const { return *m_state; }
 private:
     const PlayStateReader* m_state = nullptr;

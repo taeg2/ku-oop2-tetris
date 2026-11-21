@@ -1,9 +1,10 @@
 #pragma once
 #include "ui/PixelArt.h"
+#include <algorithm>
 // 앨범 그림과 상태 (책, 걸린 사진, 상세 보기, 페이지 넘김). 입력 연결은 AlbumView가 한다
 class AlbumScreen {
 public:
-    static const int SLOTS = 4, STAGES = 2, FLIP_END = 64;
+    static const int SLOTS = 4, STAGES = 3, FLIP_END = 64;
     void open(int cleared, int t);
     bool isOpen() const { return open_; }
     void close() { open_ = false; }
@@ -23,9 +24,12 @@ public:
     void startFlip(int t) { flipT_ = t; }
     bool flipping() const { return flipT_ >= 0; }
     bool flipDone(int t) const { return flipT_ >= 0 && t - flipT_ >= FLIP_END; }
-    void endFlip() { flipT_ = -1; stage_ = 1; }
+    void endFlip() { flipT_ = -1; stage_ = std::min(STAGES - 1, stage_ + 1); }
     int openedAt() const { return openT_; }
-    static int available(int stage) { return stage == 0 ? 4 : 2; }
+    static int available(int) { return SLOTS; }
+    static void drawIcon(Frame& f, int slot, int cx, int cy);  // 라운드 사진 그림 (52x36), slot = stage * 4 + 칸
+    static const char* roundName(int slot);
+    static const char* memoryName(int slot);
     bool cancelChosen() const { return detail_ && focus_ == 0; }
 private:
     bool open_ = false;
@@ -33,5 +37,4 @@ private:
     bool detail_ = false;
     void drawDetail(Frame& f, int t, const Frame* preview) const;
     bool done_[STAGES][SLOTS] = {};
-    static void drawIcon(Frame& f, int slot, int cx, int cy);
 };

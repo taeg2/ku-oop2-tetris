@@ -3,8 +3,10 @@
 #include <algorithm>
 #include <cmath>
 static const RGB OL{ 42, 26, 28 };
-static const char* NAMES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE LAKE", "DINNER", "THE BEACH", "BEDTIME" }, { "FIRST DAY", "SOCCER", "???", "???" } };
-static const char* MEMORIES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE BOAT", "FISH SOUP", "BUCKET", "GOODNIGHT" }, { "MY NOTES", "THE GOAL", "", "" } };
+static const char* NAMES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE LAKE", "DINNER", "THE BEACH", "BEDTIME" }, { "FIRST DAY", "SOCCER", "CAMPUS", "INTERVIEW" }, { "FIRST JOB", "WEDDING", "OUR BABY", "TODAY" } };
+static const char* MEMORIES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE BOAT", "FISH SOUP", "BUCKET", "GOODNIGHT" }, { "NOTEBOOK", "THE BALL", "GRAD CAP", "JOB ID" }, { "PAYCHECK", "OUR RINGS", "HER DRAWING", "FAMILY" } };
+const char* AlbumScreen::roundName(int slot) { return NAMES[slot / SLOTS][slot % SLOTS]; }
+const char* AlbumScreen::memoryName(int slot) { return MEMORIES[slot / SLOTS][slot % SLOTS]; }
 void AlbumScreen::open(int cleared, int t) {
     open_ = true; openT_ = t; detail_ = false;
     newSlot_ = -1;
@@ -56,10 +58,54 @@ void AlbumScreen::drawIcon(Frame& f, int slot, int cx, int cy) {
         for (int k = 0; k < 5; ++k) { f.hline(cx - 13, cx - 3, cy - 8 + k * 4, C(60, 70, 120)); f.hline(cx + 3, cx + 13, cy - 8 + k * 4, C(170, 196, 230)); f.set(cx - 14, cy - 8 + k * 4, C(210, 70, 70)); }
         f.line(cx + 10, cy + 8, cx + 20, cy - 6, C(40, 60, 140));
     } else if (slot == 5) {
-        f.gradient(cx - 26, cy - 18, 52, 36, { {130, 196, 240}, {118, 186, 84} });
-        f.rect(cx + 6, cy - 14, 2, 22, C(250, 250, 250)); f.rect(cx + 6, cy - 14, 18, 2, C(250, 250, 250));
-        for (int k = 0; k < 5; ++k) f.line(cx + 8 + k * 4, cy - 12, cx + 8 + k * 4, cy + 6, C(214, 226, 232));
-        f.disc(cx - 8, cy + 2, 8, ol); f.disc(cx - 8, cy + 2, 7, C(250, 250, 250)); f.disc(cx - 8, cy + 2, 2, ol); f.set(cx - 12, cy - 2, ol); f.set(cx - 4, cy + 6, ol); f.set(cx - 13, cy + 5, ol);
+        f.gradient(cx - 26, cy - 18, 52, 36, { {150, 204, 240}, {120, 190, 88} });
+        for (int k = 0; k < 5; ++k) f.vline(cx - 24 + k * 12, cy + 8, cy + 17, C(100, 170, 74));
+        f.ellipse(cx, cy + 13, 13, 3, C(80, 140, 64));
+        f.disc(cx, cy, 13, ol); f.disc(cx, cy, 12, C(250, 250, 248)); f.disc(cx - 3, cy - 3, 5, C(255, 255, 255));
+        f.poly({ {cx - 3, cy - 4}, {cx + 3, cy - 4}, {cx + 5, cy + 1}, {cx, cy + 5}, {cx - 5, cy + 1} }, ol);
+        f.poly({ {cx - 13, cy - 2}, {cx - 9, cy - 6}, {cx - 7, cy}, {cx - 11, cy + 5} }, ol); f.poly({ {cx + 13, cy - 2}, {cx + 9, cy - 6}, {cx + 7, cy}, {cx + 11, cy + 5} }, ol);
+        f.poly({ {cx - 4, cy + 13}, {cx + 4, cy + 13}, {cx + 2, cy + 9}, {cx - 2, cy + 9} }, ol);
+        f.line(cx, cy - 4, cx, cy - 12, C(200, 200, 204)); f.line(cx + 3, cy, cx + 10, cy - 4, C(200, 200, 204)); f.line(cx - 3, cy, cx - 10, cy - 4, C(200, 200, 204));
+    } else if (slot == 6) {
+        f.gradient(cx - 26, cy - 18, 52, 36, { {150, 200, 240}, {214, 232, 248} });
+        f.ellipse(cx, cy + 14, 18, 3, C(150, 170, 196));
+        f.rect(cx - 11, cy - 1, 22, 11, ol); f.rect(cx - 10, cy, 20, 9, C(34, 36, 50)); f.hline(cx - 10, cx + 9, cy, C(70, 72, 92));
+        f.poly({ {cx - 24, cy - 4}, {cx, cy - 14}, {cx + 24, cy - 4}, {cx, cy + 6} }, ol); f.poly({ {cx - 21, cy - 4}, {cx, cy - 12}, {cx + 21, cy - 4}, {cx, cy + 4} }, C(34, 36, 50));
+        f.line(cx - 18, cy - 5, cx, cy - 12, C(80, 82, 104)); f.disc(cx, cy - 4, 2, C(232, 188, 72));
+        f.line(cx, cy - 4, cx + 16, cy + 1, C(232, 188, 72)); f.vline(cx + 16, cy + 1, cy + 9, C(232, 188, 72)); f.rect(cx + 15, cy + 9, 3, 4, C(232, 188, 72)); f.vline(cx + 16, cy + 9, cy + 12, C(186, 140, 46));
+    } else if (slot == 7) {
+        f.rect(cx - 26, cy - 18, 52, 36, C(226, 222, 210));
+        uint8_t strap = C(70, 120, 200), strapD = C(50, 90, 160);
+        f.line(cx - 14, cy - 18, cx - 3, cy - 4, strap); f.line(cx - 13, cy - 18, cx - 2, cy - 4, strapD); f.line(cx + 14, cy - 18, cx + 3, cy - 4, strap); f.line(cx + 13, cy - 18, cx + 2, cy - 4, strapD);
+        f.rect(cx - 2, cy - 6, 5, 4, ol); f.rect(cx - 1, cy - 5, 3, 2, C(200, 200, 206));
+        f.rect(cx - 10, cy - 3, 21, 22, ol); f.rect(cx - 9, cy - 2, 19, 20, C(250, 250, 244)); f.rect(cx - 9, cy - 2, 19, 5, strap);
+        f.rect(cx - 7, cy + 4, 7, 8, ol); f.rect(cx - 6, cy + 5, 5, 6, C(206, 222, 238)); f.disc(cx - 4, cy + 7, 1, C(168, 92, 44)); f.rect(cx - 5, cy + 9, 3, 2, C(244, 244, 240));
+        f.hline(cx + 2, cx + 8, cy + 5, C(120, 120, 140)); f.hline(cx + 2, cx + 7, cy + 8, C(160, 160, 176)); f.hline(cx + 2, cx + 6, cy + 11, C(160, 160, 176));
+        f.rect(cx - 7, cy + 14, 15, 2, C(40, 40, 50));
+    }
+    if (slot == 8) {
+        f.gradient(cx - 26, cy - 18, 52, 36, { {20, 26, 60}, {60, 60, 110} });
+        for (int k = 0; k < 6; ++k) { int bx = cx - 26 + k * 9, bh = 10 + (k * 7) % 14; f.rect(bx, cy + 18 - bh, 9, bh, C(40, 44, 70)); for (int w = 0; w < bh - 3; w += 4) f.set(bx + 3, cy + 20 - bh + w, C(250, 214, 120)); }
+        f.rect(cx - 13, cy - 9, 27, 17, ol); f.rect(cx - 12, cy - 8, 25, 15, C(244, 236, 214)); f.line(cx - 12, cy - 8, cx, cy, C(200, 190, 166)); f.line(cx + 12, cy - 8, cx, cy, C(200, 190, 166));
+        f.rect(cx - 3, cy, 7, 5, C(120, 180, 100)); f.disc(cx + 8, cy + 4, 2, C(200, 52, 60));
+    } else if (slot == 9) {
+        f.gradient(cx - 26, cy - 18, 52, 36, { {250, 236, 240}, {250, 210, 224} });
+        for (int k = 0; k < 8; ++k) { int px = cx - 22 + (k * 13) % 44, py = cy - 14 + (k * 11) % 28; f.disc(px, py, 2, k % 2 ? C(250, 250, 250) : C(240, 140, 170)); }
+        for (int r = 0; r < 2; ++r) { int rx = cx - 6 + r * 12, ry = cy + 2 - r * 3; f.disc(rx, ry, 8, ol); f.disc(rx, ry, 7, C(240, 200, 90)); f.disc(rx, ry, 5, ol); f.disc(rx, ry, 4, C(250, 220, 230)); }
+        f.poly({ {cx + 2, cy - 12}, {cx + 10, cy - 12}, {cx + 6, cy - 6} }, ol); f.poly({ {cx + 3, cy - 12}, {cx + 9, cy - 12}, {cx + 6, cy - 7} }, C(220, 240, 255));
+    } else if (slot == 10) {
+        f.rect(cx - 26, cy - 18, 52, 36, C(252, 250, 240));
+        f.disc(cx + 18, cy - 11, 5, C(250, 200, 60)); for (int k = 0; k < 6; ++k) f.set(cx + 18 + (int)(std::cos(k * 1.05f) * 8), cy - 11 + (int)(std::sin(k * 1.05f) * 8), C(250, 200, 60));
+        f.poly({ {cx - 22, cy + 2}, {cx - 10, cy - 8}, {cx + 2, cy + 2} }, C(220, 70, 70)); f.rect(cx - 19, cy + 2, 18, 12, C(240, 170, 90)); f.rect(cx - 12, cy + 6, 4, 8, C(140, 90, 60));
+        auto who = [&](int px, int h, RGB c) { f.disc(px, cy + 14 - h, 2, C(60, 60, 70)); f.vline(px, cy + 16 - h, cy + 14, C(c)); f.line(px - 3, cy + 18 - h, px + 3, cy + 18 - h, C(c)); };
+        who(cx + 6, 14, { 60, 90, 200 }); who(cx + 13, 14, { 220, 70, 110 }); who(cx + 20, 9, { 240, 150, 40 });
+        f.hline(cx - 25, cx + 25, cy + 15, C(100, 180, 80)); f.hline(cx - 25, cx + 25, cy + 16, C(100, 180, 80));
+    } else if (slot == 11) {
+        f.gradient(cx - 26, cy - 18, 52, 36, { {190, 220, 246}, {236, 246, 252} });
+        f.rect(cx - 26, cy + 8, 52, 10, C(130, 190, 100));
+        auto who = [&](int px, int h, RGB hair, RGB top) { f.disc(px, cy + 8 - h, 4, ol); f.disc(px, cy + 8 - h, 3, C(246, 204, 164)); f.rect(px - 3, cy + 4 - h - 3, 7, 3, C(hair)); f.rect(px - 4, cy + 12 - h, 9, h - 2, ol); f.rect(px - 3, cy + 13 - h, 7, h - 4, C(top)); };
+        who(cx - 12, 18, { 200, 200, 206 }, { 150, 120, 96 }); who(cx, 18, { 120, 70, 46 }, { 110, 150, 200 }); who(cx + 12, 12, { 120, 70, 46 }, { 250, 200, 90 });
+        for (int k = 0; k < 3; ++k) { int hx = cx - 6 + k * 6, hy = cy - 14; f.set(hx - 1, hy, C(240, 90, 120)); f.set(hx + 1, hy, C(240, 90, 120)); f.hline(hx - 1, hx + 1, hy + 1, C(240, 90, 120)); f.set(hx, hy + 2, C(240, 90, 120)); }
     }
 }
 static void rotBlit(Frame& f, const Frame& src, uint8_t key, int w, int h, int pinX, int pinY, float ang) {
@@ -136,9 +182,9 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
     const int CW = 58, CH = 66;
     for (int s = 0; s < SLOTS; ++s) {
         int fl = flipT_ >= 0 ? t - flipT_ : -1;
-        int ps = flipT_ < 0 ? stage_ : (s >= 2 ? 1 : (fl >= 28 ? 1 : 0));
-        bool done = done_[ps][s], open = ps == stage_ ? s <= unlocked_ : (ps == 0 || s == 0), sel = s == sel_ && flipT_ < 0, pop = s == newSlot_ && a < 16 && flipT_ < 0;
-        if (ps == 1 && s >= available(1)) open = false;
+        int nx = std::min(STAGES - 1, stage_ + 1);
+        int ps = flipT_ < 0 ? stage_ : (s >= 2 ? nx : (fl >= 28 ? nx : stage_));
+        bool done = done_[ps][s], open = ps == stage_ ? s <= unlocked_ : s == 0, sel = s == sel_ && flipT_ < 0, pop = s == newSlot_ && a < 16 && flipT_ < 0;
         float ang = std::sin(t * 0.18f + s * 1.7f) * (sel ? 0.08f : 0.035f) + (s % 2 ? 0.05f : -0.05f);
         card.rect(0, 0, CW, CH, key);
         card.rect(0, 0, CW, CH, ol); card.rect(1, 1, CW - 2, CH - 2, C(252, 250, 244)); card.hline(1, CW - 2, CH - 2, C(220, 214, 200));

@@ -22,8 +22,8 @@ public:
     bool hasCandy() const { return phase_ >= WOBBLE; }
     int stage() const { return stage_; }
 private:
-    // 대화 -> 딸이 나감 -> 부엌에서 음식 -> (사탕이면 비틀거림) -> 서재 앨범 -> 페이드
-    enum Phase { OFF, TALK, MOM_LEAVE, HUNGRY, FREE, CANDY, WOBBLE, ALBUM_HUNT, ALBUM, FADE, DONE };
+    // (첫 판) 노인이 약을 먹고 잠듦 -> 아이로 깨어남 -> 대화 -> 딸이 나감 -> 부엌에서 음식 -> (사탕이면 비틀거림) -> 서재 앨범 -> 페이드
+    enum Phase { OFF, OLD_SIT, OLD_DRINK, OLD_SLEEPY, OLD_SLEEP, WAKE, TALK, MOM_LEAVE, HUNGRY, FREE, CANDY, WOBBLE, ALBUM_HUNT, ALBUM, FADE, DONE };
     struct Line { std::string who, text; };
     Phase phase_ = OFF;
     HouseRooms::Room room_ = HouseRooms::LIVING;
@@ -35,6 +35,8 @@ private:
     bool momGone_ = false;
     int libraryT_ = -1, animT_ = -100, candyStep_ = 0, albumStep_ = 0, stage_ = 0;
     void drawHero(Frame& world, int x, int y, People::Facing face, int step, bool talk, bool blink) const;
+    void drawOpening(Frame& world, int t) const;
+    mutable bool oldLook_ = false;
     bool nearFood() const;
     std::vector<Line> lines_;
     int lineT_ = 0;

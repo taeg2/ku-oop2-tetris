@@ -88,12 +88,20 @@ bool Console::isRowChanged(int y) const {
     return !std::equal(begin, begin + m_width, m_front.begin() + static_cast<std::ptrdiff_t>(y * m_width));
 }
 
+void Console::drawImage(Point pos, const std::string& sixel) {
+    m_images.emplace_back(pos, sixel);
+}
+
 void Console::present() {
     for (int y = 0; y < m_height; ++y) {
         if (m_forceRedraw || isRowChanged(y)) {
             writeRow(y);
         }
     }
+    for (const auto& image : m_images) {
+        m_terminal.writeRaw(image.first, image.second);
+    }
+    m_images.clear();
     m_terminal.flush();
     m_front = m_back;
     m_forceRedraw = false;

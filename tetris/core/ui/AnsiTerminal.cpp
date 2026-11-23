@@ -33,6 +33,11 @@ void AnsiTerminal::write(Point pos, const std::u32string& text, Color fg, Color 
     m_buffer += TextUtil::encode(text);
 }
 
+void AnsiTerminal::writeRaw(Point pos, const std::string& bytes) {
+    m_buffer += "\x1b[" + std::to_string(pos.y + 1) + ";" + std::to_string(pos.x + 1) + "H";
+    m_buffer += bytes;
+}
+
 void AnsiTerminal::flush() {
     std::cout << m_buffer << std::flush;
     m_buffer.clear();

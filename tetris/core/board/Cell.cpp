@@ -1,18 +1,16 @@
 #include "board/Cell.h"
 
-void Cell::fill(Color color) {
-    m_filled = true;
-    m_color = color;
+void Cell::fill(TetrominoType type) {
+    m_type = type;
     m_pill.reset();
 }
 
-void Cell::fill(Color color, PillType pill) {
-    fill(color);
+void Cell::fill(TetrominoType type, PillType pill) {
+    fill(type);
     m_pill = pill;
 }
 
 void Cell::clear() {
-    m_filled = false;
-    m_color = Color::Black;
+    m_type.reset();
     m_pill.reset();
 }

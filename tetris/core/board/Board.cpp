@@ -56,9 +56,10 @@ void Board::lock(const Tetromino& piece) {
             continue;  // 보드 밖 칸은 버린다 (canLock()으로 먼저 확인할 것)
         }
         if (piece.pill() && piece.pillCellIndex() == i) {
-            at(p).fill(piece.color(), *piece.pill());
-        } else {
-            at(p).fill(piece.color());
+            at(p).fill(piece.type(), *piece.pill()); // 수정
+        }
+        else {
+            at(p).fill(piece.type());                // 수정
         }
     }
 }

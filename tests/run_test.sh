@@ -6,5 +6,5 @@ cd "$(dirname "$0")"
 SRC=../tetris/core
 FILES=$(find $SRC -name '*.cpp' ! -name main.cpp)
 mkdir -p test_screens
-${CXX:-c++} -std=c++20 -O1 -I$SRC $FILES BotPlayTest.cpp -o bot_play_test -lpthread
+${CXX:-c++} -std=c++17 -O1 -I$SRC $FILES BotPlayTest.cpp -o bot_play_test -lpthread
 ./bot_play_test

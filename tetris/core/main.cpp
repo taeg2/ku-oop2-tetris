@@ -1,9 +1,9 @@
 // 기억을 맞추는 테트리스 - 진입점
 // 구체 클래스(터미널, 키보드, 사운드)는 여기서만 만들고, Game에는 추상 타입으로 넘긴다. (DIP)
 // 실행 인자: --mute  (효과음 끄기)
-#include <cstring>
 #include <iostream>
 #include <memory>
+#include <string>
 #include "flow/Game.h"
 #include "ui/MuteSoundPlayer.h"
 #ifdef _WIN32
@@ -18,7 +18,8 @@
 int main(int argc, char* argv[]) {
     bool muted = false;
     for (int i = 1; i < argc; ++i) {
-        if (std::strcmp(argv[i], "--mute") == 0) {
+        const std::string arg = argv[i];
+        if (arg == "--mute") {
             muted = true;
         }
     }

@@ -9,7 +9,7 @@ struct PosixKeyboardInput::SavedMode {
 };
 
 namespace {
-constexpr char kEscape = 27;
+const char kEscape = 27;
 }
 
 PosixKeyboardInput::PosixKeyboardInput() : m_saved(std::make_unique<SavedMode>()) {

@@ -1,6 +1,5 @@
 #pragma once
 #include <array>
-#include <optional>
 #include "common/Color.h"
 #include "medicine/PillType.h"
 #include "common/Point.h"
@@ -10,7 +9,7 @@
 //     그래서 충돌 검사 전에 원본을 망가뜨리지 않는다.
 class Tetromino {
 public:
-    static constexpr int kCellCount = 4;
+    inline static const int kCellCount = 4;
     using Cells = std::array<Point, kCellCount>;
 
     explicit Tetromino(TetrominoType type = TetrominoType::T);
@@ -29,7 +28,8 @@ public:
     Point position() const { return m_position; }
     int rotation() const { return m_rotation; }
     Color color() const { return colorOf(m_type); }
-    std::optional<PillType> pill() const { return m_pill; }
+    bool hasPill() const { return m_hasPill; }
+    PillType pill() const { return m_pill; }  // hasPill()이 true일 때만 의미가 있다
     int pillCellIndex() const { return m_pillIndex; }
 
     static Color colorOf(TetrominoType type);
@@ -38,6 +38,7 @@ private:
     TetrominoType m_type;
     int m_rotation = 0;
     Point m_position{};
-    std::optional<PillType> m_pill;
+    bool m_hasPill = false;
+    PillType m_pill = PillType::Blue;
     int m_pillIndex = 0;
 };

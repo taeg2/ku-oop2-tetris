@@ -3,6 +3,8 @@
 #include "flow/Clock.h"
 #include "flow/GameServices.h"
 #include "flow/SceneManager.h"
+#include "flow/StoryArt.h"
+#include "flow/SwitchableSound.h"
 #include "stage/Album.h"
 #include "stage/StageCatalog.h"
 #include "ui/Console.h"
@@ -24,10 +26,13 @@ private:
     std::mt19937 m_rng;
     Console m_console;
     IInputSource& m_input;
+    SwitchableSound m_sound;
     StageCatalog m_catalog;
     Album m_album;
+    StoryArt m_story;
     SceneManager m_scenes;
     GameServices m_services;
     Clock m_clock;
     int m_exitCode = 0;
+    int m_shownSceneChange = -1;
 };

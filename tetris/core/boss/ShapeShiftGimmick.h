@@ -1,5 +1,4 @@
 #pragma once
-#include <optional>
 #include "block/Tetromino.h"
 #include "boss/PeriodicGimmick.h"
 
@@ -19,7 +18,8 @@ protected:
 
 private:
     void morph(PlayContext& ctx);  // 성공하면 m_pending을 내린다
-    static std::optional<Tetromino> findPlacement(const Board& board, const Tetromino& morphed);
+    // 바뀐 블록을 놓을 자리를 찾으면 result를 채우고 true를 돌려준다
+    static bool findPlacement(const Board& board, const Tetromino& morphed, Tetromino& result);
 
     bool m_pending = false;
 };

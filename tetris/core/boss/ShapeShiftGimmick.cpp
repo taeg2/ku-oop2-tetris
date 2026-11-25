@@ -1,4 +1,6 @@
 #include "boss/ShapeShiftGimmick.h"
+#include <algorithm>
+#include <array>
 #include "board/Board.h"
 #include "block/Tetromino.h"
 #include "play/EventBus.h"
@@ -21,20 +23,23 @@ void ShapeShiftGimmick::morph(PlayContext& ctx) {
     std::uniform_int_distribution<int> offset(1, kTetrominoTypeCount - 1);
     const auto newType = static_cast<TetrominoType>((currentType + offset(ctx.rng)) % kTetrominoTypeCount);
 
-    if (const auto placed = findPlacement(ctx.board, ctx.current.morphed(newType))) {
-        ctx.current = *placed;
+    Tetromino placed = ctx.current;
+    if (findPlacement(ctx.board, ctx.current.morphed(newType), placed)) {
+        ctx.current = placed;
         m_pending = false;
         ctx.bus.publish(GameEvent::Type::BossTriggered);
     }
 }
 
-std::optional<Tetromino> ShapeShiftGimmick::findPlacement(const Board& board, const Tetromino& morphed) {
-    for (Point kick : {Point{0, 0}, Point{-1, 0}, Point{1, 0}, Point{0, -1}}) {
-        if (board.canPlace(morphed, kick)) {
-            return morphed.moved(kick);
-        }
+bool ShapeShiftGimmick::findPlacement(const Board& board, const Tetromino& morphed, Tetromino& result) {
+    const std::array<Point, 4> kicks = {Point{0, 0}, Point{-1, 0}, Point{1, 0}, Point{0, -1}};
+    const auto found = std::find_if(kicks.begin(), kicks.end(),
+                                    [&](Point kick) { return board.canPlace(morphed, kick); });
+    if (found == kicks.end()) {
+        return false;  // 바꿀 자리가 없으면 다음 블록이 나올 때 다시 시도한다
     }
-    return std::nullopt;  // 바꿀 자리가 없으면 다음 블록이 나올 때 다시 시도한다
+    result = morphed.moved(*found);
+    return true;
 }
 
 std::string ShapeShiftGimmick::statusText() const {

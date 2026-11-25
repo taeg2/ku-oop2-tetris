@@ -3,13 +3,13 @@
 #include <conio.h>
 
 namespace {
-constexpr int kExtendedPrefixA = 0x00;
-constexpr int kExtendedPrefixB = 0xE0;
-constexpr int kEscape = 27;
-constexpr int kArrowUp = 72;
-constexpr int kArrowDown = 80;
-constexpr int kArrowLeft = 75;
-constexpr int kArrowRight = 77;
+const int kExtendedPrefixA = 0x00;
+const int kExtendedPrefixB = 0xE0;
+const int kEscape = 27;
+const int kArrowUp = 72;
+const int kArrowDown = 80;
+const int kArrowLeft = 75;
+const int kArrowRight = 77;
 }  // namespace
 
 void WindowsKeyboardInput::update() {

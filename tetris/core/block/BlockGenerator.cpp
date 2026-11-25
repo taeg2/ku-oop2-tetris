@@ -3,7 +3,7 @@
 #include <array>
 
 namespace {
-constexpr Point kSpawnPosition{3, -1};
+const Point kSpawnPosition{3, -1};
 }
 
 BlockGenerator::BlockGenerator(std::mt19937& rng, int pillChancePercent)

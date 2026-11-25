@@ -1,7 +1,5 @@
 #pragma once
 #include <memory>
-#include <string>
-#include "common/Rect.h"
 #include "flow/GameServices.h"
 #include "ui/Command.h"
 #include "ui/Console.h"
@@ -23,8 +21,6 @@ public:
 protected:
     void changeTo(std::unique_ptr<Scene> next);
     void quit();
-    static void drawHelp(Console& console, const std::string& text);
-    static void drawDialog(Console& console, const Rect& area, Color frameColor);
 
     GameServices& m_services;
 };

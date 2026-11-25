@@ -36,7 +36,8 @@ void StageArtView::update(int dtMs) {
         round().update(m_state, m_t);
         if (m_advance && round().endingDone()) {
             m_advance = false;
-            m_lines = 0; m_visual = 0;
+            // PhotoProgress처럼 남은 줄은 다음 라운드로 넘긴다. 0으로 버리면 다음 라운드 그림이 목표에 못 미쳐 끝 연출이 안 끝난다.
+            m_lines = std::max(0, m_lines - m_linesPerRound); m_visual = 0;
             if (m_round + 1 < static_cast<int>(m_rounds.size())) ++m_round;
             round().reset();
         }

@@ -22,13 +22,13 @@ const int FLOOR_Y = 152, CORNER = 195, VPX = 360, VPY = 100;
 const int BOWL_X = 318, BOWL_Y = 216;
 const int DOOR_X = 222;
 int wave(int t, float period, float amp, float phase = 0) {
-    return static_cast<int>(std::lround(std::sin(t * 6.2832f / period + phase) * amp));
+    return (int)std::lround(std::sin(t * 6.2832f / period + phase) * amp);
 }
 float clamp01(float v) { return std::max(0.0f, std::min(1.0f, v)); }
 float ease(float v) { v = clamp01(v); return v * v * (3 - 2 * v); }
 float lerp(float a, float b, float u) { return a + (b - a) * clamp01(u); }
 float bez(float a, float b, float c, float t) { float u = 1 - t; return u * u * a + 2 * u * t * b + t * t * c; }
-int rnd(float v) { return static_cast<int>(std::lround(v)); }
+int rnd(float v) { return (int)std::lround(v); }
 const float PI = 3.14159265f;
 const int MOM_X0 = 404, MOM_FEET = 155, DOOR_FEET = 153;
 const float KID_PATH[3][2] = { {318,205}, {284,205}, {232,160} };
@@ -37,7 +37,7 @@ void shadow(Frame& f, int x, int y, int w) {
     int r = w / 2;
     for (int dy = -1; dy <= 1; ++dy)
         for (int dx = -r; dx <= r; ++dx) {
-            float e = static_cast<float>(dx * dx) / (r * r) + static_cast<float>(dy * dy);
+            float e = (float)(dx * dx) / (r * r) + (float)(dy * dy);
             if (e > 1.0f) continue;
             RGB c = palette()[f.get(x + dx, y + dy)];
             f.set(x + dx, y + dy, C(mix(c, RGB{ 30, 10, 10 }, 0.31f)));
@@ -50,7 +50,7 @@ void pieceBox(int type, std::vector<std::pair<int, int>>& cs, int& w, int& h) {
     for (auto& c : cs) { c.first -= mx; c.second -= my; }
     w = (Mx - mx + 1) * 6; h = (My - my + 1) * 6;
 }
-int wallY(int x, float yc) { return static_cast<int>(std::lround(VPY + (yc - VPY) * (VPX - x) / static_cast<float>(VPX - CORNER))); }
+int wallY(int x, float yc) { return (int)std::lround(VPY + (yc - VPY) * (VPX - x) / (float)(VPX - CORNER)); }
 int floorLeft(int x) { return x >= CORNER ? FLOOR_Y : wallY(x, FLOOR_Y); }
 void bubble(Frame& f, int cx, int y, const char* l1, const char* l2, int tx, int ty) {
     int w = std::max(Font::width(l1), Font::width(l2)) + 8, h = 20, x = cx - w / 2;
@@ -102,7 +102,7 @@ void drawPot(Frame& f, int bx, int by, float ang) {
     float ca = std::cos(ang), sa = std::sin(ang);
     for (int y = -40; y <= 12; ++y) for (int x = -40; x <= 40; ++x) {
         float lx = x * ca + y * sa, ly = -x * sa + y * ca;
-        int code = potPixel(static_cast<int>(std::lround(lx)), static_cast<int>(std::lround(ly)));
+        int code = potPixel((int)std::lround(lx), (int)std::lround(ly));
         if (code) f.set(bx + x, by + y, potColor(code));
     }
 }
@@ -129,8 +129,8 @@ void KitchenRound::drawRoom(Frame& f) {
     for (int x = 0; x < CORNER; ++x) {
         int yb = floorLeft(x);
         for (int y = 0; y < yb; ++y) {
-            float yc = VPY + (y - VPY) * static_cast<float>(VPX - CORNER) / (VPX - x);
-            int iy = static_cast<int>(std::floor(yc)), k = ((iy % 7) + 7) % 7, band = static_cast<int>(std::floor(yc / 7.0f));
+            float yc = VPY + (y - VPY) * (float)(VPX - CORNER) / (VPX - x);
+            int iy = (int)std::floor(yc), k = ((iy % 7) + 7) % 7, band = (int)std::floor(yc / 7.0f);
             uint8_t c = (band & 1) ? wall2 : wall;
             if (k == 0) c = seam; else if (k == 1) c = wallL;
             f.set(x, y, c);
@@ -150,7 +150,7 @@ void KitchenRound::drawRoom(Frame& f) {
     f.rect(340, 0, 5, FLOOR_Y, beam); f.vline(341, 0, FLOOR_Y - 1, beamL);
     uint8_t fl = C(FLOOR), fl2 = C(FLOOR2), flL = C(FLOOR_L), fs = C(FLOOR_S);
     int seams[16], n = 0;
-    for (float y = FLOOR_Y, step = 5; y < 270 && n < 16; y += step, step *= 1.18f) seams[n++] = static_cast<int>(y);
+    for (float y = FLOOR_Y, step = 5; y < 270 && n < 16; y += step, step *= 1.18f) seams[n++] = (int)y;
     for (int x = 0; x < 480; ++x) {
         int top = floorLeft(x);
         for (int y = top; y < 270; ++y) {
@@ -177,7 +177,7 @@ void KitchenRound::drawRoom(Frame& f) {
     f.ellipse(322, 241, 74, 21, C(226, 168, 120)); f.ellipse(322, 241, 72, 19, C(168, 56, 62));
     for (int k = 0; k < 12; ++k) {
         float a = k * 0.5236f;
-        f.set(322 + static_cast<int>(std::cos(a) * 88), 241 + static_cast<int>(std::sin(a) * 27), C(240, 224, 200));
+        f.set(322 + (int)(std::cos(a) * 88), 241 + (int)(std::sin(a) * 27), C(240, 224, 200));
     }
     for (int y = 0; y < FLOOR_Y; y += 2) f.set(CORNER - 1, y, C(SEAM));
 }
@@ -193,8 +193,8 @@ void KitchenRound::drawLeftWindow(Frame& f) {
     for (int x = X0; x <= X1; ++x) {
         int ya = wallY(x, Y0), yb = wallY(x, Y1);
         for (int y = ya; y <= yb; ++y) {
-            float u = static_cast<float>(y - ya) / std::max(1, yb - ya);
-            int k = std::min(4, static_cast<int>(u * 5));
+            float u = (float)(y - ya) / std::max(1, yb - ya);
+            int k = std::min(4, (int)(u * 5));
             if (u * 5 - k > 0.85f && k < 4 && ((x + y) & 1)) ++k;
             f.set(x, y, C(SKY[k]));
         }
@@ -250,7 +250,7 @@ void KitchenRound::drawFrontWindow(Frame& f) {
     f.rect(x0 - 6, y1 + 3, x1 - x0 + 13, 3, frame); f.hline(x0 - 6, x1 + 6, y1 + 6, ol);
     f.line(262, 50, 266, 47, C(255, 240, 220));
     f.disc(311, 26, 11, ol); f.disc(311, 26, 10, C(150, 96, 60)); f.disc(311, 26, 8, C(248, 240, 222));
-    for (int k = 0; k < 12; ++k) f.set(311 + static_cast<int>(std::cos(k * 0.5236f) * 7), 26 + static_cast<int>(std::sin(k * 0.5236f) * 7), C(150, 120, 100));
+    for (int k = 0; k < 12; ++k) f.set(311 + (int)(std::cos(k * 0.5236f) * 7), 26 + (int)(std::sin(k * 0.5236f) * 7), C(150, 120, 100));
     f.line(311, 26, 311, 21, C(OUT)); f.line(311, 26, 315, 28, C(OUT));
     f.vline(290, 0, 30, C(OUT));
     f.ditherEllipse(290, 42, 26, 18, C(196, 136, 88));
@@ -324,7 +324,7 @@ void KitchenRound::drawTank(Frame& f, int t) {
     f.ellipse(414, y1 - 5, 5, 3, C(140, 140, 150)); f.set(412, y1 - 7, C(190, 190, 200));
     for (int k = 0; k < 3; ++k) {
         int px = 378 + k * 34 + (k == 2 ? 12 : 0);
-        for (int y = y1 - 5; y > y0 + 14 + k * 4; --y) f.set(px + static_cast<int>(std::sin(y * 0.5f + t * 0.2f + k) * 1.5f), y, C(80, 150, 90));
+        for (int y = y1 - 5; y > y0 + 14 + k * 4; --y) f.set(px + (int)(std::sin(y * 0.5f + t * 0.2f + k) * 1.5f), y, C(80, 150, 90));
     }
     f.line(x0 + 4, y0 + 8, x0 + 8, y0 + 5, C(230, 250, 255));
     for (int k = 0; k < 4; ++k) {
@@ -343,10 +343,10 @@ void KitchenRound::drawTable(Frame& f) {
     f.poly({ {238,203}, {398,203}, {411,227}, {225,227} }, ol);
     for (int y = 204; y < 227; ++y) {
         float u = (y - 204) / 23.0f;
-        int xl = 239 - static_cast<int>(u * 13), xr = 397 + static_cast<int>(u * 13);
+        int xl = 239 - (int)(u * 13), xr = 397 + (int)(u * 13);
         for (int x = xl; x <= xr; ++x) {
-            int gx = static_cast<int>((x - 318) / (0.8f + 0.4f * u) + 400);
-            f.set(x, y, ging(gx, static_cast<int>(u * 8 * 3), 8, 3));
+            int gx = (int)((x - 318) / (0.8f + 0.4f * u) + 400);
+            f.set(x, y, ging(gx, (int)(u * 8 * 3), 8, 3));
         }
     }
     for (int y = 227; y < 247; ++y)
@@ -381,7 +381,7 @@ void KitchenRound::drawBowl(Frame& f, int x, int y, int eaten) {
     uint8_t flesh = C(214, 208, 200), fleshD = C(176, 168, 160), bone = C(250, 248, 240), skin = C(150, 156, 170);
     f.poly({ {x - 16, y - 5}, {x - 12, y - 2}, {x - 16, y + 1} }, e >= 1 ? bone : skin);
     for (int i = x - 12; i <= x + 6; ++i) {
-        int hh = static_cast<int>(3 * std::sin((i - (x - 12)) * 3.14159f / 20) + 1);
+        int hh = (int)(3 * std::sin((i - (x - 12)) * 3.14159f / 20) + 1);
         if (i < cut) { f.set(i, y - 2, bone); if ((i % 3) == 0) { f.set(i, y - 3, bone); f.set(i, y - 1, bone); } }
         else { f.vline(i, y - 2 - hh, y - 2 + hh, flesh); f.set(i, y - 2 + hh, fleshD); f.set(i, y - 2 - hh, skin); }
     }
@@ -391,8 +391,8 @@ void KitchenRound::drawBowl(Frame& f, int x, int y, int eaten) {
         f.line(x + 6, y - 4, x + 20, y - 12, C(196, 200, 212)); f.ellipse(x + 5, y - 3, 3, 2, C(196, 200, 212));
     }
 }
-static const std::vector<std::pair<char, RGB>> kRugColors = { {'O', {42, 26, 28}}, {'F', {112, 72, 46}}, {'f', {82, 50, 34}}, {'G', {146, 98, 62}},
-                     {'T', {236, 226, 206}}, {'M', {196, 150, 104}}, {'N', {50, 30, 30}}, {'E', {42, 26, 28}} };
+#define RUG_COLORS { {'O', {42, 26, 28}}, {'F', {112, 72, 46}}, {'f', {82, 50, 34}}, {'G', {146, 98, 62}}, \
+                     {'T', {236, 226, 206}}, {'M', {196, 150, 104}}, {'N', {50, 30, 30}}, {'E', {42, 26, 28}} }
 static const Sprite RUG_PELT("rug pelt", {
     "......OOOOOOOO......................................................OOOOOOOO........",
     ".....OFTFTFTFFO....................................................OFFTFTFTFO.......",
@@ -424,7 +424,7 @@ static const Sprite RUG_PELT("rug pelt", {
     ".....OFFFFFFFFFO..................................................OFFFFFFFFFO.......",
     ".....OFTFTFTFFO....................................................OFFTFTFTFO.......",
     "......OOOOOOOO......................................................OOOOOOOO........",
-}, kRugColors);
+}, RUG_COLORS);
 static const Sprite RUG_HEAD("rug head", {
     "...OOOO..........OOOO...",
     "..OFffFO........OFffFO..",
@@ -444,7 +444,7 @@ static const Sprite RUG_HEAD("rug head", {
     "....OFFFFMMMMMMFFFFO....",
     ".....OOFFFFFFFFFFOO.....",
     ".......OOOOOOOOOO.......",
-}, kRugColors);
+}, RUG_COLORS);
 void KitchenRound::drawRug(Frame& f, int c, int t) {
     const int PX = 92, PY = 230;
     bool awake = c >= 4, sitting = c >= 8;
@@ -542,7 +542,7 @@ void KitchenRound::drawTankLife(Frame& f, int t) {
         float y = 44 + (i * 7) % 15 + std::sin((t - fi.born) * 0.21f + i) * 1.5f;
         float k = (t - fi.born) / 8.0f;
         if (k < 1) { x = fi.sx + (x - fi.sx) * ease(k); y = 42 + (y - 42) * ease(k); }
-        drawFish(f, x, y, fi.col, facing, t + static_cast<int>(i));
+        drawFish(f, x, y, fi.col, facing, t + (int)i);
     }
     for (size_t s = 0; s < splashes_.size(); ++s) {
         int k = t - splashes_[s], sx = rnd(splashX_[s]);
@@ -559,7 +559,7 @@ void KitchenRound::drawTankLife(Frame& f, int t) {
     if (on) f.vline(449, 143, 145, C(220, 220, 230)); else f.hline(448, 450, 145, C(220, 220, 230));
     const int x = 428, y = 57;
     uint8_t note = C(250, 226, 110), noteD = C(222, 190, 80), ink = C(70, 60, 120), red = C(200, 56, 60);
-    int n = std::min(10, static_cast<int>(fish_.size()));
+    int n = std::min(10, (int)fish_.size());
     bool pop = !fish_.empty() && t - fish_.back().born < 3 && n < 10;
     f.rect(x + 1, y + 1, 28, 24, C(110, 80, 60));
     f.rect(x, y - pop, 28, 24, note); f.hline(x, x + 27, y - pop, noteD);
@@ -573,7 +573,7 @@ void KitchenRound::drawTankLife(Frame& f, int t) {
         else f.set(px + 1, py + 1, noteD);
     }
     if (n >= 10 && !(earnedT_ >= 0 && t <= earnedT_ + 12 && t % 2))
-        for (int k = 0; k < 40; ++k) { float a = k * 0.157f; f.set(x + 14 + static_cast<int>(std::cos(a) * 15), y + 12 + static_cast<int>(std::sin(a) * 11), red); }
+        for (int k = 0; k < 40; ++k) { float a = k * 0.157f; f.set(x + 14 + (int)(std::cos(a) * 15), y + 12 + (int)(std::sin(a) * 11), red); }
 }
 void KitchenRound::bitePose(int t, float& bite, bool& chew, int& eaten) const {
     bite = 0; chew = false; eaten = 0;
@@ -645,7 +645,7 @@ void KitchenRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
             if (cc < MOM_WALK0) talk = cc >= MOM_SAY0 && cc < MOM_SAY1 && cc % 4 < 2;
             else if (cc < MOM_WALK1) { mx = std::max(240.0f, MOM_X0 - (cc - MOM_WALK0) * 3.0f); face = mx > 240 ? People::LEFT : People::BACK; step = mx > 240 ? (cc / 2) % 4 : -1; }
             else {
-                float u = cc >= MOM_IN0 ? static_cast<float>(cc - MOM_IN0) / (MOM_GONE - MOM_IN0) : 0;
+                float u = cc >= MOM_IN0 ? (float)(cc - MOM_IN0) / (MOM_GONE - MOM_IN0) : 0;
                 mx = 240 + (DOOR_X - 240) * u; my = MOM_FEET + (DOOR_FEET - MOM_FEET) * u;
                 face = People::BACK; step = cc >= MOM_IN0 ? (cc / 2) % 4 : -1;
             }
@@ -674,7 +674,7 @@ void KitchenRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
         else if (cc < KID_WALK1) { kidPos(cc, kx, ky); face = ky > 203 ? People::LEFT : People::BACK; step = (kx > KID_PATH[2][0] + 0.5f || ky > KID_PATH[2][1] + 0.5f) ? (cc / 2) % 4 : -1; }
         else if (cc < KID_IN0) { kx = KID_PATH[2][0]; ky = KID_PATH[2][1]; face = People::BACK; }
         else {
-            float u = static_cast<float>(cc - KID_IN0) / (KID_GONE - KID_IN0);
+            float u = (float)(cc - KID_IN0) / (KID_GONE - KID_IN0);
             kx = KID_PATH[2][0] + (DOOR_X - KID_PATH[2][0]) * u; ky = KID_PATH[2][1] + (DOOR_FEET - KID_PATH[2][1]) * u;
             face = People::BACK; step = (cc / 2) % 4;
         }
@@ -754,7 +754,7 @@ void KitchenRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (cc >= THROW && cc < THROW + THROW_LEN + 8) {
         std::vector<std::pair<int, int>> cs; int bw, bh; pieceBox(endPiece_, cs, bw, bh);
         float sx = 155 + 16, sy = 52 - 36, lx = 210, ly = 244 - bh;
-        float u = std::min(1.0f, static_cast<float>(cc - THROW) / THROW_LEN), tt = std::sin(u * PI / 2) * 0.35f + u * 0.65f;
+        float u = std::min(1.0f, (float)(cc - THROW) / THROW_LEN), tt = std::sin(u * PI / 2) * 0.35f + u * 0.65f;
         float x = bez(sx, 196, lx, tt), y = bez(sy, -24, ly, tt);
         if (cc < THROW + THROW_LEN) for (auto& q : cs) ToyBlocks::cell6(f, rnd(x) + q.first * 6, rnd(y) + q.second * 6, endPiece_);
         else {
@@ -819,7 +819,7 @@ void KitchenRound::onLinesCleared(const std::vector<int>& rows, int, int t) {
         fl.tx = 386.0f + (t * 37 + k * 19) % 59;
         static const int XS[3] = { 1, 4, 8 };
         for (int j = 0; j < 3; ++j) {
-            fl.sx[j] = static_cast<float>(boardX() + XS[j] * 8 + 4); fl.sy[j] = static_cast<float>(boardY() + r * 8 + 4);
+            fl.sx[j] = (float)(boardX() + XS[j] * 8 + 4); fl.sy[j] = (float)(boardY() + r * 8 + 4);
             fl.col[j] = (r * 3 + j * 2 + t) % 7;
         }
         flyers_.push_back(fl);

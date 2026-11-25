@@ -26,8 +26,8 @@ struct Cv {
         }
     }
     void ell(float cx, float cy, float rx, float ry, char c) {
-        for (int y = static_cast<int>(std::floor(cy - ry)); y <= static_cast<int>(std::ceil(cy + ry)); ++y)
-            for (int x = static_cast<int>(std::floor(cx - rx)); x <= static_cast<int>(std::ceil(cx + rx)); ++x) {
+        for (int y = (int)std::floor(cy - ry); y <= (int)std::ceil(cy + ry); ++y)
+            for (int x = (int)std::floor(cx - rx); x <= (int)std::ceil(cx + rx); ++x) {
                 float a = (x + 0.5f - cx) / rx, b = (y + 0.5f - cy) / ry;
                 if (a * a + b * b <= 1.0f) set(x, y, c);
             }
@@ -35,7 +35,7 @@ struct Cv {
     void poly(const std::vector<Pt>& p, char c) {
         float lo = p[0].y, hi = p[0].y;
         for (auto& q : p) { lo = std::min(lo, q.y); hi = std::max(hi, q.y); }
-        for (int y = static_cast<int>(std::floor(lo)); y <= static_cast<int>(std::ceil(hi)); ++y) {
+        for (int y = (int)std::floor(lo); y <= (int)std::ceil(hi); ++y) {
             float yc = y + 0.5f;
             std::vector<float> xs;
             for (size_t i = 0; i < p.size(); ++i) {
@@ -45,7 +45,7 @@ struct Cv {
             }
             std::sort(xs.begin(), xs.end());
             for (size_t k = 0; k + 1 < xs.size(); k += 2)
-                for (int x = static_cast<int>(std::ceil(xs[k] - 0.5f)); x < static_cast<int>(std::ceil(xs[k + 1] - 0.5f)); ++x) set(x, y, c);
+                for (int x = (int)std::ceil(xs[k] - 0.5f); x < (int)std::ceil(xs[k + 1] - 0.5f); ++x) set(x, y, c);
         }
     }
     void outline(char c) {
@@ -88,7 +88,7 @@ inline Sprite closet() {
         for (int x = 21; x <= 88; ++x) {
             float t = TL + (x + 0.5f - LX) * (TR - TL) / (RX - LX);
             float b = BL + (x + 0.5f - LX) * (BR - BL) / (RX - LX);
-            for (int y = static_cast<int>(t); y <= static_cast<int>(b) && y < 173; ++y) {
+            for (int y = (int)t; y <= (int)b && y < 173; ++y) {
                 float u = (x + 0.5f - LX) / (RX - LX), v = (y + 0.5f - t) / (b - t);
                 float du = 1.0f / 67, dv = 1.0f / (b - t);
                 auto in = [&](float u0, float u1, float v0, float v1) { return u >= u0 && u <= u1 && v >= v0 && v <= v1; };
@@ -109,9 +109,9 @@ inline Sprite closet() {
         c.rect(52, 88, 53, 95, 'G');
         if (k == 0) c.rect(46, 86, 47, 92, 'G');
         if (k > 0) {
-            float w = static_cast<float>(leaf[k]);
+            float w = (float)leaf[k];
             c.poly({{20, 21}, {20 - w, 22}, {20 - w, 147 + w / 6}, {20, 145}}, k == 1 ? 'T' : 'S');
-            if (k > 1) c.line(static_cast<int>(20 - w) + 2, 26, static_cast<int>(20 - w) + 2, 142, 'L');
+            if (k > 1) c.line((int)(20 - w) + 2, 26, (int)(20 - w) + 2, 142, 'L');
         }
         c.outline('O');
     }
@@ -126,7 +126,7 @@ inline void wolfHead(Cv& c, int k) {
     c.poly({{46, 18}, {49, 8}, {52, 18}}, 'E');
     c.poly({{22, 22}, {57, 20}, {60, 34}, {57, 46}, {30, 50}, {22, 48}}, 'K');
     c.poly({{0, 35}, {24, 26}, {32, 26}, {32, 38}, {3, 38}}, 'K');
-    float fo = static_cast<float>(o);
+    float fo = (float)o;
     c.poly({{3, 40 + fo}, {32, 40 + fo}, {32, 46 + fo}, {8, 46 + fo}}, 'K');
     if (o > 0) c.rect(6, 39, 30, 39 + o, 'D');
     for (int x = 6; x <= 29; x += 2) {
@@ -148,14 +148,14 @@ inline void wolfHead(Cv& c, int k) {
         c.set(39, 24, 'Z');
     }
     c.rect(0, 34, 2, 36, 'Z');
-    for (int x = 40; x < 70; x += 4) c.poly({{static_cast<float>(x), 50}, {static_cast<float>(x) + 2, 44}, {static_cast<float>(x) + 4, 50}}, 'K');
+    for (int x = 40; x < 70; x += 4) c.poly({{(float)x, 50}, {(float)x + 2, 44}, {(float)x + 4, 50}}, 'K');
 }
 inline Sprite wolfIn() {
     Cv c(71, 9, 119);
     for (int k = 0; k < 9; ++k) {
         c.frame(k);
         c.poly({{12, 44}, {62, 44}, {69, 118}, {12, 118}}, 'K');
-        for (int x : {10, 14, 40, 44, 48, 52, 56, 60, 64}) c.poly({{static_cast<float>(x), 44}, {static_cast<float>(x) + 2, 38}, {static_cast<float>(x) + 4, 44}}, 'K');
+        for (int x : {10, 14, 40, 44, 48, 52, 56, 60, 64}) c.poly({{(float)x, 44}, {(float)x + 2, 38}, {(float)x + 4, 44}}, 'K');
         c.line(12, 46, 12, 118, 'M');
         wolfHead(c, k);
         c.outline('N');

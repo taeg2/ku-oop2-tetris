@@ -100,7 +100,7 @@ void ClassroomRound::drawBlackboard(Frame& f) {
     Font::center(f, "WELCOME!", x + w / 2, y + 22, chY);
     Font::center(f, "FIRST DAY OF SCHOOL", x + w / 2, y + 34, ch);
     for (int k = 0; k < 3; ++k) { int fx = x + 20 + k * 6, fy = y + 60; f.disc(fx, fy, 2, chP); }
-    f.disc(x + w - 24, y + 62, 4, chY); for (int k = 0; k < 8; ++k) { float a = k * 0.785f; f.set(x + w - 24 + static_cast<int>(std::lround(std::cos(a) * 7)), y + 62 + static_cast<int>(std::lround(std::sin(a) * 7)), chY); }
+    f.disc(x + w - 24, y + 62, 4, chY); for (int k = 0; k < 8; ++k) { float a = k * 0.785f; f.set(x + w - 24 + (int)std::lround(std::cos(a) * 7), y + 62 + (int)std::lround(std::sin(a) * 7), chY); }
     f.rect(x + 6, y + h + 4, w - 12, 4, C(OL)); f.rect(x + 7, y + h + 4, w - 14, 2, C(176, 124, 78));
     f.rect(x + 40, y + h + 2, 8, 2, C(246, 246, 246)); f.rect(x + 54, y + h + 2, 6, 2, C(250, 220, 120)); f.rect(x + w - 40, y + h + 1, 14, 3, C(120, 90, 70));
 }
@@ -134,7 +134,7 @@ static void desk(Frame& f, int cx, int y, int w, int d) {
     int sh = std::max(2, d / 3);
     f.rect(x0, y + 1, w + 1, sh + 1, ol); f.rect(x0 + 1, y + 1, w - 1, sh, side);
 }
-static int col(int i, float s) { static const int X[3] = { 262, 340, 418 }; return 340 + static_cast<int>(std::lround((X[i] - 340) * s)); }
+static int col(int i, float s) { static const int X[3] = { 262, 340, 418 }; return 340 + (int)std::lround((X[i] - 340) * s); }
 void ClassroomRound::drawSideDesk(Frame& f) {
     for (int i = 0; i < 3; ++i) desk(f, col(i, 0.62f), 168, 38, 6);
     for (int i = 0; i < 3; ++i) desk(f, col(i, 0.8f), 188, 50, 9);
@@ -192,23 +192,23 @@ static void packScaled(Frame& f, int cx, int y, float k) {
     uint8_t key = C(255, 0, 255);
     tmp.rect(0, 0, 44, 44, key);
     backpack(tmp, 3, 6, 10, -1, false);
-    int w = static_cast<int>(std::lround(44 * k)), h = static_cast<int>(std::lround(44 * k));
+    int w = (int)std::lround(44 * k), h = (int)std::lround(44 * k);
     for (int j = 0; j < h; ++j) for (int i = 0; i < w; ++i) {
-        uint8_t c = tmp.get(static_cast<int>(i / k), static_cast<int>(j / k));
-        if (c != key) f.set(cx - w / 2 + i, y - static_cast<int>(std::lround(6 * k)) + j, c);
+        uint8_t c = tmp.get((int)(i / k), (int)(j / k));
+        if (c != key) f.set(cx - w / 2 + i, y - (int)std::lround(6 * k) + j, c);
     }
 }
 static float ease(float u) { u = std::max(0.0f, std::min(1.0f, u)); return u * u * (3 - 2 * u); }
 void ClassroomRound::pose(int e, int& x, int& top, int& step, bool& back) const {
     float px = MX, py = 212;
     step = -1; back = false;
-    if (e >= TO_BAG && e < GRAB) { float u = (e - TO_BAG) / static_cast<float>(GRAB - TO_BAG); px = MX + 48 * u; step = e; }
+    if (e >= TO_BAG && e < GRAB) { float u = (e - TO_BAG) / (float)(GRAB - TO_BAG); px = MX + 48 * u; step = e; }
     else if (e >= GRAB && e < WEAR) px = MX + 48;
-    else if (e >= WEAR) { float u = (e - WEAR) / static_cast<float>(TO_DOOR - WEAR); px = MX + 48 - 22 * u; py = 212 - 54 * u; step = e; back = true; }
+    else if (e >= WEAR) { float u = (e - WEAR) / (float)(TO_DOOR - WEAR); px = MX + 48 - 22 * u; py = 212 - 54 * u; step = e; back = true; }
     int rise = e < STAND1 ? (e - STAND0) * 2 : 12;
     if (e >= REACH - 2 && e < LIFT) rise -= 2;
-    x = static_cast<int>(std::lround(px)) - 10;
-    top = static_cast<int>(std::lround(py)) - 38 + (12 - rise) + (step >= 0 && step % 2 ? -1 : 0);
+    x = (int)std::lround(px) - 10;
+    top = (int)std::lround(py) - 38 + (12 - rise) + (step >= 0 && step % 2 ? -1 : 0);
 }
 void ClassroomRound::drawCarry(Frame& f, int t) {
     int e = endT_ >= 0 ? t - endT_ : -1;
@@ -216,11 +216,11 @@ void ClassroomRound::drawCarry(Frame& f, int t) {
     int x, top, step; bool back;
     pose(e, x, top, step, back);
     int shx = x + 17, shy = top + 19, hx, hy;
-    if (e < REACH) { float u = ease((e - STAND1 + 1) / static_cast<float>(REACH - STAND1)); hx = static_cast<int>(std::lround(shx + (MX - shx) * u)); hy = static_cast<int>(std::lround(shy + 6 + (232 - shy - 6) * u)); }
-    else if (e < LIFT) { float u = ease((e - REACH) / static_cast<float>(LIFT - REACH)); hx = static_cast<int>(std::lround(MX + (shx + 6 - MX) * u)); hy = static_cast<int>(std::lround(232 + (shy + 4 - 232) * u - std::sin(u * 3.1416f) * 10)); }
+    if (e < REACH) { float u = ease((e - STAND1 + 1) / (float)(REACH - STAND1)); hx = (int)std::lround(shx + (MX - shx) * u); hy = (int)std::lround(shy + 6 + (232 - shy - 6) * u); }
+    else if (e < LIFT) { float u = ease((e - REACH) / (float)(LIFT - REACH)); hx = (int)std::lround(MX + (shx + 6 - MX) * u); hy = (int)std::lround(232 + (shy + 4 - 232) * u - std::sin(u * 3.1416f) * 10); }
     else { hx = shx + 6; hy = shy + 4 + ((e - LIFT) < 3 ? (e - LIFT) % 2 : 0); }
     int sw = e >= LIFT && e < TO_BAG ? (e - LIFT) % 2 * 2 - 1 : 0;
-    if (e >= REACH) packScaled(f, hx + sw + 3, hy + 4, 1.0f - 0.42f * ease((e - REACH) / static_cast<float>(LIFT - REACH)));
+    if (e >= REACH) packScaled(f, hx + sw + 3, hy + 4, 1.0f - 0.42f * ease((e - REACH) / (float)(LIFT - REACH)));
     sleeve(f, shx, shy, hx, hy + 1);
     f.disc(hx, hy + 1, 2, C(OL)); f.disc(hx, hy + 1, 1, C(246, 204, 164));
 }
@@ -322,7 +322,7 @@ void ClassroomRound::drawNext(Frame& f, int piece, int t) {
     else if (s < 8) { o = (s - 4) / 3.0f; }
     if (o > 0.05f) pieceAt(f, show, 249, 135 - ((t / 6) % 2), 147);
     uint8_t ol = C(OL), door = C(196, 140, 88), doorL = C(220, 168, 110);
-    int hinge = 267, fx = static_cast<int>(std::lround(hinge - 36 + 48 * o)), skew = static_cast<int>(std::lround(4 * o));
+    int hinge = 267, fx = (int)std::lround(hinge - 36 + 48 * o), skew = (int)std::lround(4 * o);
     int l = std::min(hinge, fx), r = std::max(hinge, fx);
     if (r - l >= 2) {
         int ly = fx < hinge ? 0 : skew;

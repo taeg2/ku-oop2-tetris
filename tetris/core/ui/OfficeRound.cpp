@@ -7,7 +7,7 @@
 #include <cmath>
 using namespace Stage3Art;
 static const int HERO_X = 286, FLOOR_Y = 216, DESK_X = 316;
-static int rnd(float v) { return static_cast<int>(std::lround(v)); }
+static int rnd(float v) { return (int)std::lround(v); }
 static void paycheck(Frame& f, int x, int y, int) {
     uint8_t ol = C(OLC);
     f.rect(x - 9, y - 6, 19, 13, ol); f.rect(x - 8, y - 5, 17, 11, C(244, 236, 214)); f.line(x - 8, y - 5, x, y + 1, C(200, 190, 166)); f.line(x + 8, y - 5, x, y + 1, C(200, 190, 166));
@@ -126,7 +126,7 @@ void OfficeRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     else person(f, HERO_X, FLOOR_Y, HERO_SUIT, false, SIT, TYPE, tired ? SLEEPY : CALM, typing ? t : t / 3);
     drawDesk(f, t);
     if (curT_ >= 0 && t - curT_ < DONE_LEN && e < 0) {
-        float u = (t - curT_) / static_cast<float>(DONE_LEN);
+        float u = (t - curT_) / (float)DONE_LEN;
         int px = rnd(DESK_X + 110 + 22 * u), py = rnd(182 - inbox_ * 2 - std::sin(u * 3.1416f) * 20);
         f.rect(px - 1, py - 1, 18, 4, ol); f.rect(px, py, 16, 2, C(252, 250, 242));
     }

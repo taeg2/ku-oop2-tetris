@@ -8,8 +8,8 @@
 // 설정 화면. 소리 켜기/끄기와 조작 키 목록을 보여 준다. 소리 값은 soundOn()으로 읽어 가서 바꿔 끼운다
 class SettingsView : public View {
 public:
-    inline static const int kScale = 2;
-    inline static const int kFrameMs = 100;
+    static constexpr int kScale = 2;
+    static constexpr int kFrameMs = 100;
     explicit SettingsView(Point origin);
     void open(bool soundOn, const Frame& background);  // 뒤에 깔 화면을 그린 바로 뒤에 부른다
     void handle(Command command);

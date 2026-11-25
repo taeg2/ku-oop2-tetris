@@ -31,7 +31,7 @@ public:
                 for (int gx = 0; gx < Frame::W; ++gx) {
                     int bits = 0;
                     for (int k = 0; k < 6; ++k) if (rows[k] && rows[k][gx] == c) bits |= 1 << k;
-                    char ch = static_cast<char>(63 + bits);
+                    char ch = (char)(63 + bits);
                     if (ch == prev) run += s;
                     else { emit(out, prev, run); prev = ch; run = s; }
                 }

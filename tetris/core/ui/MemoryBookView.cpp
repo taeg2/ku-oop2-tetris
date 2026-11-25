@@ -37,11 +37,11 @@ static void photo(Frame& f, int slot, int x, int y, int state, int t) {
 MemoryBookView::MemoryBookView(Point origin) : View(origin) {}
 void MemoryBookView::open(const std::vector<bool>& remembered, int current, const Frame& background) {
     m_open = true; m_openT = m_t; m_current = current;
-    for (int i = 0; i < kSlots; ++i) m_remembered[i] = i < static_cast<int>(remembered.size()) && remembered[i];
+    for (int i = 0; i < kSlots; ++i) m_remembered[i] = i < (int)remembered.size() && remembered[i];
     m_sel = current >= 0 ? current : 0;
     m_background = MenuArt::capture(background);
 }
-int MemoryBookView::rememberedCount() const { return static_cast<int>(std::count(m_remembered.begin(), m_remembered.end(), true)); }
+int MemoryBookView::rememberedCount() const { return (int)std::count(m_remembered.begin(), m_remembered.end(), true); }
 void MemoryBookView::handle(Command command) {
     if (!m_open) return;
     if (command == Command::MoveLeft) m_sel = (m_sel + kSlots - 1) % kSlots;

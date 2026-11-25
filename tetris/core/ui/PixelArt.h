@@ -13,27 +13,27 @@ inline std::vector<RGB>& palette() { static std::vector<RGB> p; return p; }
 inline uint8_t C(int r, int g, int b) {
     auto& p = palette();
     for (size_t i = 0; i < p.size(); ++i)
-        if (p[i].r == r && p[i].g == g && p[i].b == b) return static_cast<uint8_t>(i);
+        if (p[i].r == r && p[i].g == g && p[i].b == b) return (uint8_t)i;
     if (p.size() >= 256) { std::fprintf(stderr, "palette full!\n"); return 0; }
     p.push_back({ r, g, b });
-    return static_cast<uint8_t>(p.size() - 1);
+    return (uint8_t)(p.size() - 1);
 }
 inline int& paletteEpoch() { static int e = 0; return e; }
 inline void resetPalette() { palette().clear(); ++paletteEpoch(); }
 inline uint8_t C(RGB c) { return C(c.r, c.g, c.b); }
 inline RGB mix(RGB a, RGB b, float t) {
-    return { static_cast<int>(a.r + (b.r - a.r) * t), static_cast<int>(a.g + (b.g - a.g) * t), static_cast<int>(a.b + (b.b - a.b) * t) };
+    return { (int)(a.r + (b.r - a.r) * t), (int)(a.g + (b.g - a.g) * t), (int)(a.b + (b.b - a.b) * t) };
 }
 struct Frame {
     using Pts = std::vector<std::pair<int,int>>;
-    inline static const int W = 480, H = 270;
+    static constexpr int W = 480, H = 270;
     std::vector<uint8_t> px;
     Frame() : px(W * H, 0) {}
     void set(int x, int y, uint8_t c) {
-        if (static_cast<unsigned>(x) < static_cast<unsigned>(W) && static_cast<unsigned>(y) < static_cast<unsigned>(H)) px[y * W + x] = c;
+        if ((unsigned)x < (unsigned)W && (unsigned)y < (unsigned)H) px[y * W + x] = c;
     }
     uint8_t get(int x, int y) const {
-        if (static_cast<unsigned>(x) < static_cast<unsigned>(W) && static_cast<unsigned>(y) < static_cast<unsigned>(H)) return px[y * W + x];
+        if ((unsigned)x < (unsigned)W && (unsigned)y < (unsigned)H) return px[y * W + x];
         return 0;
     }
     void rect(int x, int y, int w, int h, uint8_t c) {
@@ -79,24 +79,24 @@ struct Frame {
     void taper(int x0, int y0, int x1, int y1, float w0, float w1, uint8_t c) {
         int n = std::max(std::abs(x1 - x0), std::abs(y1 - y0)) + 1;
         for (int i = 0; i <= n; ++i) {
-            float t = static_cast<float>(i) / n, w = w0 + (w1 - w0) * t;
-            int cx = static_cast<int>(std::lround(x0 + (x1 - x0) * t)), cy = static_cast<int>(std::lround(y0 + (y1 - y0) * t));
-            int r = static_cast<int>(w / 2);
+            float t = (float)i / n, w = w0 + (w1 - w0) * t;
+            int cx = (int)std::lround(x0 + (x1 - x0) * t), cy = (int)std::lround(y0 + (y1 - y0) * t);
+            int r = (int)(w / 2);
             for (int dy = -r; dy <= r; ++dy) for (int dx = -r; dx <= r; ++dx)
                 if (dx * dx + dy * dy <= r * r + r) set(cx + dx, cy + dy, c);
         }
     }
     void ditherEllipse(int cx, int cy, int rx, int ry, uint8_t c) {
         for (int y = -ry; y <= ry; ++y) for (int x = -rx; x <= rx; ++x) {
-            long e = static_cast<long>(x) * x * ry * ry + static_cast<long>(y) * y * rx * rx, R = static_cast<long>(rx) * rx * ry * ry;
+            long e = (long)x * x * ry * ry + (long)y * y * rx * rx, R = (long)rx * rx * ry * ry;
             if (e <= R * 7 / 10 || (e <= R && ((cx + x + cy + y) & 1))) set(cx + x, cy + y, c);
         }
     }
     void gradient(int x, int y, int w, int h, const std::vector<RGB>& ramp) {
-        int n = static_cast<int>(ramp.size());
+        int n = (int)ramp.size();
         for (int j = 0; j < h; ++j) {
-            float t = static_cast<float>(j) / h * n;
-            int k = static_cast<int>(t); if (k >= n) k = n - 1;
+            float t = (float)j / h * n;
+            int k = (int)t; if (k >= n) k = n - 1;
             float f = t - k;
             for (int i = 0; i < w; ++i) {
                 int kk = k;
@@ -115,15 +115,15 @@ struct Sprite {
     Sprite(const char* nm, std::initializer_list<const char*> r, std::initializer_list<std::pair<char, RGB>> keys) : Sprite(nm, std::vector<std::string>(r.begin(), r.end()), std::vector<std::pair<char, RGB>>(keys.begin(), keys.end())) {}
     Sprite(const char* nm, const std::vector<std::string>& r, const std::vector<std::pair<char, RGB>>& keys) : name(nm) {
         rows = r;
-        h = static_cast<int>(rows.size());
-        w = h ? static_cast<int>(rows[0].size()) : 0;
+        h = (int)rows.size();
+        w = h ? (int)rows[0].size() : 0;
         for (int i = 0; i < 128; ++i) has[i] = false;
-        for (auto& k : keys) { this->key[static_cast<int>(k.first) & 127] = k.second; has[static_cast<int>(k.first) & 127] = true; }
+        for (auto& k : keys) { this->key[(int)k.first & 127] = k.second; has[(int)k.first & 127] = true; }
         for (int i = 0; i < h; ++i)
-            if (static_cast<int>(rows[i].size()) != w)
-                std::fprintf(stderr, "[sprite %s] row %d has %d chars, expected %d\n", nm, i, static_cast<int>(rows[i].size()), w);
+            if ((int)rows[i].size() != w)
+                std::fprintf(stderr, "[sprite %s] row %d has %d chars, expected %d\n", nm, i, (int)rows[i].size(), w);
         for (auto& s : rows) for (char ch : s)
-            if (ch != '.' && !has[static_cast<int>(ch) & 127])
+            if (ch != '.' && !has[(int)ch & 127])
                 std::fprintf(stderr, "[sprite %s] char '%c' has no color\n", nm, ch);
     }
 };
@@ -135,9 +135,9 @@ inline void blit(Frame& f, const Sprite& sp, int x, int y, int s = 1, bool flip 
         for (int c = 0; c < sp.w; ++c) {
             char ch = sp.rows[r][flip ? sp.w - 1 - c : c];
             if (ch == '.') continue;
-            int col = lut[static_cast<int>(ch) & 127];
+            int col = lut[(int)ch & 127];
             if (col < 0) continue;
-            for (int j = 0; j < s; ++j) for (int i = 0; i < s; ++i) f.set(x + c * s + i, y + r * s + j, static_cast<uint8_t>(col));
+            for (int j = 0; j < s; ++j) for (int i = 0; i < s; ++i) f.set(x + c * s + i, y + r * s + j, (uint8_t)col);
         }
 }
 inline const char* glyph(char ch) {
@@ -178,9 +178,9 @@ inline const char* glyph(char ch) {
 inline void text(Frame& f, const std::string& s, int x, int y, uint8_t c, int scale = 1) {
     for (size_t k = 0; k < s.size(); ++k) {
         const char* g = glyph(s[k]);
-        int len = static_cast<int>(std::strlen(g));
+        int len = (int)std::strlen(g);
         for (int i = 0; i < 15 && i < len; ++i)
             if (g[i] == '#')
-                f.rect(x + static_cast<int>(k) * 4 * scale + (i % 3) * scale, y + (i / 3) * scale, scale, scale, c);
+                f.rect(x + (int)k * 4 * scale + (i % 3) * scale, y + (i / 3) * scale, scale, scale, c);
     }
 }

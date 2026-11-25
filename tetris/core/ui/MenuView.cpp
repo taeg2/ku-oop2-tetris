@@ -8,7 +8,7 @@ static void icon(Frame& f, int k, int cx, int cy, int t) {
     uint8_t ol = C(MenuArt::OUT);
     if (k == 0) { f.poly({ {cx - 3, cy - 5}, {cx - 3, cy + 5}, {cx + 5, cy} }, ol); f.poly({ {cx - 2, cy - 3}, {cx - 2, cy + 3}, {cx + 3, cy} }, C(110, 180, 90)); }
     if (k == 1) { f.rect(cx - 6, cy - 5, 12, 11, ol); f.rect(cx - 5, cy - 4, 10, 9, C(170, 50, 64)); f.rect(cx - 5, cy - 4, 2, 9, C(130, 36, 50)); f.set(cx + 1, cy - 1, C(250, 200, 210)); f.set(cx + 2, cy - 1, C(250, 200, 210)); f.set(cx + 1, cy, C(250, 200, 210)); f.set(cx + 2, cy, C(250, 200, 210)); f.set(cx + 1, cy + 1, C(250, 200, 210)); }
-    if (k == 2) { float a0 = t * 0.15f; for (int i = 0; i < 8; ++i) { float a = a0 + i * 0.785f; f.disc(cx + static_cast<int>(std::lround(std::cos(a) * 5)), cy + static_cast<int>(std::lround(std::sin(a) * 5)), 1, ol); } f.disc(cx, cy, 5, ol); f.disc(cx, cy, 4, C(150, 150, 160)); f.disc(cx, cy, 1, ol); }
+    if (k == 2) { float a0 = t * 0.15f; for (int i = 0; i < 8; ++i) { float a = a0 + i * 0.785f; f.disc(cx + (int)std::lround(std::cos(a) * 5), cy + (int)std::lround(std::sin(a) * 5), 1, ol); } f.disc(cx, cy, 5, ol); f.disc(cx, cy, 4, C(150, 150, 160)); f.disc(cx, cy, 1, ol); }
     if (k == 3) { f.rect(cx - 5, cy - 6, 10, 13, ol); f.rect(cx - 4, cy - 5, 8, 11, C(130, 86, 54)); f.set(cx + 2, cy, C(230, 190, 90)); f.hline(cx - 6, cx + 6, cy + 7, ol); }
 }
 MenuView::MenuView(Point origin) : View(origin) {}

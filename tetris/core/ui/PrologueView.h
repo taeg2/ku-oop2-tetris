@@ -7,8 +7,8 @@
 // 집 오프닝. stage 0은 사탕, stage 1은 샌드위치를 먹고 서재에서 앨범을 집으면 finished()가 true가 된다
 class PrologueView : public View {
 public:
-    inline static const int kScale = 2;
-    inline static const int kFrameMs = 100;
+    static constexpr int kScale = 2;
+    static constexpr int kFrameMs = 100;
     explicit PrologueView(Point origin);
     void start(int stage);
     void handle(Command command);

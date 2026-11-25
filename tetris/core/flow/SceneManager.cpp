@@ -2,6 +2,7 @@
 
 void SceneManager::change(std::unique_ptr<Scene> next) {
     m_current = std::move(next);
+    ++m_changeCount;
     if (m_current) {
         m_current->onEnter();
     }

@@ -14,7 +14,7 @@ void GameOverScene::onEnter() {
 void GameOverScene::handle(Command command) {
     if (command == Command::Confirm || command == Command::HardDrop) {
         m_services.sound.play(SoundId::Select);
-        changeTo(std::make_unique<PlayScene>(m_services, m_stageIndex));  // 새 PlayScene = 스테이지 시작 상태
+        changeTo(std::make_unique<PlayScene>(m_services, m_stageIndex));  // 지금 라운드부터 보드를 비우고 다시
     } else if (command == Command::Pause) {
         changeTo(std::make_unique<TitleScene>(m_services));
     } else if (command == Command::Quit) {

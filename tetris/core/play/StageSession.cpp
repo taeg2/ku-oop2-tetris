@@ -44,6 +44,15 @@ void StageSession::reset() {
     spawnNext();
 }
 
+void StageSession::restartBoard() {
+    m_board.reset();
+    m_generator.reset();
+    m_flashRows.clear();
+    m_dropTimerMs = 0;
+    m_state = State::Falling;
+    spawnNext();
+}
+
 void StageSession::handle(Command command) {
     if (m_state != State::Falling) {
         return;

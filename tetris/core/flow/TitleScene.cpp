@@ -3,6 +3,7 @@
 #include "stage/Album.h"
 #include "ui/ISoundPlayer.h"
 #include "flow/PrologueScene.h"
+#include "flow/StoryArt.h"
 
 namespace {
 constexpr int kShuffleMs = 1200;
@@ -26,6 +27,7 @@ TitleScene::TitleScene(GameServices& services) : Scene(services) {
 
 void TitleScene::onEnter() {
     m_services.album.clear();  // 타이틀로 돌아오면 새 게임
+    m_services.story.restart();
 }
 
 void TitleScene::shuffleDecorations() {
@@ -43,7 +45,7 @@ void TitleScene::handle(Command command) {
     }
     if (command == Command::Confirm || command == Command::HardDrop) {
         m_services.sound.play(SoundId::Select);
-        changeTo(std::make_unique<PrologueScene>(m_services));
+        changeTo(std::make_unique<PrologueScene>(m_services, 0));
     }
 }
 

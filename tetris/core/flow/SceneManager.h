@@ -14,6 +14,7 @@ public:
     void update(int dtMs);
     void render(Console& console) const;
     bool isRunning() const { return m_current != nullptr; }
+    int changeCount() const { return m_changeCount; }  // 장면이 바뀔 때마다 1씩 는다 (화면 지우기 판단용)
 
 private:
     void applyRequests();
@@ -21,4 +22,5 @@ private:
     std::unique_ptr<Scene> m_current;
     std::unique_ptr<Scene> m_pending;
     bool m_quitRequested = false;
+    int m_changeCount = 0;
 };

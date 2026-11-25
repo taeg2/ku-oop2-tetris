@@ -17,8 +17,13 @@
 #include "ui/PhotoFrameView.h"
 #include "flow/AlbumScene.h"
 #include "flow/EndingScene.h"
+#include "flow/PlayScene.h"
+#include "flow/PrologueScene.h"
 #include "flow/SceneManager.h"
+#include "flow/StoryArt.h"
+#include "flow/SwitchableSound.h"
 #include "flow/TitleScene.h"
+#include "ui/PixelArt.h"
 
 #define CHECK(c) do { if (!(c)) { std::printf("CHECK FAILED %s:%d %s\n", __FILE__, __LINE__, #c); std::exit(1); } } while (0)
 
@@ -40,7 +45,10 @@ public:
         }
     }
     void flush() override {}
+    void writeRaw(Point, const std::string& bytes) override { ++images; imageBytes += bytes.size(); }  // Sixel 그림은 개수만 센다
     std::vector<Cell> screen = std::vector<Cell>(W * H);
+    int images = 0;
+    std::size_t imageBytes = 0;
 };
 static CaptureTerminal g_terminal;
 
@@ -56,6 +64,17 @@ static void dump(const std::string& name) {
         }
         attr << "\n";
         out << TextUtil::encode(line) << "\n";
+    }
+}
+
+// 그림 View가 방금 render()한 Frame을 PPM 이미지로 저장한다 (팔레트는 render() 직후에만 맞다)
+static void dumpArt(const std::string& name, const Frame& f) {
+    std::ofstream out("test_screens/" + name + ".ppm", std::ios::binary);
+    out << "P6\n" << Frame::W << " " << Frame::H << "\n255\n";
+    const auto& pal = palette();
+    for (uint8_t c : f.px) {
+        const RGB rgb = c < pal.size() ? pal[c] : RGB{0, 0, 0};
+        out.put((char)rgb.r); out.put((char)rgb.g); out.put((char)rgb.b);
     }
 }
 
@@ -109,11 +128,13 @@ static Command botCommand(const StageSession& s, int& stuck) {
 
 int main() {
     std::mt19937 rng(12345);
-    MuteSoundPlayer sound;
+    MuteSoundPlayer mute;
+    SwitchableSound sound(mute);
     StageCatalog catalog;
     Album album(config::kStageCount);
+    StoryArt story(catalog, sound, rng);
     SceneManager scenes;
-    GameServices services{sound, album, catalog, rng, scenes};
+    GameServices services{sound, album, story, catalog, rng, scenes};
     Console console(g_terminal, config::kScreenWidth, config::kScreenHeight);
 
     // --- 단위 확인 ---
@@ -186,49 +207,84 @@ int main() {
         dump("stage" + std::to_string(stage + 1) + "_cleared");
     }
 
-    // --- 장면 흐름: 타이틀 -> 프롤로그 -> 플레이 (무작위 입력) ---
+    // --- 장면 흐름: 타이틀 -> 집 오프닝 -> (앨범 -> 플레이) x 12 라운드 -> 집 -> ... -> 엔딩 ---
+    // 그림(Sixel) 만들기는 느리므로 봇이 플레이하는 동안에는 renderEvery 프레임마다 한 번만 그린다
+    int renderEvery = 1, frameNo = 0;
     auto frame = [&](int n, std::optional<Command> cmd = std::nullopt) {
         for (int i = 0; i < n; ++i) {
             if (cmd && i == 0) scenes.handle(*cmd);
             scenes.update(16);
             if (!scenes.isRunning()) return;
-            console.clear(); scenes.render(console); console.present();
+            if (++frameNo % renderEvery == 0) { console.clear(); scenes.render(console); console.present(); }
         }
     };
     scenes.change(std::make_unique<TitleScene>(services));
     frame(10); dump("scene_title");
-    frame(5, Command::Confirm); frame(120); dump("scene_prologue_0");
-    for (int i = 0; i < 3; ++i) { frame(5, Command::Confirm); frame(5, Command::Confirm); }
-    frame(200); dump("scene_prologue_3");
-    for (int i = 0; i < 6; ++i) { frame(5, Command::Confirm); frame(5, Command::Confirm); }
-    frame(30); dump("scene_play_intro");
-    frame(150); dump("scene_play_start");
-    std::uniform_int_distribution<int> pick(0, 6);
-    const Command cmds[] = {Command::MoveLeft, Command::MoveRight, Command::Rotate, Command::SoftDrop, Command::HardDrop, Command::UseBluePill, Command::UseRedPill};
-    for (int i = 0; i < 4000 && scenes.isRunning(); ++i) {
-        frame(1, cmds[pick(rng)]);
-    }
-    frame(1); dump("scene_random_play");
-    frame(5, Command::Pause); dump("scene_paused");
-    frame(5, Command::Pause);
-    for (int i = 0; i < 3000 && scenes.isRunning(); ++i) frame(1, Command::HardDrop);
-    dump("scene_after_drops");
+    CHECK(g_terminal.images == 0);  // 타이틀은 글자 화면
+    frame(5, Command::Confirm); frame(120);
+    CHECK(g_terminal.images > 0);   // 집 오프닝은 그림(Sixel)으로 그린다
+    story.house().render(); dumpArt("art_house_opening", story.house().frame());
+    for (int i = 0; i < 40; ++i) frame(20, Command::Confirm);  // 대사 넘기기
+    story.house().render(); dumpArt("art_house_talk", story.house().frame());
 
-    // --- 앨범과 엔딩 ---
-    album.clear(); album.add(catalog.get(0).photo); album.add(catalog.get(1).photo);
-    scenes.change(std::make_unique<AlbumScene>(services, 1));
-    frame(60); dump("album_showcase");
-    frame(130); dump("album_insert");
-    frame(200); dump("album_caption");
-    album.add(catalog.get(2).photo);
-    scenes.change(std::make_unique<EndingScene>(services));
-    frame(150); dump("ending_0");
-    for (int i = 0; i < 4; ++i) { frame(5, Command::Confirm); frame(5, Command::Confirm); }
-    frame(40); dump("ending_reassemble_mid");
-    frame(400); dump("ending_reassemble_done");
-    for (int i = 0; i < 6; ++i) { frame(5, Command::Confirm); frame(200, Command::Confirm); }
-    dump("ending_last");
-    for (int i = 0; i < 3; ++i) { frame(5, Command::Confirm); }
-    std::printf("scene flow ok, running=%d\n", scenes.isRunning());
+    // 집 안을 걸어 다니는 건 봇이 하기 어려우므로, 스테이지마다 앨범부터 시작한다
+    int stuck = 0, failures = 0;
+    renderEvery = 60;
+    bool menuChecked = false, dumpedPlay = false;
+    for (int stage = 0; stage < 3; ++stage) {
+        scenes.change(std::make_unique<AlbumScene>(services, stage, AlbumScene::kNoRoundCleared));
+        frame(30); story.album().render(); dumpArt("art_album_stage" + std::to_string(stage + 1), story.album().frame());
+        int frames = 0;
+        while (frames++ < 100000) {
+            // 플레이 장면인지: 세션이 블록을 떨어뜨리는 중이고, 앨범이 닫혀 있고, 라운드 끝 처리가 남지 않았다
+            const bool inPlay = story.hasSession() && story.stageIndex() == stage && story.session().hasActivePiece() &&
+                                !story.album().isOpen() && !story.roundEndPending();
+            if (stage == 2 && story.ending().finished()) break;
+            if (stage < 2 && story.house().stage() == stage + 1) break;  // 다음 집 장면이 열렸다
+            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); frame(5, Command::Confirm); continue; }
+            if (inPlay && !story.stageArt().wantsPause()) {
+                if (!dumpedPlay && story.session().board().filledCells().size() > 20) {
+                    dumpedPlay = true;
+                    story.stageArt().render(); dumpArt("art_play_lake", story.stageArt().frame());
+                }
+                if (!menuChecked && story.session().progress().pieces() == 1) {
+                    // 메뉴 -> 기억의 책 -> 닫기 -> 설정에서 소리 끄기 -> 닫기 -> 계속하기
+                    menuChecked = true;
+                    frame(5, Command::Pause); story.menu().render(); dumpArt("art_menu", story.menu().frame());
+                    CHECK(story.menu().isOpen());
+                    frame(5, Command::SoftDrop); frame(5, Command::Confirm);
+                    CHECK(story.book().isOpen()); story.book().render(); dumpArt("art_memory_book", story.book().frame());
+                    CHECK(story.book().rememberedCount() == 1);
+                    frame(5, Command::Pause); CHECK(!story.book().isOpen());
+                    frame(5, Command::SoftDrop); frame(5, Command::Confirm);
+                    CHECK(story.settings().isOpen()); frame(5, Command::Confirm); CHECK(!sound.isOn());
+                    story.settings().render(); dumpArt("art_settings", story.settings().frame());
+                    frame(5, Command::Confirm); CHECK(sound.isOn());
+                    frame(5, Command::Pause); CHECK(!story.settings().isOpen());
+                    frame(5, Command::Pause); CHECK(!story.menu().isOpen());
+                    continue;
+                }
+                if (frames % 14 == 0) { frame(1, botCommand(story.session(), stuck)); continue; }
+            } else if (!inPlay && frames % 30 == 0) {
+                frame(1, Command::Confirm);  // 앨범에서 다음 라운드 고르기
+                continue;
+            }
+            frame(1);
+        }
+        int count = 0;
+        for (int slot = 0; slot < (stage + 1) * StoryArt::kRoundsPerStage; ++slot) count += story.remembered()[(std::size_t)slot];
+        std::printf("scene stage %d: frames=%d remembered=%d failures=%d\n", stage + 1, frames, count, failures);
+        CHECK(count == (stage + 1) * StoryArt::kRoundsPerStage);
+        CHECK(story.session().isCleared());
+        if (stage < 2) { frame(30); story.house().render(); dumpArt("art_house_stage" + std::to_string(stage + 2), story.house().frame()); }
+    }
+    renderEvery = 1;
+    CHECK(story.ending().finished());
+    CHECK(menuChecked);
+    story.ending().render(); dumpArt("art_ending", story.ending().frame());
+    CHECK(album.isComplete());
+    frame(5, Command::Confirm);  // 엔딩 -> 타이틀
+    CHECK(scenes.isRunning());
+    std::printf("scene flow ok, images=%d\n", g_terminal.images);
     return 0;
 }

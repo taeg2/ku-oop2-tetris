@@ -26,7 +26,8 @@ public:
     void subscribe(IGameEventListener& listener);
     void handle(Command command);
     void update(int dtMs);
-    void reset();  // 재도전: 스테이지 시작 상태로
+    void reset();         // 재도전: 스테이지 시작 상태로
+    void restartBoard();  // 재도전: 사진 진행·보스·약·속도는 그대로 두고 보드만 비워 지금 라운드부터 다시
 
     bool isCleared() const { return m_state == State::Cleared; }
     bool isFailed() const { return m_state == State::Failed; }

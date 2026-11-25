@@ -1,35 +1,14 @@
 #pragma once
-#include <array>
-#include <vector>
-#include "common/Point.h"
-#include "flow/NarrativeScene.h"
+#include "flow/Scene.h"
 
-class PhotoArt;
-
-// 엔딩 (결말). 앨범을 펼쳐 세 장을 차례로 보고, 마지막 사진이 테트로미노 조각으로
-//     흩어졌다가 다시 맞춰진 뒤, 아버지가 자녀를 알아본다. (기획안 7장 최종 이벤트)
-class EndingScene : public NarrativeScene {
+// 엔딩 (ui의 EndingView). 서재에서 앨범을 내려놓으면 아이들이 들어와 "이제 기분이 어때요?"라고 묻고,
+//     아버지가 "나아졌어"라고 답한 뒤 THE END. 끝난 뒤 Enter를 누르면 타이틀로 간다.
+class EndingScene : public Scene {
 public:
     explicit EndingScene(GameServices& services);
 
-protected:
-    void renderBackground(Console& console) const override;
-    void onNarrationEnd() override;
-    void onLineShown(std::size_t index) override;
-    void onUpdate(int dtMs) override;
-    bool canAdvance() const override;
-
-private:
-    struct Fragment {
-        std::vector<Point> blocks;  // 4x4 픽셀 블록 좌표 (테트로미노 모양)
-        Point scatter;              // 흩어진 위치 (콘솔 칸 단위 오프셋)
-    };
-
-    void renderAlbumSpread(Console& console) const;
-    void renderReassembly(Console& console) const;
-    void renderFrame(Console& console, const std::string& caption) const;
-    const PhotoArt& photo(int index) const;
-
-    std::vector<Fragment> m_fragments;
-    int m_assembleMs = -1;  // -1: 아직 시작 안 함
+    void onEnter() override;
+    void handle(Command command) override;
+    void update(int dtMs) override;
+    void render(Console& console) const override;
 };

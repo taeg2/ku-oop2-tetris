@@ -46,11 +46,15 @@ constexpr int kStageIntroMs = 2200;
 constexpr int kStageCompleteMs = 2200;
 constexpr int kStageFailMs = 1400;
 constexpr int kTypingCharsPerSecond = 28;
+constexpr int kFinalAlbumMs = 5000;  // 마지막 앨범을 보여 준 뒤 엔딩으로 넘어가기까지
 
 }  // namespace config
 
 // 플레이 화면 배치 (콘솔 좌표)
 namespace layout {
+// ui의 그림 View(집, 앨범, 라운드, 메뉴, 엔딩)를 그리는 위치. 그림은 Sixel 이미지 하나로 화면 전체를 덮는다.
+constexpr int kArtX = 0;
+constexpr int kArtY = 0;
 constexpr int kBoardX = 1;
 constexpr int kBoardY = 2;
 constexpr int kNextX = 27;

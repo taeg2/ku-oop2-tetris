@@ -11,10 +11,6 @@
 #include "stage/StageCatalog.h"
 #include "play/StageSession.h"
 #include "ui/MuteSoundPlayer.h"
-#include "ui/BoardView.h"
-#include "ui/HudView.h"
-#include "ui/NextBlockView.h"
-#include "ui/PhotoFrameView.h"
 #include "flow/AlbumScene.h"
 #include "flow/EndingScene.h"
 #include "flow/PlayScene.h"
@@ -22,7 +18,6 @@
 #include "flow/SceneManager.h"
 #include "flow/StoryArt.h"
 #include "flow/SwitchableSound.h"
-#include "flow/TitleScene.h"
 #include "ui/PixelArt.h"
 
 #define CHECK(c) do { if (!(c)) { std::printf("CHECK FAILED %s:%d %s\n", __FILE__, __LINE__, #c); std::exit(1); } } while (0)
@@ -168,11 +163,7 @@ int main() {
     for (int stage = 0; stage < 3; ++stage) {
         StageSession s(catalog.get(stage), sound, rng);
         Counter counter; s.subscribe(counter);
-        BoardView bv({layout::kBoardX, layout::kBoardY}, s);
-        HudView hv({layout::kHudX, layout::kHudY}, s);
-        NextBlockView nv({layout::kNextX, layout::kNextY}, s);
-        PhotoFrameView pv({layout::kPhotoX, layout::kPhotoY}, s);
-        int frames = 0, stuck = 0, attempts = 1; bool dumpedBoss = false, dumpedEffect = false;
+        int frames = 0, stuck = 0, attempts = 1;
         int pillsUsed = 0, actions = 0;
         while (!s.isCleared() && frames < 200000) {
             ++frames;
@@ -185,15 +176,6 @@ int main() {
                 else s.handle(botCommand(s, stuck));
             }
             s.update(16);
-            bv.update(16); pv.update(16); hv.update(16);
-            bool effect = s.board().isHidden({0,0}) ;
-            for (int y = 0; y < Board::kHeight && !effect; ++y) for (int x = 0; x < Board::kWidth; ++x)
-                if (s.board().isHidden({x, y}) || s.board().isMarked({x, y})) effect = true;
-            if ((s.boss().isActive() && !dumpedBoss && s.board().filledCells().size() > 25) || (effect && !dumpedEffect)) {
-                console.clear(); bv.draw(console); nv.draw(console); hv.draw(console); pv.draw(console); console.present();
-                dump("stage" + std::to_string(stage + 1) + (effect ? "_effect" : "_boss"));
-                if (effect) dumpedEffect = true; else dumpedBoss = true;
-            }
         }
         std::printf("stage %d: cleared=%d frames=%d attempts=%d pieces=%d pillsUsed=%d bossActive=%d\n", stage + 1,
                     s.isCleared(), frames, attempts, s.progress().pieces(), pillsUsed, s.boss().isActive());
@@ -202,12 +184,9 @@ int main() {
         std::printf("   bossTriggers=%d pillsGained=%d lines=%d\n", counter.n[(int)GameEvent::Type::BossTriggered], counter.n[(int)GameEvent::Type::PillGained], counter.n[(int)GameEvent::Type::LinesCleared]);
         CHECK(counter.n[(int)GameEvent::Type::BossTriggered] > 0);
         CHECK(!s.boss().isActive());
-        for (int i = 0; i < 100; ++i) pv.update(16);
-        console.clear(); bv.draw(console); nv.draw(console); hv.draw(console); pv.draw(console); console.present();
-        dump("stage" + std::to_string(stage + 1) + "_cleared");
     }
 
-    // --- 장면 흐름: 타이틀 -> 집 오프닝 -> (앨범 -> 플레이) x 12 라운드 -> 집 -> ... -> 엔딩 ---
+    // --- 장면 흐름: 집 오프닝 -> (앨범 -> 플레이) x 12 라운드 -> 집 -> ... -> 엔딩 ---
     // 그림(Sixel) 만들기는 느리므로 봇이 플레이하는 동안에는 renderEvery 프레임마다 한 번만 그린다
     int renderEvery = 1, frameNo = 0;
     // frame(n): n 프레임 진행, press(cmd, n): 키를 한 번 누르고 n 프레임 진행
@@ -222,10 +201,8 @@ int main() {
         scenes.handle(cmd);
         frame(n);
     };
-    scenes.change(std::make_unique<TitleScene>(services));
-    frame(10); dump("scene_title");
-    CHECK(g_terminal.images == 0);  // 타이틀은 글자 화면
-    press(Command::Confirm, 5); frame(120);
+    scenes.change(std::make_unique<PrologueScene>(services, 0));  // 게임은 타이틀 없이 집 오프닝부터 시작한다
+    frame(120);
     CHECK(g_terminal.images > 0);   // 집 오프닝은 그림(Sixel)으로 그린다
     story.house().render(); dumpArt("art_house_opening", story.house().frame());
     for (int i = 0; i < 40; ++i) press(Command::Confirm, 20);  // 대사 넘기기
@@ -245,7 +222,7 @@ int main() {
                                 !story.album().isOpen() && !story.roundEndPending();
             if (stage == 2 && story.ending().finished()) break;
             if (stage < 2 && story.house().stage() == stage + 1) break;  // 다음 집 장면이 열렸다
-            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); press(Command::Confirm, 5); continue; }
+            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); continue; }  // 실패 연출 뒤 저절로 같은 라운드를 다시 한다
             if (inPlay && !story.stageArt().wantsPause()) {
                 if (!dumpedPlay && story.session().board().filledCells().size() > 20) {
                     dumpedPlay = true;
@@ -287,7 +264,7 @@ int main() {
     CHECK(menuChecked);
     story.ending().render(); dumpArt("art_ending", story.ending().frame());
     CHECK(album.isComplete());
-    press(Command::Confirm, 5);  // 엔딩 -> 타이틀
+    press(Command::Confirm, 5);  // 엔딩 -> 새 게임 (집 오프닝)
     CHECK(scenes.isRunning());
     std::printf("scene flow ok, images=%d\n", g_terminal.images);
     return 0;

@@ -55,17 +55,4 @@ namespace layout {
 // ui의 그림 View(집, 앨범, 라운드, 메뉴, 엔딩)를 그리는 위치. 그림은 Sixel 이미지 하나로 화면 전체를 덮는다.
 const int kArtX = 0;
 const int kArtY = 0;
-const int kBoardX = 1;
-const int kBoardY = 2;
-const int kNextX = 27;
-const int kNextY = 2;
-const int kHudX = 27;
-const int kHudY = 9;
-const int kPhotoX = 45;
-const int kPhotoY = 2;
-const int kMessageX = 45;
-const int kMessageY = 22;
-const int kMessageWidth = 53;
-const int kMessageHeight = 5;
-const int kHelpY = 28;
 }  // namespace layout

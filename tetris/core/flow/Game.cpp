@@ -3,7 +3,7 @@
 #include <iostream>
 #include "common/GameConfig.h"
 #include "common/GameException.h"
-#include "flow/TitleScene.h"
+#include "flow/PrologueScene.h"
 
 Game::Game(ITerminal& terminal, IInputSource& input, ISoundPlayer& sound)
     : m_rng(std::random_device{}()),
@@ -16,7 +16,7 @@ Game::Game(ITerminal& terminal, IInputSource& input, ISoundPlayer& sound)
 
 void Game::run() {
     try {
-        m_scenes.change(std::make_unique<TitleScene>(m_services));
+        m_scenes.change(std::make_unique<PrologueScene>(m_services, 0));  // 집 오프닝부터 시작한다
         m_clock.restart();
         while (m_scenes.isRunning()) {
             const int dt = std::min(m_clock.elapsedMs(), config::kMaxFrameDeltaMs);

@@ -4,7 +4,6 @@
 #include "flow/PlayScene.h"
 #include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
-#include "flow/TitleScene.h"
 #include "stage/StageCatalog.h"
 
 AlbumScene::AlbumScene(GameServices& services, int stageIndex, int clearedRound)
@@ -27,7 +26,7 @@ bool AlbumScene::isLastStage() const {
 
 void AlbumScene::handle(Command command) {
     if (command == Command::Quit) {
-        changeTo(std::make_unique<TitleScene>(m_services));
+        quit();
         return;
     }
     if (isStageDone()) {

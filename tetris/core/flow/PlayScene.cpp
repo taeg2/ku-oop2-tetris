@@ -1,9 +1,8 @@
 #include "flow/PlayScene.h"
 #include "common/GameConfig.h"
 #include "flow/AlbumScene.h"
-#include "flow/GameOverScene.h"
+#include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
-#include "flow/TitleScene.h"
 #include "stage/Album.h"
 
 PlayScene::PlayScene(GameServices& services, int stageIndex) : Scene(services), m_stageIndex(stageIndex) {
@@ -78,7 +77,7 @@ void PlayScene::handleMenu(Command command) {
             break;
         case MenuView::Choice::QuitToTitle:
             menu.clearChoice();
-            changeTo(std::make_unique<TitleScene>(m_services));
+            changeTo(std::make_unique<PrologueScene>(m_services, 0));  // 새 게임: 집 오프닝부터
             break;
         default:
             break;
@@ -104,7 +103,7 @@ void PlayScene::update(int dtMs) {
         case Phase::Failing:
             art().update(dtMs);
             if (m_phaseMs >= config::kStageFailMs) {
-                changeTo(std::make_unique<GameOverScene>(m_services, m_stageIndex));
+                changeTo(std::make_unique<PlayScene>(m_services, m_stageIndex));  // 재도전: 지금 라운드부터 보드를 비우고 다시
             }
             break;
     }
@@ -127,6 +126,7 @@ void PlayScene::updatePlaying(int dtMs) {
     }
     session().update(dtMs);
     if (session().isFailed()) {
+        m_services.sound.play(SoundId::GameOver);
         setPhase(Phase::Failing);
     }
 }

@@ -5,6 +5,7 @@
 #include "boss/ForgetGimmick.h"
 #include "common/GameConfig.h"
 #include "boss/ShapeShiftGimmick.h"
+using namespace std;
 
 namespace {
 
@@ -85,7 +86,7 @@ StageCatalog::StageCatalog() {
         [] {
             return Boss("짙은 안개", "단기기억상실",
                         "방금 쌓은 기억이 안개 속으로 사라진다...",
-                        std::make_unique<BlackoutGimmick>(config::kBlackoutIntervalMs, config::kBlackoutDurationMs,
+                        make_unique<BlackoutGimmick>(config::kBlackoutIntervalMs, config::kBlackoutDurationMs,
                                                           config::kBlackoutWidth, config::kBlackoutHeight));
         }});
     m_stages.push_back(StageConfig{
@@ -93,21 +94,21 @@ StageCatalog::StageCatalog() {
         [] {
             return Boss("엉킨 실타래", "착각",
                         "분명 이 모양이었는데... 기억이 뒤엉킨다.",
-                        std::make_unique<ShapeShiftGimmick>(config::kShapeShiftIntervalMs, config::kShapeShiftWarningMs));
+                        make_unique<ShapeShiftGimmick>(config::kShapeShiftIntervalMs, config::kShapeShiftWarningMs));
         }});
     m_stages.push_back(StageConfig{
         "STAGE 3", "결혼과 출산", "꽃다발, 반지, 집 열쇠, 아기 신발", newbornPhoto(), config::kStage3DropMs,
         [] {
             return Boss("지우개", "까먹음",
                         "소중한 순간이 하나씩 지워지려 한다.",
-                        std::make_unique<ForgetGimmick>(config::kForgetIntervalMs, config::kForgetWarningMs,
+                        make_unique<ForgetGimmick>(config::kForgetIntervalMs, config::kForgetWarningMs,
                                                         config::kForgetCellCount));
         }});
 }
 
 const StageConfig& StageCatalog::get(int index) const {
     if (index < 0 || index >= count()) {
-        throw ConfigException("스테이지 번호 " + std::to_string(index) + " 가 범위를 벗어났습니다");
+        throw ConfigException("스테이지 번호 " + to_string(index) + " 가 범위를 벗어났습니다");
     }
-    return m_stages[static_cast<std::size_t>(index)];
+    return m_stages[static_cast<size_t>(index)];
 }

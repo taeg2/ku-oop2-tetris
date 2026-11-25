@@ -2,6 +2,8 @@
 #include <algorithm>
 #include "ui/PixelArt.h"
 #include "ui/PlayStateReader.h"
+using namespace std;
+
 class ToyBlocks {
 public:
     static const RGB* ramp(int type) {
@@ -50,7 +52,7 @@ public:
     static void nextPiece(Frame& f, const PlayStateReader& g, int type, int cx, int cy) {
         auto cs = g.shape(type);
         int minx = 9, maxx = -9, miny = 9, maxy = -9;
-        for (auto& c : cs) { minx = std::min(minx, c.first); maxx = std::max(maxx, c.first); miny = std::min(miny, c.second); maxy = std::max(maxy, c.second); }
+        for (auto& c : cs) { minx = min(minx, c.first); maxx = max(maxx, c.first); miny = min(miny, c.second); maxy = max(maxy, c.second); }
         int w = (maxx - minx + 1) * 6, h = (maxy - miny + 1) * 6;
         for (auto& c : cs) cell6(f, cx - w / 2 + (c.first - minx) * 6, cy - h / 2 + (c.second - miny) * 6, type);
     }

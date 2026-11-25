@@ -4,9 +4,11 @@
 #include "ui/Stage2UI.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 static const RGB OL{ 40, 30, 36 };
 static const int MAIN_X = 288, FLOOR_Y = 214, EX_X = 424;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static const Sprite HEAD_SIDE("interview head, facing right", {
 "....HHHHHH......",
 "...HHHHHHHH.....",
@@ -21,7 +23,7 @@ static const Sprite HEAD_SIDE("interview head, facing right", {
 "......sSSS......",
 "......sSS.......",
 }, { {'H', {168, 92, 44}}, {'h', {206, 128, 64}}, {'S', {246, 204, 164}}, {'s', {214, 164, 128}}, {'E', {34, 26, 34}}, {'M', {176, 80, 84}} });
-struct Seat { RGB hair, hairL, suit, suitD, tie; bool glasses; };
+class Seat { public: RGB hair, hairL, suit, suitD, tie; bool glasses; };
 static const Seat HERO{ {168, 92, 44}, {206, 128, 64}, {44, 52, 86}, {32, 38, 64}, {190, 50, 60}, false };
 static const Seat BOSS{ {150, 150, 158}, {196, 196, 204}, {70, 70, 82}, {52, 52, 62}, {60, 90, 160}, true };
 static void recolor(Frame& tmp, int w, int h, uint8_t from, uint8_t to) { for (int j = 0; j < h; ++j) for (int i = 0; i < w; ++i) if (tmp.get(i, j) == from) tmp.set(i, j, to); }
@@ -65,7 +67,7 @@ static void seated(Frame& f, int cx, int floor, const Seat& lk, bool flip, int m
 static const char* QUESTIONS[20] = { "INTRODUCE YOURSELF", "WHY OUR COMPANY?", "YOUR STRENGTHS?", "YOUR WEAKNESS?", "IN 5 YEARS?", "TEAMWORK?", "BIGGEST FAILURE?", "WHY HIRE YOU?", "SALARY?", "ANY PRESSURE?", "LEADERSHIP?", "A HARD DECISION?", "WHY THIS FIELD?", "A CONFLICT?", "YOUR DREAM?", "WORK OVERTIME?", "YOUR HOBBIES?", "DESCRIBE YOURSELF", "LAST WORDS?", "ANY QUESTIONS?" };
 static const char* BABBLES[4] = { "UGA BUGA", "UHH... UM...", "UGA UGA BUGA", "I... UHH..." };
 void InterviewRound::reset() { pieceNo_ = 0; lastTop_ = -1; odd_ = false; nextOdd_ = false; queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; passT_ = -1; lines_ = 0; shown_ = 0; lineT_ = 0; }
-void InterviewRound::onLinesCleared(const std::vector<int>&, int totalLines, int) {
+void InterviewRound::onLinesCleared(const vector<int>&, int totalLines, int) {
     while (lines_ < totalLines && lines_ < 20) queue_.push_back(++lines_);
 }
 void InterviewRound::start(int t) {
@@ -78,7 +80,7 @@ void InterviewRound::update(const PlayStateReader& g, int t) {
     if (!g.hasPiece()) lastTop_ = -1;
     else {
         int top = PlayStateReader::kRows;
-        for (auto& c : g.pieceCells()) top = std::min(top, c.second);
+        for (auto& c : g.pieceCells()) top = min(top, c.second);
         if (lastTop_ < 0 || top < lastTop_) { ++pieceNo_; odd_ = nextOdd_ || shown_ >= 7; nextOdd_ = shown_ >= 7; }
         lastTop_ = top;
     }
@@ -100,11 +102,11 @@ void InterviewRound::drawClock(Frame& f, int t) {
     uint8_t ol = C(OL), face = C(250, 248, 238), rim = C(120, 86, 60), hand = C(40, 34, 40), red = C(210, 60, 60);
     int cx = 226, cy = 44;
     f.disc(cx, cy, 15, ol); f.disc(cx, cy, 14, rim); f.disc(cx, cy, 11, face);
-    for (int k = 0; k < 12; ++k) f.set(cx + rnd(std::cos(k * 0.5236f) * 9), cy + rnd(std::sin(k * 0.5236f) * 9), ol);
+    for (int k = 0; k < 12; ++k) f.set(cx + rnd(cos(k * 0.5236f) * 9), cy + rnd(sin(k * 0.5236f) * 9), ol);
     float speed = shown_ >= 4 ? 0.9f : 0.08f;
     float a1 = t * speed * 0.08f - 1.57f, a2 = t * speed - 1.57f;
-    f.line(cx, cy, cx + rnd(std::cos(a1) * 5), cy + rnd(std::sin(a1) * 5), hand);
-    f.line(cx, cy, cx + rnd(std::cos(a2) * 8), cy + rnd(std::sin(a2) * 8), shown_ >= 4 ? red : hand);
+    f.line(cx, cy, cx + rnd(cos(a1) * 5), cy + rnd(sin(a1) * 5), hand);
+    f.line(cx, cy, cx + rnd(cos(a2) * 8), cy + rnd(sin(a2) * 8), shown_ >= 4 ? red : hand);
     f.set(cx, cy, red);
     if (shown_ >= 4 && passT_ < 0 && (t / 3) % 2) Font::center(f, "HURRY", cx, cy + 19, red, ol);
 }
@@ -134,7 +136,7 @@ void InterviewRound::drawRoom(Frame& f, int t) {
     f.rect(414, 30, 50, 34, ol); f.rect(415, 31, 48, 32, C(40, 64, 110)); f.disc(431, 47, 8, C(250, 196, 70)); f.disc(431, 47, 5, C(40, 64, 110)); f.rect(442, 42, 16, 3, C(240, 240, 236)); f.rect(442, 48, 12, 3, C(240, 240, 236));
     uint8_t pot = C(176, 110, 70), potD = C(136, 82, 52), leaf = C(70, 140, 80), leafD = C(48, 104, 60), leafL = C(110, 180, 110);
     int px = 466, py = 150;
-    for (int k = 0; k < 7; ++k) { float a = -2.6f + k * 0.35f; int lx = px + rnd(std::cos(a) * 20), ly = py - 26 + rnd(std::sin(a) * 26); f.taper(px, py - 18, lx, ly, 3, 1, ol); f.taper(px, py - 18, lx, ly, 2, 1, k % 2 ? leaf : leafD); f.set(lx, ly, leafL); }
+    for (int k = 0; k < 7; ++k) { float a = -2.6f + k * 0.35f; int lx = px + rnd(cos(a) * 20), ly = py - 26 + rnd(sin(a) * 26); f.taper(px, py - 18, lx, ly, 3, 1, ol); f.taper(px, py - 18, lx, ly, 2, 1, k % 2 ? leaf : leafD); f.set(lx, ly, leafL); }
     f.rect(px - 9, py - 18, 18, 18, ol); f.rect(px - 8, py - 17, 16, 17, pot); f.vline(px + 6, py - 17, py - 1, potD); f.hline(px - 9, px + 8, py - 18, ol);
     drawClock(f, t);
 }
@@ -167,11 +169,11 @@ void InterviewRound::drawMain(Frame& f, int t) {
         }
     }
     if (relaxed) for (int k = 0; k < 6; ++k) {
-        int a = (t - passT_ + k * 4) % 24, sx = hx + rnd(std::cos(k * 1.05f) * (18 + a / 3)), sy = hy + 10 + rnd(std::sin(k * 1.05f) * (14 + a / 4));
+        int a = (t - passT_ + k * 4) % 24, sx = hx + rnd(cos(k * 1.05f) * (18 + a / 3)), sy = hy + 10 + rnd(sin(k * 1.05f) * (14 + a / 4));
         if (a < 12) { f.set(sx, sy, C(255, 236, 140)); f.set(sx - 1, sy, C(255, 250, 210)); f.set(sx + 1, sy, C(255, 250, 210)); f.set(sx, sy - 1, C(255, 250, 210)); f.set(sx, sy + 1, C(255, 250, 210)); }
     }
 }
-static const std::vector<std::pair<int, int>> WEIRD[6] = {
+static const vector<pair<int, int>> WEIRD[6] = {
     { {1, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2} },
     { {0, 0}, {2, 0}, {1, 1}, {0, 2}, {2, 2} },
     { {0, 0}, {1, 0} },
@@ -179,7 +181,7 @@ static const std::vector<std::pair<int, int>> WEIRD[6] = {
     { {0, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1} },
     { {0, 0}, {1, 1}, {2, 2} },
 };
-static const std::vector<std::pair<int, int>>& weirdShape(int k) { return WEIRD[((k % 6) + 6) % 6]; }
+static const vector<pair<int, int>>& weirdShape(int k) { return WEIRD[((k % 6) + 6) % 6]; }
 static void paperCell(Frame& f, int x, int y, int type) {
     const RGB* r = ToyBlocks::ramp(type);
     uint8_t ol = C(r[0]), tab = C(r[2]), tabD = C(r[1]), paper = C(mix(r[4], RGB{ 252, 250, 242 }, 0.55f)), line = C(r[3]), fold = C(mix(r[3], RGB{ 230, 224, 210 }, 0.5f));
@@ -193,10 +195,10 @@ void InterviewRound::drawPaperBlocks(Frame& f, const PlayStateReader& g, int t) 
     int bx = boardX(), by = boardY();
     uint8_t cell = C(22, 26, 42), line = C(32, 38, 58);
     bool hide = blank(t);
-    std::vector<int> skip;
+    vector<int> skip;
     if (g.clearing()) skip = g.clearingRows();
     for (int y = 0; y < PlayStateReader::kRows; ++y) {
-        if (std::find(skip.begin(), skip.end(), y) != skip.end()) continue;
+        if (find(skip.begin(), skip.end(), y) != skip.end()) continue;
         for (int x = 0; x < PlayStateReader::kCols; ++x) {
             if (g.at(x, y) < 0) continue;
             if (hide) {
@@ -220,23 +222,23 @@ void InterviewRound::drawPaperBlocks(Frame& f, const PlayStateReader& g, int t) 
     for (auto& c : g.ghostCells()) erase(c.first, c.second);
     for (auto& c : g.pieceCells()) erase(c.first, c.second);
     int mx = 99, my = 99;
-    for (auto& c : g.pieceCells()) { mx = std::min(mx, c.first); my = std::min(my, c.second); }
+    for (auto& c : g.pieceCells()) { mx = min(mx, c.first); my = min(my, c.second); }
     if (mx == 99) return;
     bool flick = babbling(t);
     const auto& w = weirdShape(flick ? cur_ + t / 4 : pieceNo_ * 7 + 3);
     for (auto& c : w) {
-        int x = std::min(PlayStateReader::kCols - 1, mx + c.first), y = my + c.second;
+        int x = min(PlayStateReader::kCols - 1, mx + c.first), y = my + c.second;
         if (y >= 0 && y < PlayStateReader::kRows) paperCell(f, bx + x * 8, by + y * 8, flick ? (g.current() + t / 4) % 7 : (pieceNo_ * 5 + 1) % 7);
     }
 }
 void InterviewRound::warpBoard(Frame& f, int t) {
     int bx = boardX(), by = boardY();
-    static std::vector<uint8_t> row(80);
+    static vector<uint8_t> row(80);
     for (int y = by; y < by + 160; ++y) {
-        int dx = rnd(std::sin(y * 0.18f + t * 0.5f) * 1.6f);
+        int dx = rnd(sin(y * 0.18f + t * 0.5f) * 1.6f);
         if (!dx) continue;
         for (int x = 0; x < 80; ++x) row[x] = f.get(bx + x, y);
-        for (int x = 0; x < 80; ++x) f.set(bx + x, y, row[std::max(0, std::min(79, x - dx))]);
+        for (int x = 0; x < 80; ++x) f.set(bx + x, y, row[max(0, min(79, x - dx))]);
     }
 }
 void InterviewRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
@@ -262,9 +264,9 @@ void InterviewRound::drawNext(Frame& f, int piece, int t) {
     if (passT_ >= 0) { Font::center(f, "PASS", x + 27, y + 26, C(60, 150, 80)); f.rect(x + 8, y + 22, 38, 1, C(60, 150, 80)); f.rect(x + 8, y + 36, 38, 1, C(60, 150, 80)); return; }
     Font::center(f, "NEXT", x + 27, y + 5, ink);
     bool odd = babbling(t) || nextOdd_;
-    std::vector<std::pair<int, int>> cs = babbling(t) ? weirdShape(cur_ + t / 4 + 3) : nextOdd_ ? weirdShape((pieceNo_ + 1) * 7 + 3) : SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = babbling(t) ? weirdShape(cur_ + t / 4 + 3) : nextOdd_ ? weirdShape((pieceNo_ + 1) * 7 + 3) : SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
-    for (auto& c : cs) { mx = std::min(mx, c.first); my = std::min(my, c.second); Mx = std::max(Mx, c.first); My = std::max(My, c.second); }
+    for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
     int bw = (Mx - mx + 1) * 8, bh = (My - my + 1) * 8;
     for (auto& c : cs) paperCell(f, x + 27 - bw / 2 + (c.first - mx) * 8, y + 26 - bh / 2 + (c.second - my) * 8, babbling(t) ? (piece + t / 4 + 2) % 7 : odd ? ((pieceNo_ + 1) * 5 + 1) % 7 : piece);
     (void)t;
@@ -273,7 +275,7 @@ void InterviewRound::drawHud(Frame& f, int, int t) {
     uint8_t ink = C(60, 60, 80), done = C(60, 150, 80), todo = C(214, 208, 192), red = C(210, 60, 60);
     int x = 202, y = 84;
     Font::draw(f, "Q", x + 6, y + 40, ink);
-    Font::draw(f, std::to_string(std::min(20, shown_ + (passT_ >= 0 ? 0 : 1))) + "/20", x + 16, y + 40, ink);
+    Font::draw(f, to_string(min(20, shown_ + (passT_ >= 0 ? 0 : 1))) + "/20", x + 16, y + 40, ink);
     for (int i = 0; i < 20; ++i) { int cx = x + 7 + (i % 5) * 9, cy = y + 49 + (i / 5) * 5; f.rect(cx, cy, 6, 3, i < shown_ ? done : i == 3 || i == 6 || i == 9 || i == 14 ? red : todo); }
     (void)t;
 }
@@ -283,8 +285,8 @@ void InterviewRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (shown_ >= 7 && passT_ < 0) warpBoard(f, t);
     if (passT_ < 0 && curT_ >= 0) {
         int a = t - curT_;
-        if (a < ASK) { const char* q = QUESTIONS[(cur_ - 1) % 20]; int w = Font::width(q) + 10; bubble(f, std::min(472 - w, EX_X - w / 2), 128, w, q, false, ink); }
-        else if (a < Q_LEN) { const char* b = BABBLES[(cur_ + a / 6) % 4]; int w = Font::width(b) + 10; bubble(f, std::max(196, MAIN_X - w / 2 + ((t % 2) ? 1 : 0)), 128, w, b, true, panicInk); }
+        if (a < ASK) { const char* q = QUESTIONS[(cur_ - 1) % 20]; int w = Font::width(q) + 10; bubble(f, min(472 - w, EX_X - w / 2), 128, w, q, false, ink); }
+        else if (a < Q_LEN) { const char* b = BABBLES[(cur_ + a / 6) % 4]; int w = Font::width(b) + 10; bubble(f, max(196, MAIN_X - w / 2 + ((t % 2) ? 1 : 0)), 128, w, b, true, panicInk); }
     }
     int bx = boardX(), by = boardY();
     if (passT_ < 0) {
@@ -298,7 +300,7 @@ void InterviewRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         if (a < WELCOME) bubble(f, EX_X - 50, 128, Font::width("YOU PASSED!") + 10, "YOU PASSED!", false, C(60, 150, 80));
         else if (a < END - 12) bubble(f, EX_X - 60, 128, Font::width("WELCOME ABOARD") + 10, "WELCOME ABOARD", false, C(60, 150, 80));
         if (a >= SMILE && a < SMILE + 14) Font::center(f, "PHEW...", MAIN_X, 134, C(250, 250, 240), ol);
-        if (a >= END - 12) { float k = std::min(1.0f, (a - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
+        if (a >= END - 12) { float k = min(1.0f, (a - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
     }
     if (whiteout(t) > 0) {
         int w = whiteout(t);

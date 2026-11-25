@@ -13,12 +13,13 @@
 #include "stage/StageConfig.h"
 #include "ui/Command.h"
 #include "ui/ISoundPlayer.h"
+using namespace std;
 
 // 스테이지 한 판의 규칙을 진행한다. 보드·블록·사진 진행·속도·보스·약을 소유하고
 //     이벤트 버스로 서로 연결한다. 화면은 모르며, View에는 const 접근자만 제공한다.
 class StageSession {
 public:
-    StageSession(const StageConfig& config, ISoundPlayer& sound, std::mt19937& rng);
+    StageSession(const StageConfig& config, ISoundPlayer& sound, mt19937& rng);
     StageSession(const StageSession&) = delete;
     StageSession& operator=(const StageSession&) = delete;
 
@@ -42,7 +43,7 @@ public:
     const SpeedController& speed() const { return m_speed; }
     const Boss& boss() const { return m_boss; }
     const Inventory& inventory() const { return m_inventory; }
-    const std::vector<int>& flashingRows() const { return m_flashRows; }
+    const vector<int>& flashingRows() const { return m_flashRows; }
 
 private:
     enum class State { Falling, LineFlash, Cleared, Failed };
@@ -61,7 +62,7 @@ private:
     void fail();
 
     const StageConfig* m_config;  // 스테이지 데이터 (StageCatalog가 소유, changeStage로 바뀐다)
-    std::mt19937& m_rng;
+    mt19937& m_rng;
     EventBus m_bus;
     Board m_board;
     BlockGenerator m_generator;
@@ -75,5 +76,5 @@ private:
     State m_state = State::Falling;
     int m_dropTimerMs = 0;
     int m_flashLeftMs = 0;
-    std::vector<int> m_flashRows;
+    vector<int> m_flashRows;
 };

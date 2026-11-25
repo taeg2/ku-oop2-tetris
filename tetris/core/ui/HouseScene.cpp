@@ -2,12 +2,14 @@
 #include "ui/PixelFont.h"
 #include "ui/People.h"
 #include <cmath>
+using namespace std;
+
 namespace {
-struct Box { int x, y, w, h; };
-const std::vector<Box>& solids(HouseRooms::Room r) {
-    static const std::vector<Box> living = { { 0, 0, 240, 66 }, { 54, 62, 28, 40 }, { 158, 62, 28, 40 }, { 102, 82, 36, 18 }, { 94, 110, 54, 24 }, { 208, 96, 22, 38 }, { 0, 0, 2, 96 }, { 0, 120, 2, 15 }, { 28, 62, 44, 6 } };
-    static const std::vector<Box> kitchen = { { 0, 0, 240, 68 }, { 116, 0, 112, 70 }, { 208, 0, 20, 88 }, { 22, 56, 70, 72 }, { 0, 74, 20, 24 }, { 216, 118, 24, 17 }, { 238, 0, 2, 96 }, { 238, 120, 2, 15 } };
-    static const std::vector<Box> library = { { 0, 0, 240, 58 }, { 0, 0, 16, 135 }, { 224, 0, 16, 135 }, { 52, 62, 38, 32 }, { 36, 76, 18, 14 }, { 90, 64, 18, 14 }, { 62, 96, 18, 14 }, { 158, 80, 34, 26 }, { 165, 66, 18, 14 }, { 165, 110, 18, 14 }, { 20, 64, 12, 22 }, { 208, 60, 12, 22 }, { 16, 102, 50, 26 }, { 174, 102, 50, 26 }, { 94, 78, 20, 30 }, { 16, 128, 88, 7 }, { 136, 128, 88, 7 } };
+class Box { public: int x, y, w, h; };
+const vector<Box>& solids(HouseRooms::Room r) {
+    static const vector<Box> living = { { 0, 0, 240, 66 }, { 54, 62, 28, 40 }, { 158, 62, 28, 40 }, { 102, 82, 36, 18 }, { 94, 110, 54, 24 }, { 208, 96, 22, 38 }, { 0, 0, 2, 96 }, { 0, 120, 2, 15 }, { 28, 62, 44, 6 } };
+    static const vector<Box> kitchen = { { 0, 0, 240, 68 }, { 116, 0, 112, 70 }, { 208, 0, 20, 88 }, { 22, 56, 70, 72 }, { 0, 74, 20, 24 }, { 216, 118, 24, 17 }, { 238, 0, 2, 96 }, { 238, 120, 2, 15 } };
+    static const vector<Box> library = { { 0, 0, 240, 58 }, { 0, 0, 16, 135 }, { 224, 0, 16, 135 }, { 52, 62, 38, 32 }, { 36, 76, 18, 14 }, { 90, 64, 18, 14 }, { 62, 96, 18, 14 }, { 158, 80, 34, 26 }, { 165, 66, 18, 14 }, { 165, 110, 18, 14 }, { 20, 64, 12, 22 }, { 208, 60, 12, 22 }, { 16, 102, 50, 26 }, { 174, 102, 50, 26 }, { 94, 78, 20, 30 }, { 16, 128, 88, 7 }, { 136, 128, 88, 7 } };
     return r == HouseRooms::LIVING ? living : r == HouseRooms::KITCHEN ? kitchen : library;
 }
 const RGB OL{ 42, 26, 28 };
@@ -22,11 +24,11 @@ void HouseScene::start(int stage, int t) {
     phase_ = OLD_SIT; phaseT_ = t; room_ = HouseRooms::LIVING; kx_ = 120; ky_ = 104; face_ = People::LEFT; momX_ = 17; momY_ = 70; libraryT_ = -1; momGone_ = true; doorOpenT_ = -1; note_.clear(); noteSub_.clear(); roomT_ = t;
     say({ { "", "...Time for my medicine." } }, t);
 }
-void HouseScene::say(const std::vector<Line>& lines, int t) { lines_ = lines; lineT_ = t; }
+void HouseScene::say(const vector<Line>& lines, int t) { lines_ = lines; lineT_ = t; }
 void HouseScene::advance(int t) {
     if (!talking()) return;
     int shown = (t - lineT_) * 2;
-    if (shown < (int)lines_.front().text.size()) { lineT_ = t - 1000; return; }
+    if (shown < static_cast<int>(lines_.front().text.size())) { lineT_ = t - 1000; return; }
     lines_.erase(lines_.begin()); lineT_ = t;
     if (talking()) return;
     if (phase_ == OLD_SIT) { setPhase(OLD_DRINK, t); animT_ = t; }
@@ -41,7 +43,7 @@ void HouseScene::advance(int t) {
 }
 bool HouseScene::blocked(float x, float y) const {
     for (int dx : { -4, 4 }) {
-        int px = (int)x + dx, py = (int)y;
+        int px = static_cast<int>(x) + dx, py = static_cast<int>(y);
         for (const Box& b : solids(room_)) if (px >= b.x && px < b.x + b.w && py >= b.y && py < b.y + b.h) return true;
     }
     return false;
@@ -114,7 +116,7 @@ static const Sprite ADULT_HEAD_F("grown-up head front", {
     "..OsSSSSSSSSsO..",
     "...OOsSSSSsOO...",
     ".....OSSSSO.....",
-}, PEOPLE_COLORS);
+}, peopleColors());
 static const Sprite ADULT_HEAD_S("grown-up head side", {
     "....OOOOOO....",
     "..OOHHHLLHOO..",
@@ -131,7 +133,7 @@ static const Sprite ADULT_HEAD_S("grown-up head side", {
     "..OsSSSSsO....",
     "...OOSSsO.....",
     "....OSSO......",
-}, PEOPLE_COLORS);
+}, peopleColors());
 void HouseScene::drawHero(Frame& world, int x, int y, People::Facing face, int step, bool talk, bool blink) const {
     if (stage_ == 0 && !oldLook_) { People::drawKid(world, x, y, face, step, talk, blink); return; }
     static Frame up, mid, lo;
@@ -210,7 +212,7 @@ void HouseScene::drawOpening(Frame& world, int t) const {
             else if (an < 24) { hx = 126; hy = 92; }
             else { hx = 130; hy = 90; }
             arm(sx + 6, 108, hx, hy);
-            world.rect(hx - 2, hy - 7, 6, 8, olc); world.rect(hx - 1, hy - 6, 4, 6, glass); if (an < 18) world.rect(hx - 1, hy - 4 + (an >= 14 ? (an - 14) / 2 : 0), 4, std::max(1, 4 - (an >= 14 ? (an - 14) / 2 : 0)), water);
+            world.rect(hx - 2, hy - 7, 6, 8, olc); world.rect(hx - 1, hy - 6, 4, 6, glass); if (an < 18) world.rect(hx - 1, hy - 4 + (an >= 14 ? (an - 14) / 2 : 0), 4, max(1, 4 - (an >= 14 ? (an - 14) / 2 : 0)), water);
         }
     }
     if ((phase_ == OLD_SLEEPY || (phase_ == OLD_SLEEP && an < 12)) && (t / 4) % 3 != 2) { int zy = 84 - (t / 2) % 8; world.set(sx + 10, zy, C(250, 250, 255)); world.hline(sx + 10, sx + 12, zy - 2, C(250, 250, 255)); world.set(sx + 11, zy - 1, C(250, 250, 255)); world.hline(sx + 10, sx + 12, zy, C(250, 250, 255)); }
@@ -225,7 +227,7 @@ void HouseScene::draw(Frame& out, int t) const {
             int ph = (t + k * 3 + seed) % 12;
             if (ph > 5) continue;
             float an = k * 1.57f + seed;
-            int sx = cx + (int)std::lround(std::cos(an) * r), sy = cy + (int)std::lround(std::sin(an) * r * 0.7f);
+            int sx = cx + static_cast<int>(lround(cos(an) * r)), sy = cy + static_cast<int>(lround(sin(an) * r * 0.7f));
             int s = ph < 3 ? ph : 5 - ph;
             uint8_t c = C(255, 250, 200);
             world.set(sx, sy, C(255, 255, 255));
@@ -237,11 +239,11 @@ void HouseScene::draw(Frame& out, int t) const {
     if (room_ == HouseRooms::LIVING && doorOpenT_ >= 0) { world.rect(7, 23, 20, 38, C(20, 14, 18)); world.rect(7, 23, 5, 38, C(150, 96, 60)); }
     bool momHere = room_ == HouseRooms::LIVING && !momGone_ && (phase_ == TALK || phase_ == MOM_LEAVE);
     bool momTalk = phase_ == TALK && talking();
-    auto drawMom = [&]() { People::drawMom(world, (int)momX_, (int)momY_, phase_ == TALK ? People::FRONT : People::BACK, -1, momTalk && (t / 2) % 2); };
+    auto drawMom = [&]() { People::drawMom(world, static_cast<int>(momX_), static_cast<int>(momY_), phase_ == TALK ? People::FRONT : People::BACK, -1, momTalk && (t / 2) % 2); };
     bool walking = (phase_ == FREE || phase_ == ALBUM_HUNT) && t - walkT_ <= 1;
     bool kidBehind = momHere && momY_ > ky_;
     if (momHere && !kidBehind) drawMom();
-    int kx = (int)kx_, ky = (int)ky_, an = t - animT_, sh = stage_ >= 2 ? 10 : stage_ > 0 ? 6 : 0;
+    int kx = static_cast<int>(kx_), ky = static_cast<int>(ky_), an = t - animT_, sh = stage_ >= 2 ? 10 : stage_ > 0 ? 6 : 0;
     int fx = stage_ > 0 ? 57 : 186, fy = stage_ > 0 ? 88 : 32;
     uint8_t skin = C(246, 204, 164), sleeve = stage_ >= 2 ? C(204, 206, 214) : stage_ > 0 ? C(60, 100, 170) : C(250, 210, 64), olc = C(OL);
     auto arm = [&](int sx, int sy, int hx, int hy) { world.line(sx, sy, hx, hy, olc); world.line(sx + 1, sy, hx + 1, hy, olc); world.line(sx, sy + 1, (sx + hx) / 2, (sy + hy) / 2 + 1, sleeve); world.disc(hx, hy, 2, olc); world.disc(hx, hy, 1, skin); };
@@ -257,9 +259,9 @@ void HouseScene::draw(Frame& out, int t) const {
         if (an < 14) {
             bool side = stage_ > 0;
             drawHero(world, kx, ky, side ? People::LEFT : People::BACK, -1, false, false);
-            int hx = side ? kx - 6 - std::min(an, 5) * 2 : kx + 6, hy = side ? ky - 16 - sh : ky - 17 - sh - std::min(an, 5) * 3;
+            int hx = side ? kx - 6 - min(an, 5) * 2 : kx + 6, hy = side ? ky - 16 - sh : ky - 17 - sh - min(an, 5) * 3;
             arm(side ? kx - 2 : kx + 5, ky - 15 - sh, hx, hy);
-            if (an >= 5) { float u = std::min(1.0f, (an - 5) / 8.0f); foodAt(fx + (int)std::lround((hx - fx) * u), fy + (int)std::lround((hy - 3 - fy) * u) - (int)std::lround(std::sin(u * 3.14f) * 8)); }
+            if (an >= 5) { float u = min(1.0f, (an - 5) / 8.0f); foodAt(fx + static_cast<int>(lround((hx - fx) * u)), fy + static_cast<int>(lround((hy - 3 - fy) * u)) - static_cast<int>(lround(sin(u * 3.14f) * 8))); }
         } else {
             bool chew = an >= 21;
             drawHero(world, kx, ky, People::FRONT, -1, chew && (an / 2) % 2, false);
@@ -270,7 +272,7 @@ void HouseScene::draw(Frame& out, int t) const {
     else if (phase_ == ALBUM && albumStep_ == 0) {
         if (an < 12) {
             if (an < 6) { drawHero(world, kx, ky, People::BACK, -1, false, false); arm(kx + 5, ky - 15 - sh, kx + 3, ky - 15 - sh - an * 2); }
-            else { float u = (an - 6) / 6.0f; int bx = 104, by = 92 + (int)std::lround((ky - 18 - sh - 92) * u); bookAt(bx, by, false); drawHero(world, kx, ky, People::BACK, -1, false, false); hand(kx - 8, std::max(by, ky - 18 - sh)); hand(kx + 8, std::max(by, ky - 18 - sh)); }
+            else { float u = (an - 6) / 6.0f; int bx = 104, by = 92 + static_cast<int>(lround((ky - 18 - sh - 92) * u)); bookAt(bx, by, false); drawHero(world, kx, ky, People::BACK, -1, false, false); hand(kx - 8, max(by, ky - 18 - sh)); hand(kx + 8, max(by, ky - 18 - sh)); }
         } else { drawHero(world, kx, ky, People::FRONT, -1, false, false); int by = ky - 13 - sh; armBehind(kx - 5, ky - 15 - sh, kx - 7, by + 1); armBehind(kx + 5, ky - 15 - sh, kx + 7, by + 1); bookAt(kx, by, false); hand(kx - 8, by + 1); hand(kx + 8, by + 1); }
     } else if (phase_ == ALBUM || phase_ == FADE) {
         bool open = phase_ == FADE || (albumStep_ == 2 && an >= 4);
@@ -284,31 +286,31 @@ void HouseScene::draw(Frame& out, int t) const {
     else drawHero(world, kx, ky, face_, walking ? step_ : -1, talking() && phase_ != TALK && (t / 2) % 2, (t / 7) % 9 == 0);
     if (momHere && kidBehind) drawMom();
     bool prompt = !talking() && ((phase_ == FREE && nearCandy()) || ((phase_ == FREE || phase_ == ALBUM_HUNT) && nearAlbum()));
-    if (prompt) { int bx = (int)kx_, by = (int)ky_ - 42 - (stage_ >= 2 ? 10 : stage_ > 0 ? 6 : 0) - (t / 3) % 2; world.rect(bx - 3, by - 1, 7, 10, C(OL)); world.rect(bx - 2, by, 5, 8, C(250, 250, 240)); world.rect(bx, by + 1, 1, 4, C(OL)); world.set(bx, by + 6, C(OL)); }
+    if (prompt) { int bx = static_cast<int>(kx_), by = static_cast<int>(ky_) - 42 - (stage_ >= 2 ? 10 : stage_ > 0 ? 6 : 0) - (t / 3) % 2; world.rect(bx - 3, by - 1, 7, 10, C(OL)); world.rect(bx - 2, by, 5, 8, C(250, 250, 240)); world.rect(bx, by + 1, 1, 4, C(OL)); world.set(bx, by + 6, C(OL)); }
     HouseRooms::zoomOut(out, world);
     if (phase_ == OLD_SLEEP || (phase_ == WAKE && t - animT_ < 6)) {
         int la = phase_ == WAKE ? 50 + (t - animT_) : t - animT_;
-        float lid = la < 12 ? la / 12.0f : la < 38 ? 1.0f : la < 42 ? 1 - (la - 38) * 0.12f : la < 44 ? 0.52f + (la - 42) * 0.2f : std::max(0.0f, 0.92f - (la - 44) / 8.0f);
-        int half = (int)std::lround(lid * 136);
+        float lid = la < 12 ? la / 12.0f : la < 38 ? 1.0f : la < 42 ? 1 - (la - 38) * 0.12f : la < 44 ? 0.52f + (la - 42) * 0.2f : max(0.0f, 0.92f - (la - 44) / 8.0f);
+        int half = static_cast<int>(lround(lid * 136));
         uint8_t blk = C(6, 4, 8);
-        for (int x = 0; x < Frame::W; ++x) { float u = (x - 240) / 240.0f; int bow = (int)std::lround((1 - u * u) * 14 * (1 - lid)); int top = half + bow, bot = Frame::H - half - bow; for (int y = 0; y < std::min(Frame::H, top); ++y) out.set(x, y, blk); for (int y = std::max(0, bot); y < Frame::H; ++y) out.set(x, y, blk); }
+        for (int x = 0; x < Frame::W; ++x) { float u = (x - 240) / 240.0f; int bow = static_cast<int>(lround((1 - u * u) * 14 * (1 - lid))); int top = half + bow, bot = Frame::H - half - bow; for (int y = 0; y < min(Frame::H, top); ++y) out.set(x, y, blk); for (int y = max(0, bot); y < Frame::H; ++y) out.set(x, y, blk); }
         if (la >= 12 && la < 38) {
             for (int s = 0; s < 18; ++s) { int sx = (s * 97 + la * (s % 3 + 1)) % Frame::W, sy = (s * 53) % Frame::H; if ((s + la / 3) % 4) { out.set(sx, sy, C(255, 250, 200)); out.set(sx - 1, sy, C(250, 222, 110)); out.set(sx + 1, sy, C(250, 222, 110)); out.set(sx, sy - 1, C(250, 222, 110)); out.set(sx, sy + 1, C(250, 222, 110)); } }
             if (la > 16 && la < 34) Font::center(out, "...", 240, 130, C(200, 190, 160));
         }
     }
     if (phase_ == WOBBLE || (phase_ == ALBUM_HUNT && t - phaseT_ < 30)) {
-        int a = phase_ == WOBBLE ? std::min(t - phaseT_, 20) : std::max(0, 30 - (t - phaseT_));
+        int a = phase_ == WOBBLE ? min(t - phaseT_, 20) : max(0, 30 - (t - phaseT_));
         float amp = a * 0.35f;
         static Frame copy; copy.px = out.px;
         for (int y = 0; y < Frame::H; ++y) {
-            int wob = (int)std::lround(std::sin(y * 0.07f + t * 0.9f) * amp);
-            for (int x = 0; x < Frame::W; ++x) out.set(x, y, copy.get(std::min(Frame::W - 1, std::max(0, x + wob)), y));
+            int wob = static_cast<int>(lround(sin(y * 0.07f + t * 0.9f) * amp));
+            for (int x = 0; x < Frame::W; ++x) out.set(x, y, copy.get(min(Frame::W - 1, max(0, x + wob)), y));
         }
-        for (auto& c : palette()) c = mix(c, RGB{ 170, 120, 220 }, std::min(0.35f, amp * 0.04f));
+        for (auto& c : palette()) c = mix(c, RGB{ 170, 120, 220 }, min(0.35f, amp * 0.04f));
     }
     if (!note_.empty() && !talking()) {
-        int nx = 8, ny = 8, w = std::max(Font::width(note_), Font::width(noteSub_)) + 16;
+        int nx = 8, ny = 8, w = max(Font::width(note_), Font::width(noteSub_)) + 16;
         out.rect(nx + 2, ny + 2, w, 26, C(30, 20, 24)); out.rect(nx, ny, w, 26, C(OL)); out.rect(nx + 1, ny + 1, w - 2, 24, C(252, 244, 200));
         for (int k = 0; k < 3; ++k) out.hline(nx + 3, nx + w - 4, ny + 8 + k * 8, C(214, 222, 236));
         out.rect(nx + w / 2 - 8, ny - 3, 16, 6, C(220, 210, 170));
@@ -317,26 +319,26 @@ void HouseScene::draw(Frame& out, int t) const {
     }
     if (talking()) {
         const Line& l = lines_.front();
-        int shown = std::min((int)l.text.size(), std::max(0, (t - lineT_) * 2));
+        int shown = min(static_cast<int>(l.text.size()), max(0, (t - lineT_) * 2));
         int bx = 30, by = phase_ >= OLD_SIT && phase_ <= WAKE ? 8 : 196, bw = 420, bh = 64;
         out.rect(bx, by, bw, bh, C(250, 250, 250)); out.rect(bx + 3, by + 3, bw - 6, bh - 6, C(10, 8, 12));
         int tx = bx + 16;
         if (!l.who.empty()) { Font::draw(out, l.who, tx, by + 12, C(250, 220, 120)); tx += Font::width(l.who) + 10; }
-        std::string s = l.text.substr(0, shown);
+        string s = l.text.substr(0, shown);
         int maxw = bx + bw - 16 - tx, line = 0;
-        std::string cur;
+        string cur;
         size_t i = 0;
         while (i <= s.size()) {
-            size_t sp = s.find(' ', i); if (sp == std::string::npos) sp = s.size();
-            std::string word = s.substr(i, sp - i);
-            std::string tryS = cur.empty() ? word : cur + " " + word;
+            size_t sp = s.find(' ', i); if (sp == string::npos) sp = s.size();
+            string word = s.substr(i, sp - i);
+            string tryS = cur.empty() ? word : cur + " " + word;
             if (Font::width(tryS) > maxw && !cur.empty()) { Font::draw(out, cur, tx, by + 12 + line * 12, C(250, 250, 250)); ++line; cur = word; }
             else cur = tryS;
             i = sp + 1;
         }
         Font::draw(out, cur, tx, by + 12 + line * 12, C(250, 250, 250));
-        if (shown >= (int)l.text.size() && (t / 3) % 2) out.poly({ {bx + bw - 22, by + bh - 16}, {bx + bw - 14, by + bh - 16}, {bx + bw - 18, by + bh - 11} }, C(250, 250, 250));
+        if (shown >= static_cast<int>(l.text.size()) && (t / 3) % 2) out.poly({ {bx + bw - 22, by + bh - 16}, {bx + bw - 14, by + bh - 16}, {bx + bw - 18, by + bh - 11} }, C(250, 250, 250));
     }
     if (t - roomT_ < 4) { float k = 1 - (t - roomT_) / 4.0f; for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
-    if (phase_ == FADE) { float k = std::min(1.0f, (t - phaseT_) / 12.0f); for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
+    if (phase_ == FADE) { float k = min(1.0f, (t - phaseT_) / 12.0f); for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
 }

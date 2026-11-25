@@ -11,6 +11,7 @@
 #include "ui/IInputSource.h"
 #include "ui/ISoundPlayer.h"
 #include "ui/ITerminal.h"
+using namespace std;
 
 // 게임 전체의 뿌리. 터미널·입력·사운드는 추상 타입으로 받고(DIP, 구체 객체는 main.cpp가 만든다),
 // 화면 버퍼·스테이지 데이터·앨범·장면을 소유하며 메인 루프(입력 -> update -> render)를 돈다.
@@ -23,7 +24,7 @@ public:
 private:
     void tick(int dtMs);
 
-    std::mt19937 m_rng;
+    mt19937 m_rng;
     Console m_console;
     IInputSource& m_input;
     SwitchableSound m_sound;

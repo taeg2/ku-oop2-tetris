@@ -5,18 +5,20 @@
 #include <cmath>
 #include <cstdlib>
 #include <algorithm>
+using namespace std;
+
 namespace {
 const RGB OUT{ 42, 26, 28 };
 const RGB SKY[5] = { {116,100,170}, {160,112,168}, {222,128,140}, {248,162,120}, {254,204,132} };
 const RGB SAND_HL{ 252, 226, 184 }, SAND_L{ 238, 202, 152 }, SAND{ 218, 174, 122 }, SAND_D{ 180, 136, 92 }, SAND_DD{ 134, 96, 68 };
 const RGB WET{ 176, 138, 110 }, WATER_L{ 236, 176, 150 }, TREE{ 70, 56, 92 }, TREE2{ 96, 70, 106 };
-const RGB SKIN{ 246, 204, 164 }, SKIN_D{ 222, 168, 132 }, HAIR{ 110, 70, 44 }, HAIR_L{ 140, 92, 58 };
-const RGB YEL{ 250, 210, 64 }, YEL_D{ 208, 160, 44 }, SHORTS{ 72, 100, 170 }, SHORTS_D{ 52, 74, 136 }, EYE{ 34, 26, 34 };
+const RGB SKIN{ 246, 204, 164 };
+const RGB EYE{ 34, 26, 34 };
 const RGB TENT{ 226, 120, 150 }, TENT_D{ 176, 80, 112 }, TENT_L{ 246, 170, 190 }, SUCK{ 255, 214, 214 };
 const RGB GOO{ 24, 18, 30 }, GOO_L{ 70, 60, 90 };
 const int HORIZON = 88, SHORE = 132;
 const int BKT_X = 2, BKT_Y = 130, OCTO_X = 312, OCTO_Y = 196;
-struct Spot { int x, y, v; };
+class Spot { public: int x, y, v; };
 const Spot SPOTS[5] = { {130,180,0}, {232,180,4}, {326,180,1}, {280,236,2}, {150,236,3} };
 const int SHAPE[5][6] = { {10,10,-4,26,20,26}, {12,20,-6,30,26,30}, {28,28,-21,18,34,32}, {11,11,-4,36,22,36}, {11,11,-4,20,22,20} };
 const float UP_SEQ[10] = { 0.6f, 0.2f, 0.0f, 0.0f, 0.0f, 0.3f, 0.8f, 1.1f, 1.0f, 1.0f };
@@ -24,11 +26,11 @@ const int PATS = 4, PAT_LEN = 2, HAPPY = 3, STAND = 2, KNEEL = 2;
 const float SPEED = 6.0f, PI = 3.14159265f;
 enum { P_KNEEL = 0, P_BUILD = 8, P_HAPPY = 88, P_STANDUP = 90, P_RUN_R = 92, P_RUN_L = 96, P_END = 100, P_WAVE = 102 };
 int wave(int t, float period, float amp, float phase = 0) {
-    return (int)std::lround(std::sin(t * 6.2832f / period + phase) * amp);
+    return static_cast<int>(lround(sin(t * 6.2832f / period + phase) * amp));
 }
-float clamp01(float v) { return std::max(0.0f, std::min(1.0f, v)); }
-float ease(float t) { t = clamp01(t); return 0.5f - 0.5f * std::cos(PI * t); }
-int rnd(float v) { return (int)std::lround(v); }
+float clamp01(float v) { return max(0.0f, min(1.0f, v)); }
+float ease(float t) { t = clamp01(t); return 0.5f - 0.5f * cos(PI * t); }
+int rnd(float v) { return static_cast<int>(lround(v)); }
 const int BAYER[4][4] = { {0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5} };
 void blendPixel(Frame& f, int x, int y, RGB c, float a) {
     if (x < 0 || y < 0 || x >= Frame::W || y >= Frame::H) return;
@@ -36,7 +38,7 @@ void blendPixel(Frame& f, int x, int y, RGB c, float a) {
 }
 void blendEllipse(Frame& f, float x0, float y0, float x1, float y1, RGB c, float a) {
     float cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, rx = (x1 - x0) / 2, ry = (y1 - y0) / 2;
-    for (int y = (int)y0; y <= (int)y1; ++y) for (int x = (int)x0; x <= (int)x1; ++x) {
+    for (int y = static_cast<int>(y0); y <= static_cast<int>(y1); ++y) for (int x = static_cast<int>(x0); x <= static_cast<int>(x1); ++x) {
         float u = (x - cx) / rx, v = (y - cy) / ry;
         if (u * u + v * v <= 1) blendPixel(f, x, y, c, a);
     }
@@ -54,7 +56,7 @@ void tower(Frame& f, int x0, int y0, int w, int h, bool crenel, int windows, boo
     if (crenel) for (int cx = x0 + 1; cx < x1; cx += 4) { f.rect(cx, y0 - 3, 2, 4, s); f.set(cx + 1, y0 - 3, sl); }
     if (slump) f.ellipse((x0 + x1) / 2, y0, (x1 - x0) / 2, slump, s);
     for (int k = 0; k < windows; ++k) {
-        int wx = x0 + w / 2 - 1 + (int)((k - (windows - 1) / 2.0f) * 5);
+        int wx = x0 + w / 2 - 1 + static_cast<int>((k - (windows - 1) / 2.0f) * 5);
         f.rect(wx, y0 + 4, 2, 2, win);
     }
     if (door) {
@@ -86,7 +88,7 @@ const Sprite KID_LEGS_KNEEL("kid legs kneeling", {
     "..OSSSOOOOSSSO..",
     ".OKSSSSOOSSSSKO.",
     ".OOOOOOOOOOOOOO.",
-}, PEOPLE_COLORS);
+}, peopleColors());
 const Sprite KID_BODY_ONE_ARM("kid body, right arm free", {
     "....OOYYYYOO....",
     "..OOYYYYYYYOO...",
@@ -97,12 +99,12 @@ const Sprite KID_BODY_ONE_ARM("kid body, right arm free", {
     ".OSSOyyyyyyyO...",
     "..OOOBBBBBBO....",
     "....OBBbbBBO....",
-}, PEOPLE_COLORS);
+}, peopleColors());
 }
 void BeachRound::drawSky(Frame& f, int t) {
     for (int y = 0; y < HORIZON; ++y) {
-        float v = (float)y / HORIZON * 4;
-        int i = std::min(3, (int)v); float fr = v - i;
+        float v = static_cast<float>(y) / HORIZON * 4;
+        int i = min(3, static_cast<int>(v)); float fr = v - i;
         for (int x = 0; x < 480; ++x) f.set(x, y, C(SKY[(fr * 16 > BAYER[y % 4][x % 4]) ? i + 1 : i]));
     }
     f.disc(360, 78, 12, C(255, 232, 170)); f.disc(360, 78, 8, C(255, 244, 206));
@@ -116,7 +118,7 @@ void BeachRound::drawSky(Frame& f, int t) {
 void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawSky(f, t);
     for (int x = 0; x < 480; ++x) {
-        int h = (int)(7 + 4 * std::sin(x * 0.03f) + 2 * std::sin(x * 0.11f));
+        int h = static_cast<int>(7 + 4 * sin(x * 0.03f) + 2 * sin(x * 0.11f));
         f.vline(x, HORIZON - h, HORIZON, C(TREE2));
     }
     for (int k = 0; k < 40; ++k) {
@@ -124,7 +126,7 @@ void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
         f.poly({ {tx, HORIZON - th - 6}, {tx - 3, HORIZON - 1}, {tx + 3, HORIZON - 1} }, C(TREE));
     }
     const RGB LAKE[6] = { {170,130,176}, {160,124,172}, {150,118,168}, {140,112,164}, {130,106,160}, {122,100,156} };
-    for (int y = HORIZON; y < SHORE; ++y) f.hline(0, 479, y, C(LAKE[std::min(5, (y - HORIZON) * 6 / (SHORE - HORIZON))]));
+    for (int y = HORIZON; y < SHORE; ++y) f.hline(0, 479, y, C(LAKE[min(5, (y - HORIZON) * 6 / (SHORE - HORIZON))]));
     for (int y = HORIZON + 1; y < SHORE - 2; y += 2) {
         int w = 3 + (y - HORIZON) / 3;
         for (int k = 0; k < 2; ++k) { int x = 360 + ((y * 37 + k * 53) % (2 * w + 1)) - w; f.hline(x - 3, x + 4, y, C(WATER_L)); }
@@ -132,7 +134,7 @@ void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     for (int k = 0; k < 26; ++k) { int x = (k * 73) % 470, y = HORIZON + 4 + (k * 17) % (SHORE - HORIZON - 8); f.hline(x, x + 3 + k % 5, y, C(186, 150, 190)); }
     f.rect(0, SHORE, 480, 270 - SHORE, C(SAND));
     for (int y = SHORE; y < SHORE + 7; ++y) f.hline(0, 479, y, y < SHORE + 4 ? C(WET) : C(196, 152, 110));
-    int foam = SHORE + (int)(1.5f + 1.5f * std::sin(t * 6.2832f / 40));
+    int foam = SHORE + static_cast<int>(1.5f + 1.5f * sin(t * 6.2832f / 40));
     f.hline(0, 479, foam, C(236, 220, 214));
     for (int x = 0; x < 480; x += 7) f.set(x + (t / 4) % 7, foam + 1, C(236, 220, 214));
     for (int k = 0; k < 70; ++k) {
@@ -148,7 +150,7 @@ void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     for (int i = 0; i < 5; ++i) {
         float b = build(i);
         if (b <= 0) continue;
-        int x = SPOTS[i].x, y = SPOTS[i].y, w = SHAPE[SPOTS[i].v][4], len = (int)(SHAPE[SPOTS[i].v][3] * b);
+        int x = SPOTS[i].x, y = SPOTS[i].y, w = SHAPE[SPOTS[i].v][4], len = static_cast<int>(SHAPE[SPOTS[i].v][3] * b);
         f.poly({ {x - w + 4, y}, {x + 2, y}, {x - len - 6, y - 4}, {x - len - w, y - 3} }, C(196, 150, 104));
     }
     if (goneT_ < 0) blendEllipse(f, kx_ - 12, ky_ - 3, kx_ + 12, ky_ + 2, RGB{ 150, 104, 80 }, 0.35f);
@@ -188,9 +190,9 @@ void BeachRound::drawCastle(Frame& f, int i, float b, int t) {
         int x = cx - 24 + (k * 17 + i * 5) % 48, y = base - 40 + (k * 11) % 38;
         if (tmp.get(x, y) == C(SAND) && tmp.get(x + 1, y) == C(SAND)) tmp.hline(x, x + 1, y, (k % 2) ? C(SAND_HL) : C(SAND_D));
     }
-    int top = (int)(base + 2 - 54 * b);
+    int top = static_cast<int>(base + 2 - 54 * b);
     uint8_t edge = C(112, 76, 54);
-    for (int y = std::max(top, base - 50); y <= base; ++y)
+    for (int y = max(top, base - 50); y <= base; ++y)
         for (int x = cx - 40; x <= cx + 40; ++x) {
             uint8_t c = tmp.get(x, y);
             if (c == clear) {
@@ -198,7 +200,7 @@ void BeachRound::drawCastle(Frame& f, int i, float b, int t) {
                 for (int d = 0; d < 4 && !n; ++d) {
                     int nx = x + (d == 0) - (d == 1), ny = y + (d == 2) - (d == 3);
                     uint8_t q = tmp.get(nx, ny);
-                    n = q != clear && q != 0 && ny >= top && ny <= base + 2 && std::abs(nx - cx) <= 40 && ny >= base - 50;
+                    n = q != clear && q != 0 && ny >= top && ny <= base + 2 && abs(nx - cx) <= 40 && ny >= base - 50;
                 }
                 if (n) f.set(x, y, edge);
             } else if (c != 0 || (y >= base - 50)) {
@@ -219,16 +221,16 @@ void BeachRound::drawCastleGoo(Frame& f, int i, int k) {
             if (f.get(x, y) == C(110, 70, 46) || f.get(x, y) == C(96, 60, 40)) f.set(x, y, goo);
     for (int d = 0; d < 6; ++d) {
         int dx = cx - mw / 2 + d * mw / 5 + (d % 2), start = d * 3;
-        int len = std::max(0, std::min(h + 4, (k - start) * 2));
+        int len = max(0, min(h + 4, (k - start) * 2));
         if (len <= 0) continue;
         int top = base - h + 2 + (d % 3) * 4;
-        f.vline(dx, top, std::min(base, top + len), goo);
-        if (d % 2 == 0) f.vline(dx + 1, top, std::min(base, top + len - 3), goo);
+        f.vline(dx, top, min(base, top + len), goo);
+        if (d % 2 == 0) f.vline(dx + 1, top, min(base, top + len - 3), goo);
         if (top + len < base) f.disc(dx, top + len, 1, goo);
         f.set(dx - 1, top + 1, gl);
     }
-    int pr = std::min(mw + 6, k * 2);
-    if (k > 6) { f.ellipse(cx, base + 1, pr, std::max(1, pr / 6), goo); f.hline(cx - pr / 2, cx - pr / 3, base, gl); }
+    int pr = min(mw + 6, k * 2);
+    if (k > 6) { f.ellipse(cx, base + 1, pr, max(1, pr / 6), goo); f.hline(cx - pr / 2, cx - pr / 3, base, gl); }
 }
 void BeachRound::drawKid(Frame& f, int t) {
     if (goneT_ >= 0) return;
@@ -287,7 +289,7 @@ void BeachRound::drawBucket(Frame& f, int t) {
     f.rect(x + 2, y + 47, 61, 6, ol); f.rect(x + 3, y + 48, 59, 4, blueD); f.hline(x + 3, x + 61, y + 48, blueL);
     f.ellipse(x + 32, y + 6, 23, 3, ol); f.ellipse(x + 32, y + 6, 22, 2, blueD);
     static const int SX[10] = { 18, 32, 46, 13, 26, 39, 52, 18, 32, 46 }, SY[10] = { 17, 17, 17, 29, 29, 29, 29, 41, 41, 41 };
-    int n = std::min(lines_, 10), from = n - clearN_;
+    int n = min(lines_, 10), from = n - clearN_;
     for (int i = 0; i < n; ++i) {
         int a = (i >= from) ? t - clearT_ : 99;
         int s = (a == 0) ? 6 : (a == 1) ? 5 : 4;
@@ -295,7 +297,7 @@ void BeachRound::drawBucket(Frame& f, int t) {
         uint8_t st = C(244, 128, 92), sd = C(196, 84, 64);
         for (int k = 0; k < 5; ++k) {
             float ang = -1.5708f + k * 1.2566f;
-            f.taper(cx, cy, cx + rnd(std::cos(ang) * s), cy + rnd(std::sin(ang) * s), 3, 1, st);
+            f.taper(cx, cy, cx + rnd(cos(ang) * s), cy + rnd(sin(ang) * s), 3, 1, st);
         }
         f.set(cx, cy, sd); f.set(cx + 1, cy + 1, sd);
         if (a < 3) sparkle(f, cx + 5, cy - 5);
@@ -308,10 +310,10 @@ void BeachRound::drawTentacle(Frame& f, int x0, int y0, int x1, int y1, int bend
     const int N = 14;
     int px[N + 1], py[N + 1];
     for (int i = 0; i <= N; ++i) {
-        float u = (float)i / N;
+        float u = static_cast<float>(i) / N;
         float cx = (x0 + x1) / 2.0f + bend, cy = (y0 + y1) / 2.0f;
-        px[i] = (int)((1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1) + (int)(std::sin(t * 0.3f + u * 4) * u * 1.5f);
-        py[i] = (int)((1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1);
+        px[i] = static_cast<int>((1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1) + static_cast<int>(sin(t * 0.3f + u * 4) * u * 1.5f);
+        py[i] = static_cast<int>((1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1);
     }
     for (int i = 0; i < N; ++i) { float w = w0 - (w0 - 2) * i / N; f.taper(px[i], py[i], px[i + 1], py[i + 1], w + 2, w + 1.5f, ol); }
     for (int i = 0; i < N; ++i) { float w = w0 - (w0 - 2) * i / N; f.taper(px[i], py[i], px[i + 1], py[i + 1], w, w - 0.5f, c); }
@@ -324,7 +326,7 @@ void BeachRound::drawOcto(Frame& f, int t) {
     float black = goneT_ >= 0 ? clamp01((t - goneT_ - 10) / 12.0f) : 0;
     f.ellipse(HX, HY, 18, 5, C(SAND_DD)); f.ellipse(HX, HY, 14, 3, C(70, 46, 34));
     if (goneT_ >= 0 && t >= goneT_ + 16) {
-        float r = std::min(16.0f, (t - goneT_ - 16) * 0.8f);
+        float r = min(16.0f, (t - goneT_ - 16) * 0.8f);
         f.ellipse(HX, HY + 1, 14 + rnd(r * 0.6f), 4 + rnd(r * 0.15f), C(GOO));
     }
     if (goneT_ >= 0) {
@@ -357,7 +359,7 @@ void BeachRound::drawOcto(Frame& f, int t) {
         int p = (kNew >= 2 && kNew < 5) ? prevPiece_ : piece_;
         auto cs = SessionPlayState::shapeOf(p);
         int mx = 9, my = 9, Mx = 0, My = 0;
-        for (auto& c : cs) { mx = std::min(mx, c.first); my = std::min(my, c.second); Mx = std::max(Mx, c.first); My = std::max(My, c.second); }
+        for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
         int pw = (Mx - mx + 1) * 6, ph = (My - my + 1) * 6;
         int x0 = HX + sway - pw / 2, y0 = tipY - ph + 2;
         for (auto& c : cs) ToyBlocks::cell6(f, x0 + (c.first - mx) * 6, y0 + (c.second - my) * 6, p);
@@ -365,13 +367,13 @@ void BeachRound::drawOcto(Frame& f, int t) {
     f.disc(HX - 11 + sway, tipY - 1, 2, C(TENT)); f.disc(HX + 11 + sway, tipY - 1, 2, C(TENT));
 }
 void BeachRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
-    struct Item { float y; int order, kind, k; };
-    std::vector<Item> items;
-    for (int k = 0; k < 5; ++k) if (build(k) > 0) items.push_back({ (float)SPOTS[k].y, 0, 0, k });
+    class Item { public: float y; int order, kind, k; };
+    vector<Item> items;
+    for (int k = 0; k < 5; ++k) if (build(k) > 0) items.push_back({ static_cast<float>(SPOTS[k].y), 0, 0, k });
     items.push_back({ ky_ + 0.5f, 1, 1, 0 });
-    items.push_back({ (float)(BKT_Y + 52), 0, 2, 0 });
-    items.push_back({ (float)(OCTO_Y + 54), 0, 3, 0 });
-    std::sort(items.begin(), items.end(), [](const Item& a, const Item& b) { return a.y != b.y ? a.y < b.y : a.order < b.order; });
+    items.push_back({ static_cast<float>(BKT_Y + 52), 0, 2, 0 });
+    items.push_back({ static_cast<float>(OCTO_Y + 54), 0, 3, 0 });
+    sort(items.begin(), items.end(), [](const Item& a, const Item& b) { return a.y != b.y ? a.y < b.y : a.order < b.order; });
     int goo0 = goneT_ >= 0 ? goneT_ + 4 : -1;
     for (auto& it : items) {
         if (it.kind == 0) {
@@ -384,7 +386,7 @@ void BeachRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     if (puffT_ == t)
         for (int j = 0; j < 5; ++j) {
             float a = PI + (j + 0.5f) * PI / 5;
-            f.set(puffX_ + rnd(std::cos(a) * 7), puffY_ + rnd(std::sin(a) * 3), C(252, 232, 196));
+            f.set(puffX_ + rnd(cos(a) * 7), puffY_ + rnd(sin(a) * 3), C(252, 232, 196));
         }
 }
 void BeachRound::drawShovelBucket(Frame& f, int x, int y) {
@@ -394,7 +396,7 @@ void BeachRound::drawShovelBucket(Frame& f, int x, int y) {
     f.poly({ {x - 8, y - 5}, {x + 2, y - 5}, {x + 1, y + 6}, {x - 7, y + 6} }, blue);
     f.vline(x, y - 5, y + 6, blueD); f.vline(x - 7, y - 4, y + 5, blueL);
     f.hline(x - 9, x + 3, y - 6, ol); f.hline(x - 8, x + 2, y - 5, blueL);
-    for (int k = 0; k < 9; ++k) f.set(x - 3 + rnd(std::cos(PI + k * PI / 8) * 6), y - 6 + rnd(std::sin(PI + k * PI / 8) * 5), ol);
+    for (int k = 0; k < 9; ++k) f.set(x - 3 + rnd(cos(PI + k * PI / 8) * 6), y - 6 + rnd(sin(PI + k * PI / 8) * 5), ol);
     f.line(x + 4, y - 9, x + 9, y + 2, ol); f.line(x + 5, y - 9, x + 10, y + 2, wood);
     f.poly({ {x + 7, y + 1}, {x + 13, y - 1}, {x + 15, y + 6}, {x + 10, y + 8} }, ol);
     f.poly({ {x + 8, y + 2}, {x + 12, y + 0}, {x + 14, y + 6}, {x + 10, y + 7} }, red);
@@ -404,13 +406,13 @@ void BeachRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (endT_ >= 0 && t - endT_ < 26) {
         int m = t - endT_, sx0 = SPOTS[4].x, sy0 = SPOTS[4].y - 24;
         float u = clamp01((m - 4) / 10.0f);
-        int ix = sx0 + rnd((34 - sx0) * u), iy = sy0 + rnd((236 - sy0) * u) - rnd(std::sin(u * PI) * 60);
-        if (m < 12) for (int k = 0; k < 8; ++k) { float a = k * 0.785f + m * 0.3f; sparkle(f, sx0 + rnd(std::cos(a) * (18 + m)), sy0 + rnd(std::sin(a) * (10 + m / 2))); }
+        int ix = sx0 + rnd((34 - sx0) * u), iy = sy0 + rnd((236 - sy0) * u) - rnd(sin(u * PI) * 60);
+        if (m < 12) for (int k = 0; k < 8; ++k) { float a = k * 0.785f + m * 0.3f; sparkle(f, sx0 + rnd(cos(a) * (18 + m)), sy0 + rnd(sin(a) * (10 + m / 2))); }
         if (m >= 14) drawMemoryBook(f, 6, 226 - ((m >= 14 && m < 18) ? (m % 2 ? 3 : 1) : 0));
         if (m < 15) drawShovelBucket(f, ix, iy);
         if (m >= 14 && m < 24) {
             int r = (m - 14) * 3 + 6;
-            for (int k = 0; k < 8; ++k) { float a = k * 0.785f; sparkle(f, 34 + rnd(std::cos(a) * r), 242 + rnd(std::sin(a) * r * 0.7f)); }
+            for (int k = 0; k < 8; ++k) { float a = k * 0.785f; sparkle(f, 34 + rnd(cos(a) * r), 242 + rnd(sin(a) * r * 0.7f)); }
             if (m < 20) Font::center(f, "SHOVEL & BUCKET!", 56, 212 - (m - 14), C(252, 228, 152), C(OUT));
         }
     }
@@ -426,24 +428,24 @@ void BeachRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         f.line(0, by + h + 2, bx, by + h - 7, ol); f.line(0, by + h + 2, bx, by + h - 2, ol);
         if (!pop) { Font::draw(f, "HONEY!", bx + 4, by + 3, C(60, 40, 40)); Font::draw(f, "TIME FOR BED!", bx + 4, by + 11, C(190, 70, 70)); }
     }
-    float dusk = std::min(0.35f, std::min(10, lines_) / 10.0f * 0.25f + (endT_ >= 0 ? 0.1f * ease((t - endT_) / 30.0f) : 0.0f));
+    float dusk = min(0.35f, min(10, lines_) / 10.0f * 0.25f + (endT_ >= 0 ? 0.1f * ease((t - endT_) / 30.0f) : 0.0f));
     int goo0 = goneT_ >= 0 ? goneT_ + 4 : -1;
-    if (goo0 >= 0 && t >= goo0) dusk = std::min(0.6f, dusk + 0.25f * ease((t - goo0) / 40.0f));
+    if (goo0 >= 0 && t >= goo0) dusk = min(0.6f, dusk + 0.25f * ease((t - goo0) / 40.0f));
     float black = 0;
     if (t - startT_ < 8) black = 1 - (t - startT_) / 8.0f;
-    if (goo0 >= 0 && t >= goo0 + 52) black = std::min(1.0f, (t - goo0 - 52 + 1) / 10.0f);
+    if (goo0 >= 0 && t >= goo0 + 52) black = min(1.0f, (t - goo0 - 52 + 1) / 10.0f);
     for (auto& c : palette()) c = mix(mix(c, RGB{ 60, 50, 110 }, dusk), RGB{ 0, 0, 0 }, black);
 }
-void BeachRound::kneelPoint(int i, float& x, float& y) const { x = (float)(SPOTS[i].x - SHAPE[SPOTS[i].v][0] - 18); y = (float)SPOTS[i].y; }
+void BeachRound::kneelPoint(int i, float& x, float& y) const { x = static_cast<float>(SPOTS[i].x - SHAPE[SPOTS[i].v][0] - 18); y = static_cast<float>(SPOTS[i].y); }
 void BeachRound::patReach(int i, int& dx, int& h) const { const int* s = SHAPE[SPOTS[i].v]; dx = s[0] + 18 + s[2]; h = s[3]; }
 float BeachRound::pathLen() const {
     float L = 0;
-    for (size_t i = 0; i + 1 < path_.size(); ++i) L += std::hypot(path_[i + 1].first - path_[i].first, path_[i + 1].second - path_[i].second);
+    for (size_t i = 0; i + 1 < path_.size(); ++i) L += hypot(path_[i + 1].first - path_[i].first, path_[i + 1].second - path_[i].second);
     return L;
 }
 void BeachRound::along(float s, float& x, float& y) const {
     for (size_t i = 0; i + 1 < path_.size(); ++i) {
-        float dx = path_[i + 1].first - path_[i].first, dy = path_[i + 1].second - path_[i].second, L = std::hypot(dx, dy);
+        float dx = path_[i + 1].first - path_[i].first, dy = path_[i + 1].second - path_[i].second, L = hypot(dx, dy);
         if (s <= L) { x = path_[i].first + dx * s / L; y = path_[i].second + dy * s / L; return; }
         s -= L;
     }
@@ -456,10 +458,10 @@ void BeachRound::reset() {
     puffT_ = -1; startT_ = lastT_; lines_ = 0; clearT_ = -100; clearN_ = 0; endT_ = -1; goneT_ = -1;
 }
 void BeachRound::specialEvent(int) { if (cur_ < 5 && endT_ < 0) ++pending_; }
-void BeachRound::onLinesCleared(const std::vector<int>& rows, int totalLines, int t) {
-    lines_ = std::min(10, totalLines);
-    clearT_ = t; clearN_ = (int)rows.size();
-    pending_ += (int)rows.size();
+void BeachRound::onLinesCleared(const vector<int>& rows, int totalLines, int t) {
+    lines_ = min(10, totalLines);
+    clearT_ = t; clearN_ = static_cast<int>(rows.size());
+    pending_ += static_cast<int>(rows.size());
 }
 void BeachRound::update(const PlayStateReader& g, int t) {
     if (t < lastT_ || lastT_ == 0) startT_ = t;
@@ -494,7 +496,7 @@ void BeachRound::update(const PlayStateReader& g, int t) {
             else {
                 float x1, y1; kneelPoint(cur_ + 1, x1, y1);
                 path_.clear(); path_.push_back({ kx_, ky_ });
-                if (std::fabs(y1 - ky_) < 1 && x1 > kx_) {
+                if (fabs(y1 - ky_) < 1 && x1 > kx_) {
                     float lane = ky_ + 13;
                     path_.push_back({ kx_ + 6, lane }); path_.push_back({ x1 - 6, lane });
                 }
@@ -510,7 +512,7 @@ void BeachRound::update(const PlayStateReader& g, int t) {
     case Run: {
         float x, y, nx, ny;
         along(mt_ * SPEED, x, y); along(mt_ * SPEED + 2, nx, ny);
-        kx_ = (float)rnd(x); ky_ = (float)rnd(y);
+        kx_ = static_cast<float>(rnd(x)); ky_ = static_cast<float>(rnd(y));
         pose_ = (nx >= x - 0.1f ? P_RUN_R : P_RUN_L) + t % 4;
         if (++mt_ * SPEED >= pathLen()) { kx_ = path_.back().first; ky_ = path_.back().second; mode_ = Kneel; mt_ = 0; }
         break;
@@ -534,7 +536,7 @@ void BeachRound::update(const PlayStateReader& g, int t) {
                 path_.push_back({ -40, 196 });
             }
             float x, y; along((e - 30) * SPEED, x, y);
-            kx_ = (float)rnd(x); ky_ = (float)rnd(y);
+            kx_ = static_cast<float>(rnd(x)); ky_ = static_cast<float>(rnd(y));
             pose_ = P_RUN_L + t % 4;
             if ((e - 30) * SPEED > pathLen()) goneT_ = t;
         }

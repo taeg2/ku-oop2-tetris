@@ -12,19 +12,21 @@
 #include "ui/WeddingRound.h"
 #include "ui/NurseryRound.h"
 #include "ui/FadingRound.h"
+using namespace std;
+
 AlbumView::AlbumView(Point origin) : View(origin) {
-    m_previews.push_back(std::make_unique<LakeRound>());
-    m_previews.push_back(std::make_unique<KitchenRound>());
-    m_previews.push_back(std::make_unique<BeachRound>());
-    m_previews.push_back(std::make_unique<BedroomRound>());
-    m_previews.push_back(std::make_unique<ClassroomRound>());
-    m_previews.push_back(std::make_unique<SoccerRound>());
-    m_previews.push_back(std::make_unique<UniRound>());
-    m_previews.push_back(std::make_unique<InterviewRound>());
-    m_previews.push_back(std::make_unique<OfficeRound>());
-    m_previews.push_back(std::make_unique<WeddingRound>());
-    m_previews.push_back(std::make_unique<NurseryRound>());
-    m_previews.push_back(std::make_unique<FadingRound>());
+    m_previews.push_back(make_unique<LakeRound>());
+    m_previews.push_back(make_unique<KitchenRound>());
+    m_previews.push_back(make_unique<BeachRound>());
+    m_previews.push_back(make_unique<BedroomRound>());
+    m_previews.push_back(make_unique<ClassroomRound>());
+    m_previews.push_back(make_unique<SoccerRound>());
+    m_previews.push_back(make_unique<UniRound>());
+    m_previews.push_back(make_unique<InterviewRound>());
+    m_previews.push_back(make_unique<OfficeRound>());
+    m_previews.push_back(make_unique<WeddingRound>());
+    m_previews.push_back(make_unique<NurseryRound>());
+    m_previews.push_back(make_unique<FadingRound>());
 }
 void AlbumView::open(int stage, int clearedRound) {
     m_album.setStage(stage);
@@ -64,13 +66,13 @@ void AlbumView::update(int dtMs) {
 }
 void AlbumView::render() const {
     resetPalette();
-    std::fill(m_frame.px.begin(), m_frame.px.end(), 0);
+    fill(m_frame.px.begin(), m_frame.px.end(), 0);
     if (m_album.inDetail()) {
         int want = m_album.stage() * AlbumScreen::SLOTS + m_album.selected();
-        if (want < (int)m_previews.size() && m_previews[(std::size_t)want]) {
-            if (m_shown != want) { m_shown = want; m_previews[(std::size_t)want]->reset(); }
-            std::fill(m_preview.px.begin(), m_preview.px.end(), 0);
-            m_previews[(std::size_t)want]->draw(m_preview, m_empty, 0, 40 + m_t % 400);
+        if (want < static_cast<int>(m_previews.size()) && m_previews[static_cast<size_t>(want)]) {
+            if (m_shown != want) { m_shown = want; m_previews[static_cast<size_t>(want)]->reset(); }
+            fill(m_preview.px.begin(), m_preview.px.end(), 0);
+            m_previews[static_cast<size_t>(want)]->draw(m_preview, m_empty, 0, 40 + m_t % 400);
             m_album.draw(m_frame, m_t, &m_preview);
             return;
         }

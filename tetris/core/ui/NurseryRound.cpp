@@ -5,9 +5,11 @@
 #include "ui/Stage3Art.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 using namespace Stage3Art;
 static const int FLOOR_Y = 228, DAD_X = 336, CRIB_X = 438;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static void drawingItem(Frame& f, int x, int y, int) {
     uint8_t ol = C(OLC), paper = C(252, 250, 240);
     f.rect(x - 10, y - 8, 21, 17, ol); f.rect(x - 9, y - 7, 19, 15, paper);
@@ -25,7 +27,7 @@ static void babyBundle(Frame& f, int x, int y, bool cry, int t) {
     else { f.hline(x + 2, x + 4, y - 12, ol); f.set(x + 4, y - 8, C(176, 80, 84)); }
 }
 void NurseryRound::reset() { queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; endT_ = -1; lines_ = 0; shown_ = 0; cryT_ = -100; }
-void NurseryRound::onLinesCleared(const std::vector<int>&, int totalLines, int) { while (lines_ < totalLines && lines_ < 10) queue_.push_back(++lines_); }
+void NurseryRound::onLinesCleared(const vector<int>&, int totalLines, int) { while (lines_ < totalLines && lines_ < 10) queue_.push_back(++lines_); }
 void NurseryRound::start(int t) {
     cur_ = queue_.front(); queue_.pop_front(); curT_ = t; shown_ = cur_;
     if (cur_ % 3 == 0 && cur_ < 10) cryT_ = t;
@@ -59,7 +61,7 @@ void NurseryRound::drawRoom(Frame& f, int t) {
     int lx = 410, ly = 92;
     f.rect(lx - 1, ly, 20, 4, ol); f.rect(lx, ly - 18, 4, 18, ol); f.poly({ {lx - 6, ly - 18}, {lx + 10, ly - 18}, {lx + 6, ly - 28}, {lx - 2, ly - 28} }, ol);
     f.poly({ {lx - 5, ly - 19}, {lx + 9, ly - 19}, {lx + 5, ly - 27}, {lx - 1, ly - 27} }, C(255, 236, 160));
-    if (ph == 0) for (int r = 8; r < 26; r += 4) for (int k = 0; k < 20; ++k) f.set(lx + 2 + rnd(std::cos(k * 0.314f) * r), ly - 20 + rnd(std::sin(k * 0.314f) * r * 0.8f), C(255, 236, 160));
+    if (ph == 0) for (int r = 8; r < 26; r += 4) for (int k = 0; k < 20; ++k) f.set(lx + 2 + rnd(cos(k * 0.314f) * r), ly - 20 + rnd(sin(k * 0.314f) * r * 0.8f), C(255, 236, 160));
     f.rect(lx - 6, ly + 4, 34, 6, ol); f.rect(lx - 5, ly + 5, 32, 4, C(240, 236, 226));
 }
 void NurseryRound::drawCrib(Frame& f, int t) {
@@ -74,7 +76,7 @@ void NurseryRound::drawCrib(Frame& f, int t) {
     int mx = CRIB_X, my = 112;
     f.vline(x1 - 1, my - 8, top - 6, ol); f.hline(mx, x1 - 1, my - 8, ol);
     for (int k = 0; k < 4; ++k) {
-        float a = k * 1.57f + t * 0.12f; int ox = mx + rnd(std::cos(a) * 14), oy = my + 8 + rnd(std::sin(a) * 3);
+        float a = k * 1.57f + t * 0.12f; int ox = mx + rnd(cos(a) * 14), oy = my + 8 + rnd(sin(a) * 3);
         f.vline(ox, my - 8, oy - 3, C(150, 150, 160));
         static const RGB c[4] = { {250, 200, 90}, {150, 200, 250}, {250, 170, 190}, {170, 230, 170} };
         if (k % 2) { f.disc(ox, oy, 3, ol); f.disc(ox, oy, 2, C(c[k])); } else { f.poly({ {ox - 3, oy + 2}, {ox + 3, oy + 2}, {ox, oy - 3} }, ol); f.poly({ {ox - 2, oy + 1}, {ox + 2, oy + 1}, {ox, oy - 2} }, C(c[k])); }
@@ -94,7 +96,7 @@ void NurseryRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     bool crying = t - cryT_ >= 0 && t - cryT_ < CRY && e < 0;
     bool busy = curT_ >= 0 && t - curT_ < STEP && e < 0;
     if (ph == 0 && e < 0) {
-        int rock = rnd(std::sin(t * 0.3f) * 2);
+        int rock = rnd(sin(t * 0.3f) * 2);
         chair(f, DAD_X, FLOOR_Y, false, true, t);
         int hx = 0, hy = 0;
         person(f, DAD_X, FLOOR_Y - 2 + rock, HERO_HOME, false, SIT, HOLD, crying ? SLEEPY : busy ? SMILE : CALM, t, 2, &hx, &hy);
@@ -102,7 +104,7 @@ void NurseryRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
         return;
     }
     if (ph == 1 && e < 0) {
-        int a = busy ? t - curT_ : STEP, toss = busy ? rnd(std::sin(a * 3.1416f / STEP) * 46) : 0;
+        int a = busy ? t - curT_ : STEP, toss = busy ? rnd(sin(a * 3.1416f / STEP) * 46) : 0;
         int hx = 0, hy = 0;
         person(f, DAD_X + 10, FLOOR_Y, HERO_HOME, false, STAND, busy ? UP : HOLD, crying ? SLEEPY : SMILE, t, 2, &hx, &hy);
         int kx = hx + 4, ky = hy - 4 - toss;
@@ -136,9 +138,9 @@ void NurseryRound::drawNext(Frame& f, int piece, int t) {
     static const RGB c[3] = { {120, 180, 240}, {250, 160, 180}, {170, 220, 140} };
     for (int k = 0; k < 3; ++k) { f.rect(x + 4 + k * 20, y - 9, 10, 10, ol); f.rect(x + 5 + k * 20, y - 8, 8, 8, C(c[k])); f.set(x + 8 + k * 20, y - 5, C(250, 250, 250)); }
     Font::center(f, "NEXT", x + 32, y + 12, C(150, 100, 80));
-    std::vector<std::pair<int, int>> cs = SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
-    for (auto& cc : cs) { mx = std::min(mx, cc.first); my = std::min(my, cc.second); Mx = std::max(Mx, cc.first); My = std::max(My, cc.second); }
+    for (auto& cc : cs) { mx = min(mx, cc.first); my = min(my, cc.second); Mx = max(Mx, cc.first); My = max(My, cc.second); }
     int bw = (Mx - mx + 1) * 5, bh = (My - my + 1) * 5;
     for (auto& cc : cs) { int px = x + 32 - bw / 2 + (cc.first - mx) * 5, py = y + 28 - bh / 2 + (cc.second - my) * 5; const RGB* r = ToyBlocks::ramp(piece); f.rect(px, py, 5, 5, C(r[0])); f.rect(px + 1, py + 1, 3, 3, C(r[2])); f.set(px + 1, py + 1, C(r[4])); }
     (void)t; (void)chestD;
@@ -165,7 +167,7 @@ void NurseryRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         int a = t - cryT_;
         if (a < 12 && (a / 2) % 2 == 0) Font::center(f, "WAAAH!", CRIB_X - 20, 120, C(250, 120, 120), ol);
         if (a >= 6) {
-            float lid = 0.5f + 0.5f * std::sin((a - 6) * 0.35f);
+            float lid = 0.5f + 0.5f * sin((a - 6) * 0.35f);
             int h = rnd(lid * lid * 135);
             f.rect(0, 0, 480, h, C(8, 8, 14)); f.rect(0, 270 - h, 480, h, C(8, 8, 14));
             if (h > 20) Font::center(f, "SO SLEEPY", 240, h - 14, C(140, 140, 170));
@@ -176,7 +178,7 @@ void NurseryRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         if (e >= GIVE - 6 && e < GIVE) drawingItem(f, 410, 176 - (e - GIVE + 6) * 2, t);
         flyToBook(f, e - GIVE, 400, 166, drawingItem, "HER DRAWING!", t);
         if (e >= GIVE + 26 && e < GIVE + 40) for (int k = 0; k < 3; ++k) { int hx = DAD_X + 6 + k * 10, hy = 150 - (e - GIVE - 26) * 2 - k * 5; uint8_t c = C(240, 90, 120); f.set(hx - 1, hy, c); f.set(hx + 1, hy, c); f.hline(hx - 2, hx + 2, hy + 1, c); f.hline(hx - 1, hx + 1, hy + 2, c); f.set(hx, hy + 3, c); }
-        if (e >= END - 12) { float k = std::min(1.0f, (e - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
+        if (e >= END - 12) { float k = min(1.0f, (e - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
     }
     (void)bx; (void)by;
 }

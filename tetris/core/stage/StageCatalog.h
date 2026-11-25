@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "stage/StageConfig.h"
+using namespace std;
 
 // 3개 스테이지 데이터 목록 (기획안 4, 5장)
 class StageCatalog {
@@ -10,5 +11,5 @@ public:
     int count() const { return static_cast<int>(m_stages.size()); }
 
 private:
-    std::vector<StageConfig> m_stages;
+    vector<StageConfig> m_stages;
 };

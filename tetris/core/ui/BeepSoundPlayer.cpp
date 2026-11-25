@@ -1,16 +1,18 @@
 #ifdef _WIN32
-#include "ui/BeepSoundPlayer.h"
-#include <map>
-#include <vector>
+// windows.h를 가장 먼저 include한다 (using namespace std; 뒤에 오면 byte 같은 이름이 겹칠 수 있다)
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
+#include "ui/BeepSoundPlayer.h"
+#include <map>
+#include <vector>
+using namespace std;
 
 namespace {
-const std::size_t kMaxQueuedNotes = 24;  // 너무 밀리면 버린다 (소리가 화면보다 늦지 않게)
+const size_t kMaxQueuedNotes = 24;  // 너무 밀리면 버린다 (소리가 화면보다 늦지 않게)
 
 // 주파수 0 = 쉼표
-const std::map<SoundId, std::vector<std::pair<int, int>>> kMelodies = {
+const map<SoundId, vector<pair<int, int>>> kMelodies = {
     {SoundId::Lock, {{196, 25}}},
     {SoundId::LineClear, {{523, 45}, {659, 45}, {784, 70}}},
     {SoundId::PieceFilled, {{523, 80}, {659, 80}, {784, 80}, {1047, 160}}},
@@ -28,7 +30,7 @@ BeepSoundPlayer::BeepSoundPlayer() : m_thread(&BeepSoundPlayer::worker, this) {}
 
 BeepSoundPlayer::~BeepSoundPlayer() {
     {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        lock_guard<mutex> lock(m_mutex);
         m_stop = true;
         m_queue.clear();
     }
@@ -54,7 +56,7 @@ void BeepSoundPlayer::play(int frequencyHz, int durationMs) {
 
 void BeepSoundPlayer::enqueue(Note note) {
     {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        lock_guard<mutex> lock(m_mutex);
         if (m_queue.size() >= kMaxQueuedNotes) {
             return;
         }
@@ -67,7 +69,7 @@ void BeepSoundPlayer::worker() {
     while (true) {
         Note note{};
         {
-            std::unique_lock<std::mutex> lock(m_mutex);
+            unique_lock<mutex> lock(m_mutex);
             m_wake.wait(lock, [this] { return m_stop || !m_queue.empty(); });
             if (m_stop) {
                 return;

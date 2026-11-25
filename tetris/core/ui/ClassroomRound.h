@@ -1,10 +1,12 @@
 #pragma once
 #include "ui/RoundScene.h"
+using namespace std;
+
 class ClassroomRound : public RoundScene {
 public:
     const char* name() const override { return "First Day"; }
     void reset() override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     void update(const PlayStateReader& g, int t) override;
     bool endingDone() const override { return endT_ >= 0 && last_ - endT_ >= SIGN0 + 12; }
 protected:

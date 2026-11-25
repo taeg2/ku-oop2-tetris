@@ -8,12 +8,14 @@
 #include "ui/SessionPlayState.h"
 #include "ui/SixelEncoder.h"
 #include "ui/View.h"
+using namespace std;
+
 // Stage 1 플레이 화면 (호수, 부엌, 해변, 침실). EventBus에 구독해야 줄 삭제와 사진 완성을 받는다
 // 장면은 wantsPause()가 true인 동안 블록 진행을 멈추고, 라운드가 끝나면 앨범을 연다
 class StageArtView : public View, public IGameEventListener {
 public:
-    static constexpr int kScale = 2;
-    static constexpr int kFrameMs = 100;
+    inline static const int kScale = 2;
+    inline static const int kFrameMs = 100;
     StageArtView(Point origin, const StageSession& session, int linesPerRound);  // linesPerRound: 라운드 하나를 끝내는 실제 줄 수
     void update(int dtMs) override;
     void draw(Console& console) const override;
@@ -23,9 +25,9 @@ public:
     const Frame& frame() const { return m_frame; }
     void render() const;
 private:
-    RoundScene& round() const { return *m_rounds[static_cast<std::size_t>(m_round)]; }
+    RoundScene& round() const { return *m_rounds[static_cast<size_t>(m_round)]; }
     SessionPlayState m_state;
-    std::vector<std::unique_ptr<RoundScene>> m_rounds;
+    vector<unique_ptr<RoundScene>> m_rounds;
     int m_round = 0;
     int m_lines = 0, m_visual = 0, m_linesPerRound = 3;
     int m_t = 0;
@@ -34,6 +36,6 @@ private:
     bool m_advance = false;
     mutable Frame m_frame;  // draw()는 const라서 그림 캐시는 mutable로 둔다
     mutable int m_drawnT = -1;
-    mutable std::string m_sixel;
+    mutable string m_sixel;
     SixelEncoder m_encoder;
 };

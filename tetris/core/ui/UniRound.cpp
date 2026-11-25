@@ -4,9 +4,11 @@
 #include "ui/Stage2UI.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 static const RGB OL{ 40, 30, 36 };
 static const int SIT_X = 380, SIT_Y = 238;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static const Sprite HEAD_SIDE("uni student head, facing right", {
 "....HHHHHH......",
 "...HHHHHHHH.....",
@@ -21,7 +23,7 @@ static const Sprite HEAD_SIDE("uni student head, facing right", {
 "......sSSS......",
 "......sSS.......",
 }, { {'H', {168, 92, 44}}, {'h', {206, 128, 64}}, {'S', {246, 204, 164}}, {'s', {214, 164, 128}}, {'E', {34, 26, 34}}, {'M', {176, 80, 84}} });
-struct Season { RGB skyT, skyB, grass, grassD, grassL, water, waterD, waterL, leaf, leafD, leafL, top, topD; const char* name; };
+class Season { public: RGB skyT, skyB, grass, grassD, grassL, water, waterD, waterL, leaf, leafD, leafL, top, topD; const char* name; };
 static const Season SEASONS[4] = {
     { {138, 196, 240}, {214, 236, 250}, {122, 186, 92}, {96, 156, 72}, {156, 208, 112}, {96, 164, 214}, {70, 132, 188}, {176, 218, 242}, {244, 180, 200}, {222, 136, 166}, {254, 222, 232}, {120, 178, 132}, {90, 142, 104}, "SPRING" },
     { {86, 166, 238}, {176, 222, 250}, {84, 166, 70}, {62, 134, 56}, {122, 198, 88}, {62, 150, 212}, {44, 116, 180}, {160, 214, 246}, {72, 150, 66}, {50, 116, 52}, {112, 186, 84}, {244, 242, 236}, {204, 202, 196}, "SUMMER" },
@@ -96,7 +98,7 @@ static void stander(Frame& f, int cx, int feet, int season, RGB hair, bool flip,
     tmp.rect(ox + 3, oy + 12, 10, 15, top); tmp.vline(ox + 3, oy + 12, oy + 26, topD); tmp.hline(ox + 3, ox + 12, oy + 26, topD);
     if (bag) tmp.line(ox + 4, oy + 13, ox + 6, oy + 22, packD);
     blit(tmp, HEAD_SIDE, ox, oy);
-    hairOn(tmp, W, H, hair, RGB{ std::min(255, hair.r + 30), std::min(255, hair.g + 24), std::min(255, hair.b + 20) });
+    hairOn(tmp, W, H, hair, RGB{ min(255, hair.r + 30), min(255, hair.g + 24), min(255, hair.b + 20) });
     if (season == 3) { beanie(tmp, ox, oy); tmp.rect(ox + 4, oy + 10, 8, 3, C(200, 50, 60)); tmp.hline(ox + 4, ox + 11, oy + 10, C(230, 92, 92)); }
     if (smile) { tmp.set(ox + 11, oy + 8, C(176, 80, 84)); tmp.set(ox + 12, oy + 8, C(176, 80, 84)); tmp.set(ox + 13, oy + 7, C(176, 80, 84)); }
     int sx = ox + 7, sy = oy + 14, ax = sx - sw, ay = sy + 9;
@@ -126,7 +128,7 @@ static void gradSprite(Frame& f, int cx, int feet, RGB hair, bool flip, int pose
     tmp.rect(ox + 3, fy - 1, 4, 1, shoe); tmp.rect(ox + 9, fy - 1, 4, 1, shoe);
     tmp.poly({ {ox + 9, oy + 12}, {ox + 11, oy + 12}, {ox + 12, oy + 26}, {ox + 10, oy + 26} }, stole); tmp.vline(ox + 10, oy + 14, oy + 25, stoleD);
     blit(tmp, HEAD_SIDE, ox, oy);
-    hairOn(tmp, W, H, hair, RGB{ std::min(255, hair.r + 30), std::min(255, hair.g + 24), std::min(255, hair.b + 20) });
+    hairOn(tmp, W, H, hair, RGB{ min(255, hair.r + 30), min(255, hair.g + 24), min(255, hair.b + 20) });
     if (smile) { tmp.set(ox + 11, oy + 8, C(176, 80, 84)); tmp.set(ox + 12, oy + 8, C(176, 80, 84)); tmp.set(ox + 13, oy + 7, C(176, 80, 84)); tmp.set(ox + 11, oy + 5, C(34, 26, 34)); }
     if (cap) {
         tmp.rect(ox + 2, oy - 1, 10, 3, board); tmp.hline(ox + 2, ox + 11, oy - 1, boardL);
@@ -147,10 +149,10 @@ static void shade(Frame& f, int x0, int y0, int x1, int y1, int level) {
     if (level <= 0) return;
     static const RGB lo[3] = { {70, 52, 84}, {34, 34, 70}, {12, 16, 40} }, hi[3] = { {246, 206, 196}, {184, 180, 222}, {118, 138, 196} };
     static const RGB keep[12] = { {250, 214, 120}, {200, 150, 70}, {255, 236, 160}, {170, 214, 252}, {214, 232, 250}, {244, 240, 214}, {230, 230, 250}, {120, 120, 160}, {250, 220, 120}, {12, 16, 38}, {22, 28, 60}, {40, 46, 88} };
-    int l = std::min(3, level) - 1;
+    int l = min(3, level) - 1;
     int map[256];
     for (int& m : map) m = -1;
-    for (int y = std::max(0, y0); y < std::min(270, y1); ++y) for (int x = std::max(0, x0); x < std::min(480, x1); ++x) {
+    for (int y = max(0, y0); y < min(270, y1); ++y) for (int x = max(0, x0); x < min(480, x1); ++x) {
         uint8_t c = f.get(x, y);
         if (map[c] < 0) {
             RGB v = palette()[c];
@@ -159,15 +161,15 @@ static void shade(Frame& f, int x0, int y0, int x1, int y1, int level) {
             if (lit) map[c] = c;
             else {
                 float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f;
-                int q = std::min(7, (int)(lum * 8));
+                int q = min(7, static_cast<int>(lum * 8));
                 map[c] = C(mix(lo[l], hi[l], q / 7.0f));
             }
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 void UniRound::reset() { queue_.clear(); curT_ = -1; last_ = 0; gradT_ = -1; lines_ = 0; shown_ = 0; season_ = 0; cups_ = 0; nightT_ = -1000; nightLine_ = 0; lineT_ = 0; }
-void UniRound::onLinesCleared(const std::vector<int>&, int totalLines, int) {
+void UniRound::onLinesCleared(const vector<int>&, int totalLines, int) {
     while (lines_ < totalLines && lines_ < 12) {
         ++lines_;
         queue_.push_back({ TYPE, lines_ });
@@ -184,7 +186,7 @@ void UniRound::start(int t) {
 void UniRound::update(const PlayStateReader&, int t) {
     last_ = t;
     if (gradT_ >= 0) return;
-    if (t - nightT_ == DAWN) season_ = std::min(3, nightLine_ / 3);
+    if (t - nightT_ == DAWN) season_ = min(3, nightLine_ / 3);
     if (curT_ >= 0) {
         if (cur_.k == GRAD || t - curT_ < TYPE_LEN) return;
         curT_ = -1;
@@ -252,7 +254,7 @@ void UniRound::drawCampus(Frame& f, int t, int n) {
         int sy = base - 1 - (y - base) * 2;
         if (sy < 0 || (y - base) % 3 == 2) continue;
         for (int x = 0; x < 480; ++x) {
-            uint8_t c = f.get(x + rnd(std::sin((y + t) * 0.6f) * 1.5f), sy);
+            uint8_t c = f.get(x + rnd(sin((y + t) * 0.6f) * 1.5f), sy);
             if (c == C(s.skyB) || c == C(s.skyT)) continue;
             if ((x + y) % 2 == 0) f.set(x, y, c);
         }
@@ -261,7 +263,7 @@ void UniRound::drawCampus(Frame& f, int t, int n) {
     for (int k = 0; k < 18; ++k) { int x = 4 + (k * 61 + t * (k % 2 ? 1 : -1) + 960) % 470, y = base + 4 + (k * 13) % 40; if (x < 474) f.hline(x, x + 4 + k % 3, y, C(s.waterL)); }
     if (season_ == 3) for (int k = 0; k < 6; ++k) { int x = 200 + k * 46, y = base + 8 + (k * 11) % 30; f.hline(x, x + 22, y, C(232, 240, 250)); f.hline(x + 4, x + 16, y + 1, C(214, 226, 240)); }
     if (season_ <= 1) for (int k = 0; k < 2; ++k) {
-        int dx = 260 + k * 18 + rnd(std::sin((t + k * 20) * 0.05f) * 30), dy = base + 22 + k * 6;
+        int dx = 260 + k * 18 + rnd(sin((t + k * 20) * 0.05f) * 30), dy = base + 22 + k * 6;
         f.ellipse(dx, dy, 5, 2, ol); f.ellipse(dx, dy, 4, 1, C(250, 250, 244)); f.disc(dx + 4, dy - 3, 2, ol); f.disc(dx + 4, dy - 3, 1, C(70, 120, 70)); f.set(dx + 6, dy - 3, C(240, 170, 60));
     }
     f.rect(0, base + 46, 480, 124, C(s.grass));
@@ -298,7 +300,7 @@ void UniRound::drawTree(Frame& f, int t) {
         f.hline(x - 43, x - 32, feet - 98, snowD);
         return;
     }
-    int sway = rnd(std::sin(t * 0.12f) * 1.2f);
+    int sway = rnd(sin(t * 0.12f) * 1.2f);
     for (int k = 0; k < 12; ++k) f.disc(x + bx[k] + sway, feet + by[k], br[k] + 1, ol);
     for (int k = 0; k < 12; ++k) f.disc(x + bx[k] + sway, feet + by[k], br[k], k % 3 == 0 ? C(s.leafD) : C(s.leaf));
     for (int k = 0; k < 12; ++k) f.disc(x + bx[k] - 3 + sway, feet + by[k] - 3, br[k] - 6, C(s.leafL));
@@ -351,7 +353,7 @@ void UniRound::drawWalkers(Frame& f, int t) {
 void UniRound::drawWeather(Frame& f, int t) {
     const Season& s = SEASONS[season_];
     for (int k = 0; k < 40; ++k) {
-        int x = (k * 67 + t * (1 + k % 2) + rnd(std::sin((t + k * 9) * 0.15f) * 6)) % 480, y = (k * 31 + t * (season_ == 3 ? 1 + k % 2 : 2 + k % 3)) % 270;
+        int x = (k * 67 + t * (1 + k % 2) + rnd(sin((t + k * 9) * 0.15f) * 6)) % 480, y = (k * 31 + t * (season_ == 3 ? 1 + k % 2 : 2 + k % 3)) % 270;
         if ((x > 88 && x < 192 && y > 48 && y < 232) || (season_ == 1 && k % 4)) continue;
         if (season_ == 0) { f.set(x, y, C(s.leafL)); if (k % 2) f.set(x + 1, y, C(s.leaf)); }
         else if (season_ == 1) { if ((t + k) % 8 < 2) { f.set(x, y, C(255, 252, 220)); f.set(x - 1, y, C(255, 240, 170)); f.set(x + 1, y, C(255, 240, 170)); } }
@@ -389,7 +391,7 @@ void UniRound::drawNext(Frame& f, int piece, int t) {
     f.rect(x + 7, y + 6, 18, 12, paper); f.hline(x + 9, x + 22, y + 9, C(150, 160, 190)); f.hline(x + 9, x + 19, y + 12, C(150, 160, 190)); f.disc(x + 16, y + 6, 1, C(70, 130, 230));
     bool blown = nextBlown(t);
     if (blown) {
-        int a = (t % 120) - 40, px = x + 28 + a * 5, py = y + 6 - a * 2 + rnd(std::sin(a * 0.7f) * 4);
+        int a = (t % 120) - 40, px = x + 28 + a * 5, py = y + 6 - a * 2 + rnd(sin(a * 0.7f) * 4);
         if (px < 470) { f.rect(px, py, 16, 12, ol); f.rect(px + 1, py + 1, 14, 10, paper); f.line(px + 2, py + 3, px + 12, py + 4, C(150, 160, 190)); }
         f.disc(x + 43, y + 7, 1, pin);
         Font::center(f, "WINDY", x + 43, y + 22, C(250, 236, 200), ol);
@@ -401,9 +403,9 @@ void UniRound::drawNext(Frame& f, int piece, int t) {
     f.rect(x + 28, y + 6, 30, 40, ol); f.rect(x + 29, y + 7, 28, 38, paper); f.disc(x + 43, y + 7, 1, pin);
     Font::center(f, "NEXT", x + 43, y + 10, C(70, 60, 70));
     if (season_ == 3) { f.rect(x - 2, y - 4, 68, 4, C(252, 252, 255)); f.hline(x - 2, x + 65, y - 1, C(214, 222, 236)); }
-    std::vector<std::pair<int, int>> cs = SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
-    for (auto& c : cs) { mx = std::min(mx, c.first); my = std::min(my, c.second); Mx = std::max(Mx, c.first); My = std::max(My, c.second); }
+    for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
     int bw = (Mx - mx + 1) * 6, bh = (My - my + 1) * 6;
     for (auto& c : cs) ToyBlocks::cell6(f, x + 43 - bw / 2 + (c.first - mx) * 6, y + 31 - bh / 2 + (c.second - my) * 6, piece);
     shade(f, x - 2, y - 5, x + 67, y + 117, night(t));
@@ -414,13 +416,13 @@ void UniRound::drawHud(Frame& f, int, int t) {
     int x = 274, y = 160;
     f.rect(x - 2, y - 30, 5, 106, ol); f.rect(x - 1, y - 30, 3, 106, pole); f.vline(x - 1, y - 30, y + 75, poleL);
     f.rect(x - 6, y - 40, 13, 10, ol); f.rect(x - 5, y - 39, 11, 8, lamp); f.poly({ {x - 8, y - 40}, {x + 8, y - 40}, {x, y - 46} }, ol);
-    if (night(t) >= 2) for (int r = 6; r < 14; r += 3) for (int a = 0; a < 16; ++a) f.set(x + rnd(std::cos(a * 0.39f) * r), y - 35 + rnd(std::sin(a * 0.39f) * r), C(255, 236, 160));
+    if (night(t) >= 2) for (int r = 6; r < 14; r += 3) for (int a = 0; a < 16; ++a) f.set(x + rnd(cos(a * 0.39f) * r), y - 35 + rnd(sin(a * 0.39f) * r), C(255, 236, 160));
     int bx = x + 3, by = y - 26;
     f.rect(bx, by - 1, 30, 62, ol); f.rect(bx + 1, by, 28, 58, flag); f.vline(bx + 28, by, by + 57, flagD);
     f.poly({ {bx + 1, by + 58}, {bx + 14, by + 58}, {bx + 1, by + 64} }, ol); f.poly({ {bx + 29, by + 58}, {bx + 16, by + 58}, {bx + 29, by + 64} }, ol);
     f.poly({ {bx + 2, by + 58}, {bx + 13, by + 58}, {bx + 2, by + 62} }, flag); f.poly({ {bx + 28, by + 58}, {bx + 17, by + 58}, {bx + 28, by + 62} }, flag);
     Font::center(f, "YEAR", bx + 15, by + 3, gold);
-    Font::center(f, std::to_string(season_ + 1), bx + 15, by + 11, C(250, 250, 240));
+    Font::center(f, to_string(season_ + 1), bx + 15, by + 11, C(250, 250, 240));
     for (int r = 0; r < 4; ++r) for (int c = 0; c < 3; ++c) {
         int i = r * 3 + c, cx = bx + 5 + c * 7, cy = by + 22 + r * 8;
         f.rect(cx, cy, 5, 5, i < shown_ ? gold : dim);
@@ -437,7 +439,7 @@ void UniRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (curT_ >= 0 && cur_.k == TYPE && gradT_ < 0) {
         int a = t - curT_;
         if (a < TYPE_LEN) {
-            int bx = SIT_X + 22, by = SIT_Y - 50 - std::min(a, 4);
+            int bx = SIT_X + 22, by = SIT_Y - 50 - min(a, 4);
             f.rect(bx - 1, by - 1, 22, 11, ol); f.rect(bx, by, 20, 9, C(250, 250, 244)); f.poly({ {bx + 2, by + 9}, {bx + 7, by + 9}, {bx + 1, by + 13} }, ol);
             Font::center(f, "OK", bx + 10, by + 2, C(60, 150, 80));
         }
@@ -447,20 +449,20 @@ void UniRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         if (night(t) >= 3) nightLamp(f, state());
         if (a >= 4 && a < 16 && (a / 3) % 3 != 2) Font::center(f, "ALL NIGHTER", 335, 118, C(250, 220, 120), ol);
         if (a >= DAWN - 2 && a < DAWN + 6) {
-            Font::center(f, SEASONS[std::min(3, nightLine_ / 3)].name, 335, 118, C(250, 250, 240), ol);
+            Font::center(f, SEASONS[min(3, nightLine_ / 3)].name, 335, 118, C(250, 250, 240), ol);
             float k = a < DAWN ? (a - DAWN + 3) / 3.0f : 1 - (a - DAWN) / 7.0f;
-            k = std::max(0.0f, std::min(1.0f, k)) * 0.8f;
+            k = max(0.0f, min(1.0f, k)) * 0.8f;
             for (auto& c : palette()) c = mix(c, RGB{ 255, 250, 236 }, k);
         }
     }
     if (gradT_ >= 0) {
         int a = t - gradT_;
         if (a >= WHITE_OUT && a < WHITE_IN + 10) {
-            float k = a < WHITE_IN ? (a - WHITE_OUT + 1) / (float)(WHITE_IN - WHITE_OUT) : 1 - (a - WHITE_IN) / 10.0f;
-            k = std::max(0.0f, std::min(1.0f, k));
+            float k = a < WHITE_IN ? (a - WHITE_OUT + 1) / static_cast<float>(WHITE_IN - WHITE_OUT) : 1 - (a - WHITE_IN) / 10.0f;
+            k = max(0.0f, min(1.0f, k));
             for (auto& c : palette()) c = mix(c, RGB{ 255, 255, 255 }, k);
         }
-        if (a >= END - 12) { float k = std::min(1.0f, (a - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
+        if (a >= END - 12) { float k = min(1.0f, (a - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
     }
 }
 void UniRound::drawBench(Frame& f) {
@@ -488,9 +490,9 @@ void UniRound::nightLamp(Frame& f, const PlayStateReader& g) {
         if (map[c] < 0) {
             RGB v = palette()[c];
             float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f;
-            map[c] = C(mix(RGB{ 6, 8, 20 }, RGB{ 46, 52, 90 }, std::min(7, (int)(lum * 8)) / 7.0f));
+            map[c] = C(mix(RGB{ 6, 8, 20 }, RGB{ 46, 52, 90 }, min(7, static_cast<int>(lum * 8)) / 7.0f));
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 void UniRound::petalGust(Frame& f, int t) {
@@ -500,9 +502,9 @@ void UniRound::petalGust(Frame& f, int t) {
     uint8_t p0 = C(s.leaf), p1 = C(s.leafL), p2 = C(s.leafD);
     int bx = boardX(), by = boardY();
     float k = a < 6 ? a / 6.0f : a > 28 ? (36 - a) / 8.0f : 1.0f;
-    int n = (int)(220 * k);
+    int n = static_cast<int>(220 * k);
     for (int i = 0; i < n; ++i) {
-        int x = bx - 10 + (i * 37 + a * (5 + i % 3)) % 100, y = by + (i * 53 + rnd(std::sin((a + i) * 0.4f) * 5)) % 160;
+        int x = bx - 10 + (i * 37 + a * (5 + i % 3)) % 100, y = by + (i * 53 + rnd(sin((a + i) * 0.4f) * 5)) % 160;
         if (x < bx || x > bx + 78) continue;
         f.set(x, y, i % 3 ? p0 : p1); f.set(x + 1, y, p0); f.set(x, y + 1, p2);
     }
@@ -520,21 +522,21 @@ void UniRound::sunGlare(Frame& f, int t) {
         if (d2 > (r + 4) * (r + 4)) continue;
         if (d2 > r * r && (x + y) % 2) continue;
         uint8_t c = f.get(x, y);
-        if (map[c] < 0) { RGB v = palette()[c]; float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f; map[c] = C(mix(RGB{ 236, 230, 200 }, RGB{ 255, 254, 244 }, std::min(3, (int)(lum * 4)) / 3.0f)); }
-        f.set(x, y, (uint8_t)map[c]);
+        if (map[c] < 0) { RGB v = palette()[c]; float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f; map[c] = C(mix(RGB{ 236, 230, 200 }, RGB{ 255, 254, 244 }, min(3, static_cast<int>(lum * 4)) / 3.0f)); }
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
     if (a < 10) Font::center(f, "GLARE", bx + 40, by - 18, C(255, 240, 170), C(OL));
 }
 void UniRound::frost(Frame& f, int t) {
-    int bx = boardX(), by = boardY(), w = std::min(26, std::max(0, (t - lineT_ - 20) / 5));
+    int bx = boardX(), by = boardY(), w = min(26, max(0, (t - lineT_ - 20) / 5));
     if (w <= 0) return;
     uint8_t f0 = C(226, 238, 250), f1 = C(196, 216, 240), f2 = C(250, 252, 255);
     for (int y = by; y < by + 160; ++y) for (int x = bx; x < bx + 80; ++x) {
-        int e = std::min({ x - bx, bx + 79 - x, (y - by) * 2 });
+        int e = min({ x - bx, bx + 79 - x, (y - by) * 2 });
         if (e >= w) continue;
-        unsigned hsh = ((unsigned)x * 73856093u) ^ ((unsigned)y * 19349663u);
+        unsigned hsh = (static_cast<unsigned>(x) * 73856093u) ^ (static_cast<unsigned>(y) * 19349663u);
         int dens = 100 - e * 100 / w;
-        if ((int)(hsh % 100) < dens) f.set(x, y, hsh % 7 == 0 ? f2 : hsh % 3 ? f0 : f1);
+        if (static_cast<int>(hsh % 100) < dens) f.set(x, y, hsh % 7 == 0 ? f2 : hsh % 3 ? f0 : f1);
     }
     if (w == 26 && (t / 5) % 2) Font::center(f, "FROST", bx + 40, by - 18, C(220, 236, 255), C(OL));
 }
@@ -574,9 +576,9 @@ void UniRound::drawHall(Frame& f, int t) {
     static const RGB flag[4] = { {240, 96, 80}, {250, 210, 90}, {110, 170, 240}, {120, 200, 120} };
     for (int side = 0; side < 2; ++side) {
         int x0 = side ? 318 : 0, x1 = side ? 480 : 186;
-        for (int x = x0; x < x1; x += 2) f.set(x, 30 + (int)(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), ol);
+        for (int x = x0; x < x1; x += 2) f.set(x, 30 + static_cast<int>(sin((x - x0) * 3.1416f / (x1 - x0)) * 8), ol);
         for (int x = x0 + 6, k = 0; x < x1 - 6; x += 12, ++k) {
-            int y = 30 + (int)(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), sway = (t / 4 + k) % 2;
+            int y = 30 + static_cast<int>(sin((x - x0) * 3.1416f / (x1 - x0)) * 8), sway = (t / 4 + k) % 2;
             f.poly({ {x - 4, y}, {x + 4, y}, {x + sway, y + 9} }, ol); f.poly({ {x - 3, y + 1}, {x + 3, y + 1}, {x + sway, y + 7} }, C(flag[k % 4]));
         }
     }
@@ -585,7 +587,7 @@ void UniRound::drawCeremony(Frame& f, int t) {
     int h = t - gradT_ - CEREMONY;
     bool tossed = t - gradT_ >= TOSS;
     static const RGB hair[6] = { {44, 34, 44}, {96, 60, 40}, {30, 26, 30}, {140, 96, 56}, {60, 44, 36}, {20, 20, 24} };
-    struct G { int x, feet; bool flip; };
+    class G { public: int x, feet; bool flip; };
     static const G back[8] = { {204, 152, false}, {326, 152, true}, {352, 152, false}, {380, 152, true}, {408, 152, false}, {436, 152, true}, {462, 152, false}, {222, 152, true} };
     static const G front[6] = { {204, 198, false}, {318, 198, true}, {350, 200, false}, {386, 198, true}, {420, 200, false}, {454, 198, true} };
     auto row = [&](const G* g, int n, int base) {
@@ -603,12 +605,12 @@ void UniRound::drawCeremony(Frame& f, int t) {
         for (int k = 0; k < 16; ++k) {
             int y0 = k < 8 ? 114 : k < 14 ? 160 : 210;
             float v = 9.0f + (k % 3), g = 0.3f;
-            int y = y0 - (int)(v * a - g * a * a), x = sx[k] + (k % 2 ? 1 : -1) * a / 2;
+            int y = y0 - static_cast<int>(v * a - g * a * a), x = sx[k] + (k % 2 ? 1 : -1) * a / 2;
             if (y > -10 && y < 270) flyingCap(f, x, y, a / 2 + k);
         }
         static const RGB cc[4] = { {240, 96, 80}, {250, 220, 120}, {120, 180, 250}, {250, 250, 250} };
         for (int k = 0; k < 40; ++k) {
-            int cx = 190 + (k * 53 + (int)(std::sin((a + k) * 0.3f) * 6)) % 290, cy = (k * 29 + a * (2 + k % 3)) % 260;
+            int cx = 190 + (k * 53 + static_cast<int>(sin((a + k) * 0.3f) * 6)) % 290, cy = (k * 29 + a * (2 + k % 3)) % 260;
             f.rect(cx, cy, 2, 1 + (a + k) % 2, C(cc[k % 4]));
         }
     }

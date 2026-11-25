@@ -4,11 +4,13 @@
 #include "ui/HouseScene.h"
 #include "ui/SixelEncoder.h"
 #include "ui/View.h"
+using namespace std;
+
 // 집 오프닝. stage 0은 사탕, stage 1은 샌드위치를 먹고 서재에서 앨범을 집으면 finished()가 true가 된다
 class PrologueView : public View {
 public:
-    static constexpr int kScale = 2;
-    static constexpr int kFrameMs = 100;
+    inline static const int kScale = 2;
+    inline static const int kFrameMs = 100;
     explicit PrologueView(Point origin);
     void start(int stage);
     void handle(Command command);
@@ -24,6 +26,6 @@ private:
     int m_accMs = 0;
     mutable Frame m_frame;
     mutable int m_drawnT = -1;
-    mutable std::string m_sixel;
+    mutable string m_sixel;
     SixelEncoder m_encoder;
 };

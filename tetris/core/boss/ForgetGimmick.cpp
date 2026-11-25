@@ -2,15 +2,16 @@
 #include <algorithm>
 #include "board/Board.h"
 #include "play/EventBus.h"
+using namespace std;
 
 ForgetGimmick::ForgetGimmick(int intervalMs, int warningMs, int cellsPerTrigger)
     : PeriodicGimmick(intervalMs, warningMs), m_cellsPerTrigger(cellsPerTrigger) {}
 
 void ForgetGimmick::onWarning(PlayContext& ctx) {
-    std::vector<Point> filled = ctx.board.filledCells();
-    std::shuffle(filled.begin(), filled.end(), ctx.rng);
-    const auto count = std::min<std::size_t>(filled.size(), static_cast<std::size_t>(m_cellsPerTrigger));
-    m_targets.assign(filled.begin(), filled.begin() + static_cast<std::ptrdiff_t>(count));
+    vector<Point> filled = ctx.board.filledCells();
+    shuffle(filled.begin(), filled.end(), ctx.rng);
+    const auto count = min<size_t>(filled.size(), static_cast<size_t>(m_cellsPerTrigger));
+    m_targets.assign(filled.begin(), filled.begin() + static_cast<ptrdiff_t>(count));
     ctx.board.setMarked(m_targets, true);
 }
 
@@ -29,9 +30,9 @@ void ForgetGimmick::onDeactivate(PlayContext& ctx) {
     m_targets.clear();
 }
 
-std::string ForgetGimmick::statusText() const {
+string ForgetGimmick::statusText() const {
     if (isWarning() && !m_targets.empty()) {
         return "깜빡이는 칸 소멸!";
     }
-    return "다음 망각까지 " + std::to_string(secondsLeft(remainingMs())) + "초";
+    return "다음 망각까지 " + to_string(secondsLeft(remainingMs())) + "초";
 }

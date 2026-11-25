@@ -2,6 +2,8 @@
 #include "ui/PixelFont.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 static const RGB OL{ 42, 26, 28 };
 static const char* NAMES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE LAKE", "DINNER", "THE BEACH", "BEDTIME" }, { "FIRST DAY", "SOCCER", "CAMPUS", "INTERVIEW" }, { "FIRST JOB", "WEDDING", "OUR BABY", "TODAY" } };
 static const char* MEMORIES[AlbumScreen::STAGES][AlbumScreen::SLOTS] = { { "THE BOAT", "FISH SOUP", "BUCKET", "GOODNIGHT" }, { "NOTEBOOK", "THE BALL", "GRAD CAP", "JOB ID" }, { "PAYCHECK", "OUR RINGS", "HER DRAWING", "FAMILY" } };
@@ -13,8 +15,8 @@ void AlbumScreen::open(int cleared, int t) {
     if (cleared >= 0 && cleared < SLOTS) { newSlot_ = done_[stage_][cleared] ? -1 : cleared; done_[stage_][cleared] = true; }
     unlocked_ = 0;
     while (unlocked_ < available(stage_) - 1 && done_[stage_][unlocked_]) ++unlocked_;
-    sel_ = std::min(cleared + 1, SLOTS - 1);
-    sel_ = std::min(sel_, unlocked_);
+    sel_ = min(cleared + 1, SLOTS - 1);
+    sel_ = min(sel_, unlocked_);
 }
 void AlbumScreen::left() { if (sel_ > 0) --sel_; }
 void AlbumScreen::right() { if (sel_ < (detail_ ? available(stage_) - 1 : unlocked_)) ++sel_; }
@@ -95,7 +97,7 @@ void AlbumScreen::drawIcon(Frame& f, int slot, int cx, int cy) {
         f.poly({ {cx + 2, cy - 12}, {cx + 10, cy - 12}, {cx + 6, cy - 6} }, ol); f.poly({ {cx + 3, cy - 12}, {cx + 9, cy - 12}, {cx + 6, cy - 7} }, C(220, 240, 255));
     } else if (slot == 10) {
         f.rect(cx - 26, cy - 18, 52, 36, C(252, 250, 240));
-        f.disc(cx + 18, cy - 11, 5, C(250, 200, 60)); for (int k = 0; k < 6; ++k) f.set(cx + 18 + (int)(std::cos(k * 1.05f) * 8), cy - 11 + (int)(std::sin(k * 1.05f) * 8), C(250, 200, 60));
+        f.disc(cx + 18, cy - 11, 5, C(250, 200, 60)); for (int k = 0; k < 6; ++k) f.set(cx + 18 + static_cast<int>(cos(k * 1.05f) * 8), cy - 11 + static_cast<int>(sin(k * 1.05f) * 8), C(250, 200, 60));
         f.poly({ {cx - 22, cy + 2}, {cx - 10, cy - 8}, {cx + 2, cy + 2} }, C(220, 70, 70)); f.rect(cx - 19, cy + 2, 18, 12, C(240, 170, 90)); f.rect(cx - 12, cy + 6, 4, 8, C(140, 90, 60));
         auto who = [&](int px, int h, RGB c) { f.disc(px, cy + 14 - h, 2, C(60, 60, 70)); f.vline(px, cy + 16 - h, cy + 14, C(c)); f.line(px - 3, cy + 18 - h, px + 3, cy + 18 - h, C(c)); };
         who(cx + 6, 14, { 60, 90, 200 }); who(cx + 13, 14, { 220, 70, 110 }); who(cx + 20, 9, { 240, 150, 40 });
@@ -109,45 +111,45 @@ void AlbumScreen::drawIcon(Frame& f, int slot, int cx, int cy) {
     }
 }
 static void rotBlit(Frame& f, const Frame& src, uint8_t key, int w, int h, int pinX, int pinY, float ang) {
-    float c = std::cos(ang), sn = std::sin(ang);
-    int r = (int)std::ceil(std::sqrt((float)(w * w + h * h))) + 2;
+    float c = cos(ang), sn = sin(ang);
+    int r = static_cast<int>(ceil(sqrt(static_cast<float>(w * w + h * h)))) + 2;
     for (int y = pinY - 2; y <= pinY + r; ++y) for (int x = pinX - r; x <= pinX + r; ++x) {
         float dx = x - pinX, dy = y - pinY, u = dx * c + dy * sn + w / 2.0f, v = -dx * sn + dy * c;
         if (u < 0 || v < 0 || u >= w || v >= h) continue;
-        uint8_t col = src.get((int)u, (int)v);
+        uint8_t col = src.get(static_cast<int>(u), static_cast<int>(v));
         if (col != key) f.set(x, y, col);
     }
 }
 static void corner(int pinX, int pinY, float ang, float u, float v, int& x, int& y) {
-    float c = std::cos(ang), sn = std::sin(ang);
-    x = (int)std::lround(pinX + u * c - v * sn); y = (int)std::lround(pinY + u * sn + v * c);
+    float c = cos(ang), sn = sin(ang);
+    x = static_cast<int>(lround(pinX + u * c - v * sn)); y = static_cast<int>(lround(pinY + u * sn + v * c));
 }
 void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
     if (detail_) { drawDetail(f, t, preview); return; }
     int a = t - openT_;
     uint8_t ol = C(OL), gold = C(222, 184, 92);
     f.gradient(0, 0, Frame::W, Frame::H, { {30, 22, 26}, {18, 12, 16} });
-    int lift = (int)std::lround(std::max(0.0f, 1 - a / 8.0f) * 50);
-    auto Y = [&](float y) { return (int)std::lround(y) + lift; };
+    int lift = static_cast<int>(lround(max(0.0f, 1 - a / 8.0f) * 50));
+    auto Y = [&](float y) { return static_cast<int>(lround(y)) + lift; };
     const int L = 58, M = 240, R = 422;
-    auto topY = [&](int x) { float u = std::abs(x - M) / (float)(M - L); return 34.0f + 30.0f * std::pow(1 - u, 2.2f); };
-    auto botY = [&](int x) { float u = std::abs(x - M) / (float)(M - L); return 212.0f + 14.0f * (1 - u) * (1 - u) - 2.0f * u; };
+    auto topY = [&](int x) { float u = abs(x - M) / static_cast<float>(M - L); return 34.0f + 30.0f * pow(1 - u, 2.2f); };
+    auto botY = [&](int x) { float u = abs(x - M) / static_cast<float>(M - L); return 212.0f + 14.0f * (1 - u) * (1 - u) - 2.0f * u; };
     uint8_t cover = C(120, 76, 50), coverD = C(84, 50, 36), edge1 = C(236, 222, 190), edge2 = C(200, 180, 144);
     for (int x = L - 8; x <= R + 8; ++x) {
-        int xx = std::max(L, std::min(R, x));
+        int xx = max(L, min(R, x));
         int yb = Y(botY(xx)) + 16;
         f.vline(x, Y(topY(xx)) + 6, yb + 4, ol);
         f.vline(x, yb - 2, yb + 2, cover); f.set(x, yb + 3, coverD);
     }
     for (int k = 6; k >= 1; --k) for (int x = L - k; x <= R + k; ++x) {
-        int xx = std::max(L, std::min(R, x));
+        int xx = max(L, min(R, x));
         int y = Y(botY(xx)) + k * 2;
         f.set(x, y, k % 2 ? edge1 : edge2); f.set(x, y + 1, k % 2 ? edge2 : edge1);
     }
     for (int x = L; x <= R; ++x) {
-        float u = std::abs(x - M) / (float)(M - L);
+        float u = abs(x - M) / static_cast<float>(M - L);
         int y0 = Y(topY(x)), y1 = Y(botY(x));
-        RGB pc = mix(RGB{ 248, 240, 216 }, RGB{ 214, 196, 160 }, std::pow(1 - u, 6.0f) * 0.9f);
+        RGB pc = mix(RGB{ 248, 240, 216 }, RGB{ 214, 196, 160 }, pow(1 - u, 6.0f) * 0.9f);
         if (x < M) pc = mix(pc, RGB{ 236, 224, 196 }, 0.25f);
         f.vline(x, y0, y1, C(pc));
         f.set(x, y0, ol); f.set(x, y0 + 1, C(252, 248, 232));
@@ -164,7 +166,7 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
     for (int page = 0; page < 2; ++page) {
         int x0 = page == 0 ? 82 : 258, x1 = page == 0 ? 222 : 398;
         for (int x = x0; x <= x1; ++x) {
-            float u = (x - x0) / (float)(x1 - x0);
+            float u = (x - x0) / static_cast<float>(x1 - x0);
             float y = 86 + 12 * (1 - (2 * u - 1) * (2 * u - 1));
             f.set(x, Y(y), twine); f.set(x, Y(y) + 1, twineD);
         }
@@ -172,7 +174,7 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
         for (int j = 0; j < 2; ++j) {
             int s = page * 2 + j;
             pinU[s] = j == 0 ? 0.28f : 0.74f;
-            pinX[s] = (int)std::lround(x0 + (x1 - x0) * pinU[s]);
+            pinX[s] = static_cast<int>(lround(x0 + (x1 - x0) * pinU[s]));
             float u = pinU[s];
             pinY[s] = Y(86 + 12 * (1 - (2 * u - 1) * (2 * u - 1)));
         }
@@ -182,10 +184,10 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
     const int CW = 58, CH = 66;
     for (int s = 0; s < SLOTS; ++s) {
         int fl = flipT_ >= 0 ? t - flipT_ : -1;
-        int nx = std::min(STAGES - 1, stage_ + 1);
+        int nx = min(STAGES - 1, stage_ + 1);
         int ps = flipT_ < 0 ? stage_ : (s >= 2 ? nx : (fl >= 28 ? nx : stage_));
         bool done = done_[ps][s], open = ps == stage_ ? s <= unlocked_ : s == 0, sel = s == sel_ && flipT_ < 0, pop = s == newSlot_ && a < 16 && flipT_ < 0;
-        float ang = std::sin(t * 0.18f + s * 1.7f) * (sel ? 0.08f : 0.035f) + (s % 2 ? 0.05f : -0.05f);
+        float ang = sin(t * 0.18f + s * 1.7f) * (sel ? 0.08f : 0.035f) + (s % 2 ? 0.05f : -0.05f);
         card.rect(0, 0, CW, CH, key);
         card.rect(0, 0, CW, CH, ol); card.rect(1, 1, CW - 2, CH - 2, C(252, 250, 244)); card.hline(1, CW - 2, CH - 2, C(220, 214, 200));
         card.rect(4, 4, CW - 8, 44, ol);
@@ -193,7 +195,7 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
         else card.rect(5, 5, CW - 10, 42, open ? C(206, 196, 176) : C(140, 132, 122));
         if (!done && open) Font::center(card, "?", CW / 2, 22, C(120, 100, 90));
         if (!open) { int cx = CW / 2, cy = 24; card.rect(cx - 5, cy - 2, 10, 8, ol); card.rect(cx - 4, cy - 1, 8, 6, gold); card.hline(cx - 3, cx + 3, cy - 6, ol); card.vline(cx - 3, cy - 6, cy - 2, ol); card.vline(cx + 3, cy - 6, cy - 2, ol); }
-        Font::center(card, std::string("ROUND ") + char('1' + s), CW / 2, 53, done ? C(150, 58, 70) : C(140, 124, 110));
+        Font::center(card, string("ROUND ") + char('1' + s), CW / 2, 53, done ? C(150, 58, 70) : C(140, 124, 110));
         int px = pinX[s], py = pinY[s] + 3;
         rotBlit(f, card, key, CW, CH, px, py, ang);
         if (sel && a >= 8) {
@@ -207,7 +209,7 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
         int capY = Y(186) + (s % 2) * 2;
         Font::center(f, done ? MEMORIES[ps][s] : (open ? "..." : ""), px, capY, C(130, 90, 70));
         if (done) f.hline(px - 18, px + 18, capY + 9, C(200, 170, 140));
-        if (pop) for (int k = 0; k < 8; ++k) { float an = k * 0.785f + a * 0.3f; int r = 24 + a; f.set(px + (int)(std::cos(an) * r), py + 34 + (int)(std::sin(an) * r * 0.8f), gold); }
+        if (pop) for (int k = 0; k < 8; ++k) { float an = k * 0.785f + a * 0.3f; int r = 24 + a; f.set(px + static_cast<int>(cos(an) * r), py + 34 + static_cast<int>(sin(an) * r * 0.8f), gold); }
     }
     if (flipT_ >= 0) {
         int fl = t - flipT_;
@@ -216,18 +218,18 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
             f.vline(x, y0, y1, C(mix(RGB{ 244, 234, 210 }, RGB{ 190, 170, 136 }, shade)));
             f.set(x, y0, ol); f.set(x, y1, ol);
         };
-        if (fl < 14) { float u = fl / 14.0f; int xe = (int)std::lround(R - (R - M) * u); for (int x = M + 1; x <= xe; ++x) pageCol(x, 0.15f + 0.5f * u * (x - M) / (float)std::max(1, xe - M)); f.vline(xe, Y(topY(xe)) - 3, Y(botY(xe)), ol); }
-        else if (fl < 28) { float u = (fl - 14) / 14.0f; int xe = (int)std::lround(M - (M - L) * u); for (int x = xe; x < M; ++x) pageCol(x, 0.5f * (1 - u) * (M - x) / (float)std::max(1, M - xe)); f.vline(xe, Y(topY(xe)) - 3, Y(botY(xe)), ol); }
+        if (fl < 14) { float u = fl / 14.0f; int xe = static_cast<int>(lround(R - (R - M) * u)); for (int x = M + 1; x <= xe; ++x) pageCol(x, 0.15f + 0.5f * u * (x - M) / static_cast<float>(max(1, xe - M))); f.vline(xe, Y(topY(xe)) - 3, Y(botY(xe)), ol); }
+        else if (fl < 28) { float u = (fl - 14) / 14.0f; int xe = static_cast<int>(lround(M - (M - L) * u)); for (int x = xe; x < M; ++x) pageCol(x, 0.5f * (1 - u) * (M - x) / static_cast<float>(max(1, M - xe))); f.vline(xe, Y(topY(xe)) - 3, Y(botY(xe)), ol); }
         if (fl >= 32) {
-            std::string msg = "Eat something first...";
-            int n = std::min((int)msg.size(), (fl - 32) / 1 + 1);
+            string msg = "Eat something first...";
+            int n = min(static_cast<int>(msg.size()), (fl - 32) / 1 + 1);
             Font::center(f, msg.substr(0, n), 150, Y(202), C(150, 58, 70));
-            if (n == (int)msg.size()) f.hline(150 - Font::width(msg) / 2, 150 + Font::width(msg) / 2, Y(211), C(200, 170, 140));
+            if (n == static_cast<int>(msg.size())) f.hline(150 - Font::width(msg) / 2, 150 + Font::width(msg) / 2, Y(211), C(200, 170, 140));
         }
         Font::center(f, "MEMORY BOOK", Frame::W / 2, 8, gold);
     } else if (a >= 8) {
         bool done = done_[stage_][sel_];
-        std::string line = std::string("ROUND ") + char('1' + sel_) + "  " + NAMES[stage_][sel_] + "  -  " + (done ? MEMORIES[stage_][sel_] : "NEXT");
+        string line = string("ROUND ") + char('1' + sel_) + "  " + NAMES[stage_][sel_] + "  -  " + (done ? MEMORIES[stage_][sel_] : "NEXT");
         Font::center(f, line, Frame::W / 2, 254, C(250, 236, 200));
         Font::center(f, "MEMORY BOOK", Frame::W / 2, 8, gold);
     }
@@ -235,9 +237,9 @@ void AlbumScreen::draw(Frame& f, int t, const Frame* preview) const {
         static Frame copy; copy.px = f.px;
         float z = 1 + 0.7f * (1 - a / 10.0f);
         int cx = newSlot_ >= 0 ? (newSlot_ < 2 ? 152 : 328) : 240, cy = 135;
-        for (int y = 0; y < Frame::H; ++y) for (int x = 0; x < Frame::W; ++x) f.set(x, y, copy.get(cx + (int)((x - cx) / z), cy + (int)((y - cy) / z)));
+        for (int y = 0; y < Frame::H; ++y) for (int x = 0; x < Frame::W; ++x) f.set(x, y, copy.get(cx + static_cast<int>((x - cx) / z), cy + static_cast<int>((y - cy) / z)));
     }
-    if (flipT_ >= 0 && t - flipT_ > FLIP_END - 10) { float k = std::min(1.0f, (t - flipT_ - FLIP_END + 10) / 10.0f); for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
+    if (flipT_ >= 0 && t - flipT_ > FLIP_END - 10) { float k = min(1.0f, (t - flipT_ - FLIP_END + 10) / 10.0f); for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
     if (a < 8) { float k = 1 - a / 8.0f; for (auto& c : palette()) c = mix(c, RGB{ 0, 0, 0 }, k); }
 }
 void AlbumScreen::drawDetail(Frame& f, int t, const Frame* preview) const {
@@ -245,7 +247,7 @@ void AlbumScreen::drawDetail(Frame& f, int t, const Frame* preview) const {
     f.rect(0, 0, Frame::W, Frame::H, C(20, 14, 18));
     bool open = sel_ <= unlocked_, done = done_[stage_][sel_];
     const int PW = 288, PH = 162, px = (Frame::W - PW) / 2, py = 30;
-    Font::center(f, std::string("ROUND ") + char('1' + sel_) + "  -  " + NAMES[stage_][sel_], Frame::W / 2, 10, C(250, 236, 200));
+    Font::center(f, string("ROUND ") + char('1' + sel_) + "  -  " + NAMES[stage_][sel_], Frame::W / 2, 10, C(250, 236, 200));
     f.rect(px - 9, py - 9, PW + 18, PH + 30, ol); f.rect(px - 8, py - 8, PW + 16, PH + 28, paper); f.hline(px - 8, px + PW + 7, py + PH + 19, C(220, 214, 200));
     f.rect(px - 1, py - 1, PW + 2, PH + 2, ol);
     if (preview) {

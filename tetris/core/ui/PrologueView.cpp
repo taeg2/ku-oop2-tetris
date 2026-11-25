@@ -1,5 +1,7 @@
 #include "ui/PrologueView.h"
 #include <algorithm>
+using namespace std;
+
 PrologueView::PrologueView(Point origin) : View(origin) {}
 void PrologueView::start(int stage) { m_house.start(stage, m_t); }
 void PrologueView::handle(Command command) { m_house.handle(command, m_t); }
@@ -10,7 +12,7 @@ void PrologueView::update(int dtMs) {
 }
 void PrologueView::render() const {
     resetPalette();
-    std::fill(m_frame.px.begin(), m_frame.px.end(), 0);
+    fill(m_frame.px.begin(), m_frame.px.end(), 0);
     m_house.draw(m_frame, m_t);
 }
 void PrologueView::draw(Console& console) const {

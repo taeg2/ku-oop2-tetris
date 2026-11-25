@@ -3,23 +3,25 @@
 #include "ui/PixelFont.h"
 #include <string>
 #include <vector>
+using namespace std;
+
 // 메뉴, 설정, 기억의 책 화면이 같이 쓰는 그림. 멈춘 게임 화면을 어둡게 깔고 그 위에 나무판을 그린다
 namespace MenuArt {
 inline const RGB OUT{ 42, 26, 28 }, WOOD{ 156, 104, 62 }, WOOD_L{ 224, 180, 118 }, WOOD_D{ 114, 72, 50 }, PAPER{ 250, 240, 214 }, INK{ 70, 48, 40 };
-inline std::vector<RGB> capture(const Frame& f) {
-    std::vector<RGB> out(f.px.size());
+inline vector<RGB> capture(const Frame& f) {
+    vector<RGB> out(f.px.size());
     const auto& p = palette();
-    for (std::size_t i = 0; i < f.px.size(); ++i) out[i] = f.px[i] < p.size() ? p[f.px[i]] : RGB{ 0, 0, 0 };
+    for (size_t i = 0; i < f.px.size(); ++i) out[i] = f.px[i] < p.size() ? p[f.px[i]] : RGB{ 0, 0, 0 };
     return out;
 }
-inline void backdrop(Frame& f, const std::vector<RGB>& bg) {
+inline void backdrop(Frame& f, const vector<RGB>& bg) {
     if (bg.size() != f.px.size()) {
         f.gradient(0, 0, Frame::W, Frame::H, { {46, 30, 28}, {72, 48, 38} });
         for (int y = 18; y < Frame::H; y += 24) { f.hline(0, Frame::W - 1, y, C(36, 24, 22)); f.hline(0, Frame::W - 1, y + 1, C(84, 58, 46)); }
         for (int y = 0; y < Frame::H; y += 24) for (int x = (y / 24 % 2) * 60; x < Frame::W; x += 120) f.vline(x, y + 2, y + 17, C(36, 24, 22));
         return;
     }
-    for (std::size_t i = 0; i < f.px.size(); ++i) { const RGB& c = bg[i]; int l = (c.r * 3 + c.g * 6 + c.b) / 10; f.px[i] = C(((c.r + l) / 5) & ~7, ((c.g + l) / 5) & ~7, (((c.b + l) / 5) + 8) & ~7); }
+    for (size_t i = 0; i < f.px.size(); ++i) { const RGB& c = bg[i]; int l = (c.r * 3 + c.g * 6 + c.b) / 10; f.px[i] = C(((c.r + l) / 5) & ~7, ((c.g + l) / 5) & ~7, (((c.b + l) / 5) + 8) & ~7); }
 }
 inline void board(Frame& f, int x, int y, int w, int h) {
     uint8_t ol = C(OUT), wl = C(WOOD_L), wd = C(WOOD_D), wood = C(WOOD);
@@ -37,5 +39,5 @@ inline void plank(Frame& f, int x, int y, int w, int h, bool lit) {
     f.set(x + 4, y + 4, ol); f.set(x + w - 5, y + 4, ol);
 }
 inline void rope(Frame& f, int x, int y0, int y1) { for (int y = y0; y < y1; ++y) f.set(x + ((y / 2) % 2), y, (y / 2) % 2 ? C(196, 160, 110) : C(150, 116, 76)); }
-inline void hint(Frame& f, const std::string& text) { int w = Font::width(text) + 14, y = Frame::H - 15; f.rect(Frame::W / 2 - w / 2, y, w, 13, C(20, 14, 16)); Font::center(f, text, Frame::W / 2, y + 3, C(230, 220, 200)); }
+inline void hint(Frame& f, const string& text) { int w = Font::width(text) + 14, y = Frame::H - 15; f.rect(Frame::W / 2 - w / 2, y, w, 13, C(20, 14, 16)); Font::center(f, text, Frame::W / 2, y + 3, C(230, 220, 200)); }
 }

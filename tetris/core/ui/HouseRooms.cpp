@@ -1,5 +1,7 @@
 #include "ui/HouseRooms.h"
 #include <cmath>
+using namespace std;
+
 namespace {
 const RGB OL{ 58, 32, 28 };
 uint8_t ol() { return C(OL); }
@@ -10,10 +12,10 @@ void planks(Frame& f, int x, int y, int w, int h, RGB a, int len) {
     RGB b = dark(a, 0.08f), seam = dark(a, 0.35f);
     for (int j = 0; j < h; j += 7) {
         int row = j / 7;
-        f.rect(x, y + j, w, std::min(7, h - j), C(row % 2 ? a : b));
+        f.rect(x, y + j, w, min(7, h - j), C(row % 2 ? a : b));
         f.hline(x, x + w - 1, y + j, C(seam));
         int off = (row * 17) % len;
-        for (int i = x - off; i < x + w; i += len) { if (i < x) continue; f.vline(i, y + j, y + std::min(j + 6, h - 1), C(seam)); f.hline(i + 3, i + 6, y + j + 3 + row % 2, C(dark(a, 0.15f))); }
+        for (int i = x - off; i < x + w; i += len) { if (i < x) continue; f.vline(i, y + j, y + min(j + 6, h - 1), C(seam)); f.hline(i + 3, i + 6, y + j + 3 + row % 2, C(dark(a, 0.15f))); }
     }
 }
 void wall(Frame& f, int y1, int panelTop, RGB paper, RGB panel) {
@@ -52,7 +54,7 @@ void plant(Frame& f, int x, int y, int r) {
 }
 void clock(Frame& f, int x, int y, int t) {
     f.disc(x, y, 7, ol()); f.disc(x, y, 6, C(250, 248, 240)); f.disc(x, y, 1, ol());
-    float a = t * 0.02f - 1.57f; f.line(x, y, x + (int)std::lround(std::cos(a) * 4), y + (int)std::lround(std::sin(a) * 4), ol()); f.line(x, y, x, y - 3, ol());
+    float a = t * 0.02f - 1.57f; f.line(x, y, x + static_cast<int>(lround(cos(a) * 4)), y + static_cast<int>(lround(sin(a) * 4)), ol()); f.line(x, y, x, y - 3, ol());
 }
 void candle(Frame& f, int x, int y, int t) {
     int fl = (t / 2) % 3;
@@ -85,7 +87,7 @@ void HouseRooms::living(Frame& f, int t) {
     clock(f, 168, 14, t);
     f.rect(190, 0, 6, 38, ol()); f.rect(191, 0, 4, 38, C(110, 110, 116));
     f.disc(193, 46, 16, ol()); f.disc(193, 46, 15, C(206, 200, 196)); f.rect(176, 46, 34, 16, ol()); f.rect(177, 46, 32, 15, C(206, 200, 196));
-    for (int k = 0; k < 6; ++k) { float a = 3.1416f + k * 0.63f; f.set(193 + (int)(std::cos(a) * 12), 46 + (int)(std::sin(a) * 12), C(170, 164, 160)); }
+    for (int k = 0; k < 6; ++k) { float a = 3.1416f + k * 0.63f; f.set(193 + static_cast<int>(cos(a) * 12), 46 + static_cast<int>(sin(a) * 12), C(170, 164, 160)); }
     f.disc(193, 50, 9, ol()); f.rect(184, 50, 19, 9, ol()); f.disc(193, 50, 8, C(50, 30, 30)); f.rect(185, 50, 17, 8, C(50, 30, 30));
     int fl = (t / 2) % 3;
     f.poly({ {187, 58}, {199, 58}, {196, 50 - fl}, {193, 45 + fl}, {190, 51} }, C(240, 140, 50)); f.poly({ {190, 58}, {196, 58}, {194, 52 - fl}, {192, 51} }, C(255, 220, 110));

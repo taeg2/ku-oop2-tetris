@@ -1,10 +1,11 @@
 #include "ui/Console.h"
 #include <algorithm>
 #include "common/TextUtil.h"
+using namespace std;
 
 Console::Console(ITerminal& terminal, int width, int height)
     : m_terminal(terminal), m_width(width), m_height(height),
-      m_back(static_cast<std::size_t>(width * height)), m_front(m_back.size()) {
+      m_back(static_cast<size_t>(width * height)), m_front(m_back.size()) {
     m_terminal.open(width, height);
 }
 
@@ -35,11 +36,11 @@ void Console::put(Point pos, char32_t ch, Color fg, Color bg) {
     }
 }
 
-void Console::draw(Point pos, const std::string& text) {
+void Console::draw(Point pos, const string& text) {
     draw(pos, text, Color::Gray, Color::Black);
 }
 
-void Console::draw(Point pos, const std::string& text, Color fg, Color bg) {
+void Console::draw(Point pos, const string& text, Color fg, Color bg) {
     for (char32_t ch : TextUtil::decode(text)) {
         put(pos, ch, fg, bg);
         pos.x += TextUtil::charWidth(ch);
@@ -59,7 +60,7 @@ void Console::draw(Point pos, const Cell& cell) {
     draw(pos, "  ", cell.color(), cell.color());
 }
 
-void Console::drawCentered(int y, const std::string& text, Color fg, Color bg) {
+void Console::drawCentered(int y, const string& text, Color fg, Color bg) {
     const int x = (m_width - TextUtil::width(text)) / 2;
     draw({x, y}, text, fg, bg);
 }
@@ -80,15 +81,15 @@ void Console::frame(const Rect& area, Color color) {
 }
 
 void Console::clear() {
-    std::fill(m_back.begin(), m_back.end(), Glyph{});
+    std::fill(m_back.begin(), m_back.end(), Glyph{});  // 멤버 fill()과 이름이 같아 std::를 붙인다
 }
 
 bool Console::isRowChanged(int y) const {
-    const auto begin = m_back.begin() + static_cast<std::ptrdiff_t>(y * m_width);
-    return !std::equal(begin, begin + m_width, m_front.begin() + static_cast<std::ptrdiff_t>(y * m_width));
+    const auto begin = m_back.begin() + static_cast<ptrdiff_t>(y * m_width);
+    return !equal(begin, begin + m_width, m_front.begin() + static_cast<ptrdiff_t>(y * m_width));
 }
 
-void Console::drawImage(Point pos, const std::string& sixel) {
+void Console::drawImage(Point pos, const string& sixel) {
     m_images.emplace_back(pos, sixel);
 }
 
@@ -113,7 +114,7 @@ void Console::writeRow(int y) {
     int x = 0;
     while (x < limit) {
         const Glyph first = glyphAt(x, y);
-        std::u32string run;
+        u32string run;
         int runEnd = x;
         while (runEnd < limit) {
             const Glyph& g = glyphAt(runEnd, y);

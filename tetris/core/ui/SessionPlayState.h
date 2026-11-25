@@ -1,6 +1,8 @@
 #pragma once
 #include "play/StageSession.h"
 #include "ui/PlayStateReader.h"
+using namespace std;
+
 // StageSession을 읽기만 해서 PlayStateReader로 보여 주는 어댑터. 블록 색을 그림용 블록 종류로 바꾼다
 class SessionPlayState : public PlayStateReader {
 public:
@@ -11,7 +13,7 @@ public:
     Cells ghostCells() const override;
     Cells shape(int type) const override;
     int next() const override;
-    const std::vector<int>& clearingRows() const override;
+    const vector<int>& clearingRows() const override;
     bool clearing() const override;
     bool over() const override;
     bool hasPiece() const override;

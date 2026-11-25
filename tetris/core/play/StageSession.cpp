@@ -2,13 +2,14 @@
 #include <algorithm>
 #include <array>
 #include "common/GameConfig.h"
+using namespace std;
 
 namespace {
 // 회전할 때 벽이나 블록에 막히면 옆으로 살짝 밀어 본다 (wall kick)
-const std::array<Point, 6> kKicks{{{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {-2, 0}, {2, 0}}};
+const array<Point, 6> kKicks{{{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {-2, 0}, {2, 0}}};
 }  // namespace
 
-StageSession::StageSession(const StageConfig& config, ISoundPlayer& sound, std::mt19937& rng)
+StageSession::StageSession(const StageConfig& config, ISoundPlayer& sound, mt19937& rng)
     : m_config(&config),
       m_rng(rng),
       m_generator(rng, config::kPillBlockChancePercent),
@@ -110,7 +111,7 @@ void StageSession::move(Point delta) {
 
 bool StageSession::findRotation(Tetromino& result) const {
     const Tetromino rotated = m_current.rotated();
-    const auto found = std::find_if(kKicks.begin(), kKicks.end(),
+    const auto found = find_if(kKicks.begin(), kKicks.end(),
                                     [&](Point kick) { return m_board.canPlace(rotated, kick); });
     if (found == kKicks.end()) {
         return false;
@@ -169,7 +170,7 @@ void StageSession::lockCurrent() {
 }
 
 void StageSession::finishLineClear() {
-    const std::vector<PillType> pills = m_board.pillsInRows(m_flashRows);
+    const vector<PillType> pills = m_board.pillsInRows(m_flashRows);
     const int count = static_cast<int>(m_flashRows.size());
     m_board.clearRows(m_flashRows);
     m_flashRows.clear();

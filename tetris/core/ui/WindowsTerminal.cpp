@@ -1,17 +1,19 @@
 #ifdef _WIN32
-#include "ui/WindowsTerminal.h"
-#include "common/ConsoleException.h"
+// windows.h를 가장 먼저 include한다 (using namespace std; 뒤에 오면 byte 같은 이름이 겹칠 수 있다)
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <windows.h>
+#include "ui/WindowsTerminal.h"
+#include "common/ConsoleException.h"
+using namespace std;
 
 namespace {
 WORD attributeOf(Color fg, Color bg) {
     return static_cast<WORD>(static_cast<int>(fg) | (static_cast<int>(bg) << 4));
 }
 
-std::wstring toUtf16(const std::u32string& text) {
-    std::wstring out;
+wstring toUtf16(const u32string& text) {
+    wstring out;
     for (char32_t ch : text) {
         if (ch < 0x10000) {
             out.push_back(static_cast<wchar_t>(ch));
@@ -74,16 +76,16 @@ void WindowsTerminal::clearScreen() {
     SetConsoleCursorPosition(out, COORD{0, 0});
 }
 
-void WindowsTerminal::write(Point pos, const std::u32string& text, Color fg, Color bg) {
+void WindowsTerminal::write(Point pos, const u32string& text, Color fg, Color bg) {
     HANDLE out = static_cast<HANDLE>(m_output);
     SetConsoleCursorPosition(out, COORD{static_cast<SHORT>(pos.x), static_cast<SHORT>(pos.y)});
     SetConsoleTextAttribute(out, attributeOf(fg, bg));
-    const std::wstring wide = toUtf16(text);
+    const wstring wide = toUtf16(text);
     DWORD written = 0;
     WriteConsoleW(out, wide.c_str(), static_cast<DWORD>(wide.size()), &written, nullptr);
 }
 
-void WindowsTerminal::writeRaw(Point pos, const std::string& bytes) {
+void WindowsTerminal::writeRaw(Point pos, const string& bytes) {
     HANDLE out = static_cast<HANDLE>(m_output);
     DWORD mode = 0;
     if (GetConsoleMode(out, &mode) && !(mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING)) {

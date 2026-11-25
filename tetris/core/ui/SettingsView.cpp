@@ -2,7 +2,9 @@
 #include "ui/MenuArt.h"
 #include "ui/PixelFont.h"
 #include <algorithm>
-struct KeyRow { const char* keys[3]; const char* action; };
+using namespace std;
+
+class KeyRow { public: const char* keys[3]; const char* action; };
 static const KeyRow ROWS[8] = {
     { { "<", ">", "A D" }, "MOVE LEFT / RIGHT" },
     { { "^", "W", nullptr }, "ROTATE" },
@@ -13,7 +15,7 @@ static const KeyRow ROWS[8] = {
     { { "ESC", nullptr, nullptr }, "MENU / BACK" },
     { { "Q", nullptr, nullptr }, "QUIT GAME" },
 };
-static int keycap(Frame& f, const std::string& k, int x, int y) {
+static int keycap(Frame& f, const string& k, int x, int y) {
     uint8_t ol = C(MenuArt::OUT), cap = C(236, 232, 222), side = C(170, 164, 156), ink = C(60, 52, 56);
     bool arrow = k == "<" || k == ">" || k == "^" || k == "v";
     int w = arrow ? 13 : Font::width(k) + 8;
@@ -50,7 +52,7 @@ void SettingsView::render() const {
     int sy = y + 40;
     MenuArt::plank(f, x + 20, sy, w - 40, 30, true);
     Font::draw(f, "SOUND", x + 34, sy + 11, ink);
-    int swx = x + w - 104, swy = sy + 7, k = std::min(4, m_t - m_flipT), pos = m_sound ? (k * 5) : (20 - k * 5);
+    int swx = x + w - 104, swy = sy + 7, k = min(4, m_t - m_flipT), pos = m_sound ? (k * 5) : (20 - k * 5);
     f.rect(swx, swy, 42, 16, ol); f.rect(swx + 1, swy + 1, 40, 14, m_sound ? C(110, 180, 90) : C(150, 146, 140));
     Font::draw(f, m_sound ? "ON" : "OFF", m_sound ? swx + 6 : swx + 20, swy + 4, C(250, 250, 244));
     f.rect(swx + 1 + pos, swy + 1, 20, 14, ol); f.rect(swx + 2 + pos, swy + 2, 18, 12, C(246, 242, 232)); f.vline(swx + 10 + pos, swy + 5, swy + 10, C(200, 196, 188)); f.vline(swx + 12 + pos, swy + 5, swy + 10, C(200, 196, 188));
@@ -67,9 +69,9 @@ void SettingsView::render() const {
     for (int r = 0; r < 8; ++r) {
         int ry = ty + 22 + r * 15, kx = x + 34;
         for (int j = 0; j < 3 && ROWS[r].keys[j]; ++j) {
-            std::string key = ROWS[r].keys[j];
+            string key = ROWS[r].keys[j];
             bool arrow = key == "<" || key == ">" || key == "^" || key == "v";
-            if (j > 0 && !arrow) { std::string prev = ROWS[r].keys[j - 1]; if (prev == "<" || prev == ">" || prev == "^" || prev == "v") { Font::draw(f, "/", kx, ry + 3, ink); kx += 8; } }
+            if (j > 0 && !arrow) { string prev = ROWS[r].keys[j - 1]; if (prev == "<" || prev == ">" || prev == "^" || prev == "v") { Font::draw(f, "/", kx, ry + 3, ink); kx += 8; } }
             kx += keycap(f, key, kx, ry) + 3;
         }
         Font::draw(f, ROWS[r].action, x + 146, ry + 3, ink);

@@ -2,6 +2,7 @@
 #include "flow/AlbumScene.h"
 #include "flow/StoryArt.h"
 #include "stage/Album.h"
+using namespace std;
 
 PrologueScene::PrologueScene(GameServices& services, int stageIndex) : Scene(services), m_stageIndex(stageIndex) {}
 
@@ -26,7 +27,7 @@ void PrologueScene::update(int dtMs) {
     PrologueView& house = m_services.story.house();
     house.update(dtMs);
     if (house.finished()) {
-        changeTo(std::make_unique<AlbumScene>(m_services, m_stageIndex, AlbumScene::kNoRoundCleared));
+        changeTo(make_unique<AlbumScene>(m_services, m_stageIndex, AlbumScene::kNoRoundCleared));
     }
 }
 

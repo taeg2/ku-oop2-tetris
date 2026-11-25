@@ -3,8 +3,10 @@
 #include <string>
 #include <termios.h>
 #include <unistd.h>
+using namespace std;
 
-struct PosixKeyboardInput::SavedMode {
+class PosixKeyboardInput::SavedMode {
+public:
     termios original{};
 };
 
@@ -12,7 +14,7 @@ namespace {
 const char kEscape = 27;
 }
 
-PosixKeyboardInput::PosixKeyboardInput() : m_saved(std::make_unique<SavedMode>()) {
+PosixKeyboardInput::PosixKeyboardInput() : m_saved(make_unique<SavedMode>()) {
     tcgetattr(STDIN_FILENO, &m_saved->original);
     termios raw = m_saved->original;
     raw.c_lflag &= static_cast<tcflag_t>(~(ICANON | ECHO));
@@ -26,13 +28,13 @@ PosixKeyboardInput::~PosixKeyboardInput() {
 }
 
 void PosixKeyboardInput::update() {
-    std::string bytes;
+    string bytes;
     char buffer[64];
     ssize_t count = 0;
     while ((count = read(STDIN_FILENO, buffer, sizeof(buffer))) > 0) {
-        bytes.append(buffer, static_cast<std::size_t>(count));
+        bytes.append(buffer, static_cast<size_t>(count));
     }
-    for (std::size_t i = 0; i < bytes.size(); ++i) {
+    for (size_t i = 0; i < bytes.size(); ++i) {
         // 방향키는 ESC [ A~D 세 글자로 들어온다.
         if (bytes[i] == kEscape && i + 2 < bytes.size() && bytes[i + 1] == '[') {
             switch (bytes[i + 2]) {

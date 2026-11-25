@@ -4,6 +4,7 @@
 #include "board/Board.h"
 #include "block/Tetromino.h"
 #include "play/EventBus.h"
+using namespace std;
 
 ShapeShiftGimmick::ShapeShiftGimmick(int intervalMs, int warningMs) : PeriodicGimmick(intervalMs, warningMs) {}
 
@@ -20,7 +21,7 @@ void ShapeShiftGimmick::onPieceSpawn(PlayContext& ctx) {
 
 void ShapeShiftGimmick::morph(PlayContext& ctx) {
     const auto currentType = static_cast<int>(ctx.current.type());
-    std::uniform_int_distribution<int> offset(1, kTetrominoTypeCount - 1);
+    uniform_int_distribution<int> offset(1, kTetrominoTypeCount - 1);
     const auto newType = static_cast<TetrominoType>((currentType + offset(ctx.rng)) % kTetrominoTypeCount);
 
     Tetromino placed = ctx.current;
@@ -32,8 +33,8 @@ void ShapeShiftGimmick::morph(PlayContext& ctx) {
 }
 
 bool ShapeShiftGimmick::findPlacement(const Board& board, const Tetromino& morphed, Tetromino& result) {
-    const std::array<Point, 4> kicks = {Point{0, 0}, Point{-1, 0}, Point{1, 0}, Point{0, -1}};
-    const auto found = std::find_if(kicks.begin(), kicks.end(),
+    const array<Point, 4> kicks = {Point{0, 0}, Point{-1, 0}, Point{1, 0}, Point{0, -1}};
+    const auto found = find_if(kicks.begin(), kicks.end(),
                                     [&](Point kick) { return board.canPlace(morphed, kick); });
     if (found == kicks.end()) {
         return false;  // 바꿀 자리가 없으면 다음 블록이 나올 때 다시 시도한다
@@ -42,12 +43,12 @@ bool ShapeShiftGimmick::findPlacement(const Board& board, const Tetromino& morph
     return true;
 }
 
-std::string ShapeShiftGimmick::statusText() const {
+string ShapeShiftGimmick::statusText() const {
     if (m_pending) {
         return "다음 블록 뒤바뀜";
     }
     if (isWarning()) {
         return "곧 블록이 뒤바뀜!";
     }
-    return "뒤바뀜까지 " + std::to_string(secondsLeft(remainingMs())) + "초";
+    return "뒤바뀜까지 " + to_string(secondsLeft(remainingMs())) + "초";
 }

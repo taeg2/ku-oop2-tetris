@@ -4,6 +4,7 @@
 #include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
 #include "stage/Album.h"
+using namespace std;
 
 PlayScene::PlayScene(GameServices& services, int stageIndex) : Scene(services), m_stageIndex(stageIndex) {
     m_services.story.beginStage(stageIndex);
@@ -77,7 +78,7 @@ void PlayScene::handleMenu(Command command) {
             break;
         case MenuView::Choice::QuitToTitle:
             menu.clearChoice();
-            changeTo(std::make_unique<PrologueScene>(m_services, 0));  // 새 게임: 집 오프닝부터
+            changeTo(make_unique<PrologueScene>(m_services, 0));  // 새 게임: 집 오프닝부터
             break;
         default:
             break;
@@ -103,7 +104,7 @@ void PlayScene::update(int dtMs) {
         case Phase::Failing:
             art().update(dtMs);
             if (m_phaseMs >= config::kStageFailMs) {
-                changeTo(std::make_unique<PlayScene>(m_services, m_stageIndex));  // 재도전: 지금 라운드부터 보드를 비우고 다시
+                changeTo(make_unique<PlayScene>(m_services, m_stageIndex));  // 재도전: 지금 라운드부터 보드를 비우고 다시
             }
             break;
     }
@@ -121,7 +122,7 @@ void PlayScene::updatePlaying(int dtMs) {
         if (session().isCleared()) {
             m_services.album.add(session().config().photo);
         }
-        changeTo(std::make_unique<AlbumScene>(m_services, m_stageIndex, story.lastClearedRound()));
+        changeTo(make_unique<AlbumScene>(m_services, m_stageIndex, story.lastClearedRound()));
         return;
     }
     session().update(dtMs);

@@ -8,12 +8,14 @@
 #include "ui/RoundScene.h"
 #include "ui/SixelEncoder.h"
 #include "ui/View.h"
+using namespace std;
+
 // 라운드를 고르는 앨범 화면. 라운드가 끝날 때마다 열리고, 라운드를 고르기 전에는 닫을 수 없다
 // 스테이지를 다 깨면 스스로 페이지를 넘기고 stageFinished()가 true가 된다. 이후 PrologueView::start(새 stage)로 집 장면을 연다
 class AlbumView : public View {
 public:
-    static constexpr int kScale = 2;
-    static constexpr int kFrameMs = 100;
+    inline static const int kScale = 2;
+    inline static const int kFrameMs = 100;
     explicit AlbumView(Point origin);
     void open(int stage, int clearedRound);  // clearedRound: 방금 깬 라운드 번호, 처음 열 때는 -1
     void handle(Command command);
@@ -27,7 +29,7 @@ public:
     void render() const;
 private:
     AlbumScreen m_album;
-    std::vector<std::unique_ptr<RoundScene>> m_previews;
+    vector<unique_ptr<RoundScene>> m_previews;
     EmptyPlayState m_empty;
     int m_t = 0;
     int m_accMs = 0;
@@ -37,6 +39,6 @@ private:
     mutable Frame m_frame;
     mutable Frame m_preview;
     mutable int m_drawnT = -1;
-    mutable std::string m_sixel;
+    mutable string m_sixel;
     SixelEncoder m_encoder;
 };

@@ -2,12 +2,14 @@
 #include "ui/PixelFont.h"
 #include <cmath>
 #include <cstdlib>
+using namespace std;
+
 namespace {
 const RGB OUT{ 42, 26, 28 };
 const RGB GRASS{ 118, 176, 82 }, GRASS_L{ 160, 204, 94 }, GRASS_D{ 80, 140, 74 }, HAZE{ 156, 198, 132 };
 const RGB BARK{ 126, 80, 58 }, BARK_L{ 164, 110, 74 }, BARK_D{ 88, 54, 42 };
 int wave(int t, float period, float amp, float phase = 0) {
-    return (int)std::lround(std::sin(t * 6.2832f / period + phase) * amp);
+    return static_cast<int>(lround(sin(t * 6.2832f / period + phase) * amp));
 }
 void tuft(Frame& f, int x, int y) {
     uint8_t d = C(GRASS_D), l = C(GRASS_L);
@@ -44,7 +46,7 @@ void clump(Frame& f, int cx, int cy, int r, int sway) {
 void LakeRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     RGB sky[6] = { {110,164,218}, {126,178,226}, {144,192,234}, {164,206,240}, {186,220,244}, {204,230,246} };
     for (int y = 0; y < 60; ++y) {
-        int b = std::min(5, y / 10);
+        int b = min(5, y / 10);
         for (int x = 0; x < 480; ++x) {
             int bb = b;
             if (y % 10 == 9 && b < 5 && (x & 1)) bb = b + 1;
@@ -53,13 +55,13 @@ void LakeRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     }
     f.disc(150, -2, 24, C(186, 220, 244)); f.disc(150, -2, 20, C(214, 234, 248));
     f.disc(150, -2, 15, C(240, 246, 236)); f.disc(150, -4, 11, C(252, 250, 224));
-    int drift = ((int)cloudX_) % 560;
+    int drift = (static_cast<int>(cloudX_)) % 560;
     cloud(f, (175 + drift) % 560 - 40, 14, 12);
     cloud(f, (290 + drift) % 560 - 40, 12, 14);
     cloud(f, (40 + drift) % 560 - 40, 30, 8);
     uint8_t hill = C(128, 168, 160), trees = C(104, 146, 128), treesD = C(88, 128, 116);
     for (int x = 0; x < 480; ++x) {
-        int top = 54 - (int)(3 * std::sin(x * 0.03) + 2 * std::sin(x * 0.11));
+        int top = 54 - static_cast<int>(3 * sin(x * 0.03) + 2 * sin(x * 0.11));
         f.vline(x, top, 62, hill);
     }
     for (int x = 296; x < 480; ++x) {
@@ -145,13 +147,13 @@ void LakeRound::drawCabin(Frame& f, int t) {
     f.rect(463, 61, 7, 12, ol); f.rect(464, 62, 5, 11, C(150, 150, 160));
     float w = wind(t);
     for (int k = 0; k < 3; ++k) {
-        int age = (t + k * 8) % 24, sx = 466 + age / 6 + (int)(w * age * 2), sy = 58 - (int)(age * (1 - 0.8f * w));
+        int age = (t + k * 8) % 24, sx = 466 + age / 6 + static_cast<int>(w * age * 2), sy = 58 - static_cast<int>(age * (1 - 0.8f * w));
         f.disc(sx, sy, 1 + age / 10, C(236, 240, 244));
     }
     int c = endStart_ >= 0 ? endFrame_ : -1;
     bool open = c >= 3 && c < 118;
     if (open) {
-        int k = std::min(3, c - 2);
+        int k = min(3, c - 2);
         f.rect(438, 96, 7, 17, C(120, 92, 60)); f.rect(439, 98, 5, 15, C(250, 206, 120));
         f.rect(438, 96, 7 - k * 2, 17, C(84, 48, 40));
         if (c >= 5 && c < 102) {
@@ -179,7 +181,7 @@ void LakeRound::drawCabin(Frame& f, int t) {
 void LakeRound::drawTree(Frame& f, int t) {
     float w = wind(t);
     uint8_t ol = C(OUT), b = C(BARK), bl = C(BARK_L), bd = C(BARK_D);
-    struct Limb { int x0, y0, x1, y1; float w0, w1; };
+    class Limb { public: int x0, y0, x1, y1; float w0, w1; };
     const Limb limbs[] = {
         {100,92, 66,52, 9,4}, {80,72, 56,72, 5,2}, {100,140, 56,140, 9,4}, {74,140, 52,155, 5,2},
         {100,190, 66,193, 8,3}, {180,100, 208,78, 7,3}, {180,165, 210,172, 7,3},
@@ -189,11 +191,11 @@ void LakeRound::drawTree(Frame& f, int t) {
     for (auto& l : limbs) f.taper(l.x0, l.y0, l.x1, l.y1, l.w0, l.w1, b);
     for (auto& l : limbs) f.taper(l.x0, l.y0 - 2, l.x1, l.y1 - 1, l.w0 / 3, 1, bl);
     for (auto& l : limbs) f.taper(l.x0, l.y0 + 2, l.x1, l.y1 + 1, l.w0 / 4, 1, bd);
-    clump(f, 58, 50, 24, wave(t, 26, 1.3f) + (int)(w * (3.2f + 1.4f * std::sin(1.9f * t))));
-    clump(f, 42, 124, 26, wave(t, 26, 1.3f, 1.7f) + (int)(w * (3.2f + 1.4f * std::sin(1.9f * t + 1))));
-    clump(f, 52, 184, 18, wave(t, 26, 1.3f, 3.4f) + (int)(w * (3.2f + 1.4f * std::sin(1.9f * t + 2))));
-    clump(f, 212, 70, 14, wave(t, 26, 1.3f, 5.1f) + (int)(w * (3.2f + 1.4f * std::sin(1.9f * t + 3))));
-    clump(f, 214, 164, 12, wave(t, 26, 1.3f, 6.8f) + (int)(w * (3.2f + 1.4f * std::sin(1.9f * t + 4))));
+    clump(f, 58, 50, 24, wave(t, 26, 1.3f) + static_cast<int>(w * (3.2f + 1.4f * sin(1.9f * t))));
+    clump(f, 42, 124, 26, wave(t, 26, 1.3f, 1.7f) + static_cast<int>(w * (3.2f + 1.4f * sin(1.9f * t + 1))));
+    clump(f, 52, 184, 18, wave(t, 26, 1.3f, 3.4f) + static_cast<int>(w * (3.2f + 1.4f * sin(1.9f * t + 2))));
+    clump(f, 212, 70, 14, wave(t, 26, 1.3f, 5.1f) + static_cast<int>(w * (3.2f + 1.4f * sin(1.9f * t + 3))));
+    clump(f, 214, 164, 12, wave(t, 26, 1.3f, 6.8f) + static_cast<int>(w * (3.2f + 1.4f * sin(1.9f * t + 4))));
 }
 void LakeRound::drawStump(Frame& f) {
     uint8_t ol = C(OUT), side = C(182, 128, 80), sideD = C(140, 92, 58), sideL = C(206, 156, 100);
@@ -219,7 +221,7 @@ void LakeRound::drawStump(Frame& f) {
 }
 void LakeRound::drawBoat(Frame& f, int t) {
     int c = endStart_ >= 0 ? endFrame_ : -1;
-    int bx = (int)boatX_, by = (int)boatY_;
+    int bx = static_cast<int>(boatX_), by = static_cast<int>(boatY_);
     uint8_t ol = C(OUT), wood = C(160, 108, 66), woodL = C(196, 146, 94), woodD = C(116, 74, 48);
     uint8_t foam = C(184, 222, 244);
     bool rowing = c >= 14 && c < 46, kidIn = c < 46;
@@ -250,7 +252,7 @@ void LakeRound::drawBoat(Frame& f, int t) {
 }
 void LakeRound::drawWalkingKid(Frame& f, int x, int y, int facing, int step) {
     int h = 12 + (y - 116) * 10 / 82;
-    h = std::max(10, std::min(22, h));
+    h = max(10, min(22, h));
     uint8_t ol = C(OUT), skin = C(246, 204, 164), shirt = C(250, 210, 64), shorts = C(72, 100, 170), hat = C(232, 202, 112);
     int head = h * 3 / 10, body = h * 4 / 10, legs = h - head - body;
     int top = y - h;
@@ -259,21 +261,21 @@ void LakeRound::drawWalkingKid(Frame& f, int x, int y, int facing, int step) {
     f.rect(x - 2, y - legs - body / 3, 5, body / 3 + 1, shorts);
     int neckY = top + head + 3;
     f.vline(x - 1, top + head + 2, neckY, skin); f.vline(x, top + head + 2, neckY, skin); f.vline(x + 1, top + head + 2, neckY, skin);
-    int shirtH = std::max(1, body - body / 3 - 3);
+    int shirtH = max(1, body - body / 3 - 3);
     f.rect(x - 3, neckY, 7, shirtH + 1, ol); f.rect(x - 2, neckY + 1, 5, shirtH, shirt);
     f.vline(x - 3, neckY + 1, neckY + 1 + shirtH / 2 + (step % 2), skin); f.vline(x + 3, neckY + 1, neckY + 2 + shirtH / 2 - (step % 2), skin);
     f.disc(x, top + head / 2 + 1, head / 2 + 1, ol); f.disc(x, top + head / 2 + 1, head / 2, skin);
     {
         int r2 = head / 2 + 1, cy2 = top + head / 2 + 1;
         for (int yy = cy2 + r2 / 2; yy <= cy2 + r2; ++yy) {
-            int dy2 = yy - cy2, span = (int)std::sqrt((float)std::max(0, r2 * r2 - dy2 * dy2));
+            int dy2 = yy - cy2, span = static_cast<int>(sqrt(static_cast<float>(max(0, r2 * r2 - dy2 * dy2))));
             f.hline(x - span, x + span, yy, skin);
         }
     }
     if (facing == 2) {
         int r = head / 2, cy = top + head / 2 + 1, hairBottom = cy - r / 3;
         for (int yy = top; yy <= hairBottom; ++yy) {
-            int dy2 = yy - cy, span = (int)std::sqrt((float)std::max(0, r * r - dy2 * dy2));
+            int dy2 = yy - cy, span = static_cast<int>(sqrt(static_cast<float>(max(0, r * r - dy2 * dy2))));
             f.hline(x - span, x + span, yy, C(110, 70, 44));
         }
     }
@@ -285,11 +287,11 @@ void LakeRound::drawWorm(Frame& f, int t) {
     uint8_t ol = C(OUT), pink = C(236, 140, 156), pinkD = C(196, 96, 118), pinkL = C(250, 190, 200);
     f.ellipse(332, 262, 18, 5, C(96, 66, 46)); f.ellipse(332, 262, 15, 3, C(70, 46, 34));
     int hx = 334 + sway, hy = 230;
-    float dx = hx - 332.0f, dy = hy + 4 - 258.0f, len = std::sqrt(dx * dx + dy * dy);
-    int n = std::max(7, (int)(len / 4));
+    float dx = hx - 332.0f, dy = hy + 4 - 258.0f, len = sqrt(dx * dx + dy * dy);
+    int n = max(7, static_cast<int>(len / 4));
     for (int k = 0; k < n; ++k) {
-        float u = (float)k / n;
-        int x = 332 + (int)(dx * u) + sway * k / 6, y = 260 + (int)(dy * u) - (int)(std::sin(u * 3.14f) * (len > 40 ? 16 : 0));
+        float u = static_cast<float>(k) / n;
+        int x = 332 + static_cast<int>(dx * u) + sway * k / 6, y = 260 + static_cast<int>(dy * u) - static_cast<int>(sin(u * 3.14f) * (len > 40 ? 16 : 0));
         f.disc(x, y, 5, ol); f.disc(x, y, 4, pink); f.hline(x - 3, x + 3, y + 2, pinkD); f.set(x - 2, y - 2, pinkL);
     }
     Frame::Pts wing = { {hx - 4, hy}, {hx - 16, hy - 8}, {hx - 13, hy - 1}, {hx - 18, hy + 3}, {hx - 11, hy + 3}, {hx - 12, hy + 8}, {hx - 3, hy + 4} };
@@ -310,7 +312,7 @@ void LakeRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     }
     float w = wind(t);
     for (int k = 0; k < 6; ++k) {
-        int x = 128 + k * 9, s = wave(t, 18, 1.0f, x * 0.35f) + (int)(w * 3);
+        int x = 128 + k * 9, s = wave(t, 18, 1.0f, x * 0.35f) + static_cast<int>(w * 3);
         f.line(x, 53, x + s, 46 - k % 3, C(70, 130, 70));
         RGB p = (k % 3 == 0) ? RGB{ 236,200,240 } : (k % 3 == 1) ? RGB{ 250,230,120 } : RGB{ 244,170,186 };
         f.set(x + s, 45 - k % 3, C(p)); f.set(x + s - 1, 46 - k % 3, C(p)); f.set(x + s + 1, 46 - k % 3, C(p));
@@ -326,7 +328,7 @@ void LakeRound::drawNext(Frame& f, int piece, int t) {
     if (sitting) {
         if (c >= 128) { drawSittingTeddy(f, t, c - 128); return; }
         float u = (c - 122) / 6.0f;
-        y0 = 52 + (int)(27 * u * u);
+        y0 = 52 + static_cast<int>(27 * u * u);
     }
     uint8_t ol = C(90, 50, 36), fur = C(186, 118, 66), furL = C(206, 144, 90), muzzle = C(232, 184, 128);
     uint8_t wing = C(248, 248, 252), wingD = C(206, 210, 226), olW = C(150, 156, 180);
@@ -363,7 +365,7 @@ void LakeRound::drawNext(Frame& f, int piece, int t) {
         int ax = x0 + 70, ay = y0 + 46;
         for (int i = 0; i < 40; ++i) {
             int x = ax + i * (10 + reach) / 40;
-            int wv = (int)(std::sin(i * 0.35f - t * 1.3f) * (2 + i / 8));
+            int wv = static_cast<int>(sin(i * 0.35f - t * 1.3f) * (2 + i / 8));
             f.vline(x, ay + wv - 10 + i / 6, ay + wv + 10 - i / 6, i % 6 < 1 ? towelD : towel);
             f.set(x, ay + wv + 7 - i / 6, stripe);
         }
@@ -438,11 +440,11 @@ void LakeRound::drawSittingTeddy(Frame& f, int t, int k) {
     for (int i = -13; i <= 13; ++i) {
         int y = hy - 25 + i * tilt / 13;
         f.set(hx + i, y - 1, C(252, 220, 96)); f.set(hx + i, y + 1, C(206, 160, 40));
-        if (std::abs(i) > 9) f.set(hx + i, y, C(252, 220, 96));
+        if (abs(i) > 9) f.set(hx + i, y, C(252, 220, 96));
     }
 }
 void LakeRound::drawHud(Frame& f, int, int t) {
-    int lines = std::min(arrived_, goal());
+    int lines = min(arrived_, goal());
     int x = 186, y = 212;
     uint8_t ol = C(OUT), frame = C(156, 104, 62), frameL = C(206, 156, 100), board = C(46, 74, 58), boardL = C(58, 88, 70);
     f.rect(x + 2, y + 2, 112, 50, C(70, 110, 60));
@@ -482,13 +484,13 @@ float LakeRound::wind(int t) const {
     return tail[k - 17];
 }
 void LakeRound::kidAt(int& x, int& y) const {
-    float c = (float)endFrame_;
-    auto lerp = [](float a, float b, float u) { return a + (b - a) * std::max(0.0f, std::min(1.0f, u)); };
-    if (c < 52) { float u = (c - 46) / 6.0f; x = (int)lerp(boatX_ + 70, 436, u); y = (int)(lerp(boatY_ + 4, 190, u) - std::sin(u * 3.14159f) * 10); }
-    else if (c < 60) { x = (int)lerp(436, 458, (c - 52) / 8.0f); y = (int)lerp(190, 198, (c - 52) / 8.0f); }
-    else if (c < 100) { x = 458; y = (int)lerp(198, 134, (c - 60) / 40.0f); }
-    else if (c < 106) { x = 458; y = (int)lerp(134, 113, (c - 100) / 6.0f); }
-    else { x = (int)lerp(458, 441, (c - 106) / 8.0f); y = 113; }
+    float c = static_cast<float>(endFrame_);
+    auto lerp = [](float a, float b, float u) { return a + (b - a) * max(0.0f, min(1.0f, u)); };
+    if (c < 52) { float u = (c - 46) / 6.0f; x = static_cast<int>(lerp(boatX_ + 70, 436, u)); y = static_cast<int>(lerp(boatY_ + 4, 190, u) - sin(u * 3.14159f) * 10); }
+    else if (c < 60) { x = static_cast<int>(lerp(436, 458, (c - 52) / 8.0f)); y = static_cast<int>(lerp(190, 198, (c - 52) / 8.0f)); }
+    else if (c < 100) { x = 458; y = static_cast<int>(lerp(198, 134, (c - 60) / 40.0f)); }
+    else if (c < 106) { x = 458; y = static_cast<int>(lerp(134, 113, (c - 100) / 6.0f)); }
+    else { x = static_cast<int>(lerp(458, 441, (c - 106) / 8.0f)); y = 113; }
 }
 void LakeRound::update(const PlayStateReader&, int t) {
     int landed = 0;
@@ -499,53 +501,53 @@ void LakeRound::update(const PlayStateReader&, int t) {
     if (memoryT_ >= 0 && endStart_ < 0 && t - memoryT_ >= 26) endStart_ = t;
     float w = wind(t);
     cloudX_ += 0.15f + 1.6f * w;
-    if (w > 0) boatUp_ = std::min(24.0f, boatUp_ + 2.0f * w); else boatUp_ = std::max(0.0f, boatUp_ - 1.0f);
+    if (w > 0) boatUp_ = min(24.0f, boatUp_ + 2.0f * w); else boatUp_ = max(0.0f, boatUp_ - 1.0f);
     if (endStart_ < 0) {
-        boatX_ = 336.0f + 11.0f * std::sin(t * 6.2832f / 64);
-        boatY_ = 150.0f - boatUp_ + std::sin(t * 6.2832f / 20);
+        boatX_ = 336.0f + 11.0f * sin(t * 6.2832f / 64);
+        boatY_ = 150.0f - boatUp_ + sin(t * 6.2832f / 20);
     } else {
         endFrame_ = t - endStart_;
         if (endFrame_ == 0) { rowFromX_ = boatX_; rowFromY_ = boatY_; }
         float sx = rowFromX_, sy = rowFromY_;
-        float u = std::max(0.0f, std::min(1.0f, (endFrame_ - 14) / 30.0f));
+        float u = max(0.0f, min(1.0f, (endFrame_ - 14) / 30.0f));
         u = u * u * (3 - 2 * u);
         boatX_ = sx + (348 - sx) * u;
-        boatY_ = sy + (166 - sy) * u + (endFrame_ < 44 ? std::sin(t * 6.2832f / 20) : 0);
+        boatY_ = sy + (166 - sy) * u + (endFrame_ < 44 ? sin(t * 6.2832f / 20) : 0);
     }
 }
-void LakeRound::onLinesCleared(const std::vector<int>& rows, int totalLines, int t) {
+void LakeRound::onLinesCleared(const vector<int>& rows, int totalLines, int t) {
     if (totalLines / 4 > gusts_ && totalLines < goal()) { gusts_ = totalLines / 4; windStart_ = t; }
     for (int r : rows)
         for (int k = 0; k < 4; ++k)
-            flyers_.push_back({ (float)(boardX() + 12 + k * 18), (float)(boardY() + r * 8 + 4), t, (r + k) % 7 });
+            flyers_.push_back({ static_cast<float>(boardX() + 12 + k * 18), static_cast<float>(boardY() + r * 8 + 4), t, (r + k) % 7 });
 }
 void LakeRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     drawWorm(f, t);
-    int kx = (int)boatX_ + 37, ky = (int)boatY_ - 4;
+    int kx = static_cast<int>(boatX_) + 37, ky = static_cast<int>(boatY_) - 4;
     for (auto& fl : flyers_) {
         float u = (t - fl.start) / 7.0f;
-        float cx = (fl.x0 + kx) / 2, cy = std::min(fl.y0, (float)ky) - 50;
+        float cx = (fl.x0 + kx) / 2, cy = min(fl.y0, static_cast<float>(ky)) - 50;
         for (int tr = 2; tr >= 0; --tr) {
-            float v = std::max(0.0f, u - tr * 0.06f);
+            float v = max(0.0f, u - tr * 0.06f);
             float x = (1 - v) * (1 - v) * fl.x0 + 2 * (1 - v) * v * cx + v * v * kx;
             float y = (1 - v) * (1 - v) * fl.y0 + 2 * (1 - v) * v * cy + v * v * ky;
-            int size = std::max(2, (int)(7 - 4 * v)) - tr;
+            int size = max(2, static_cast<int>(7 - 4 * v)) - tr;
             const RGB* r = ToyBlocks::ramp(fl.type);
-            if (size > 0) f.rect((int)x - size / 2, (int)y - size / 2, size, size, C(r[tr == 0 ? 2 : 3]));
+            if (size > 0) f.rect(static_cast<int>(x) - size / 2, static_cast<int>(y) - size / 2, size, size, C(r[tr == 0 ? 2 : 3]));
         }
     }
     if (memoryT_ >= 0 && t - memoryT_ < 20) {
         for (int k = 0; k < 10; ++k) {
             float a = k * 0.628f + (t - memoryT_) * 0.25f, rr = 34 + (t - memoryT_);
-            int sx = kx + (int)(std::cos(a) * rr), sy = ky + 8 + (int)(std::sin(a) * rr * 0.4f);
+            int sx = kx + static_cast<int>(cos(a) * rr), sy = ky + 8 + static_cast<int>(sin(a) * rr * 0.4f);
             f.set(sx, sy, C(255, 255, 220)); f.set(sx - 1, sy, C(250, 222, 110)); f.set(sx + 1, sy, C(250, 222, 110));
             f.set(sx, sy - 1, C(250, 222, 110)); f.set(sx, sy + 1, C(250, 222, 110));
         }
     }
     if (memoryT_ >= 0 && t - memoryT_ < 26) {
         int m = t - memoryT_;
-        float u = std::max(0.0f, std::min(1.0f, (m - 4) / 10.0f));
-        int ix = 242 + (int)((34 - 242) * u), iy = 246 + (int)((236 - 246) * u) - (int)(std::sin(u * 3.14159f) * 70);
+        float u = max(0.0f, min(1.0f, (m - 4) / 10.0f));
+        int ix = 242 + static_cast<int>((34 - 242) * u), iy = 246 + static_cast<int>((236 - 246) * u) - static_cast<int>(sin(u * 3.14159f) * 70);
         int bounce = (m >= 14 && m < 18) ? (m % 2 ? 3 : 1) : 0;
         if (m >= 14) drawMemoryBook(f, 6, 226 - bounce);
         if (m < 15) {
@@ -560,7 +562,7 @@ void LakeRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
             int r = (m - 14) * 3 + 6;
             for (int k = 0; k < 8; ++k) {
                 float a = k * 0.785f;
-                int sx = 34 + (int)(std::cos(a) * r), sy = 242 + (int)(std::sin(a) * r * 0.7f);
+                int sx = 34 + static_cast<int>(cos(a) * r), sy = 242 + static_cast<int>(sin(a) * r * 0.7f);
                 f.set(sx, sy, C(255, 250, 200)); f.set(sx - 1, sy, C(250, 222, 110)); f.set(sx + 1, sy, C(250, 222, 110));
                 f.set(sx, sy - 1, C(250, 222, 110)); f.set(sx, sy + 1, C(250, 222, 110));
             }
@@ -577,23 +579,23 @@ void LakeRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         Font::center(f, "DINNER!", bx + 28, by + 11, C(150, 58, 70));
     }
     if (c >= FADE0) {
-        float k = std::min(1.0f, (c - FADE0 + 1) / 10.0f);
+        float k = min(1.0f, (c - FADE0 + 1) / 10.0f);
         for (auto& col : palette()) col = mix(col, RGB{ 0, 0, 0 }, k);
     }
 }
 void LakeRound::drawWindFx(Frame& f, int t) {
     float w = wind(t);
     if (w <= 0) return;
-    int n = (int)(18 * w);
+    int n = static_cast<int>(18 * w);
     for (int k = 0; k < n; ++k) {
         int y = 20 + (k * 37) % 200, x = (k * 97 + t * 14) % 520 - 20, len = 6 + k % 6;
         f.hline(x, x + len, y, C(236, 244, 250));
     }
     for (int k = 0; k < n / 2; ++k) {
-        int x = (k * 131 + t * 9) % 500 - 10, y = 40 + (k * 53 + (int)(std::sin(t * 0.5f + k) * 6)) % 160;
+        int x = (k * 131 + t * 9) % 500 - 10, y = 40 + (k * 53 + static_cast<int>(sin(t * 0.5f + k) * 6)) % 160;
         f.set(x, y, k % 3 ? C(86, 158, 72) : C(244, 170, 186)); f.set(x + 1, y + (k % 2), k % 3 ? C(132, 194, 92) : C(250, 210, 220));
     }
-    for (int k = 0; k < (int)(10 * w); ++k) {
+    for (int k = 0; k < static_cast<int>(10 * w); ++k) {
         int x = 324 + (k * 41 + t * 3) % 96, y = 80 + (k * 29) % 120;
         f.hline(x, x + 2, y, C(250, 252, 255)); f.set(x + 1, y - 1, C(250, 252, 255));
     }

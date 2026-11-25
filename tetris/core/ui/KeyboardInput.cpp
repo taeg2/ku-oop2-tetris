@@ -1,5 +1,6 @@
 #include "ui/KeyboardInput.h"
 #include <stdexcept>
+using namespace std;
 
 namespace {
 const int kEnter = 13;
@@ -13,7 +14,7 @@ bool KeyboardInput::hasCommand() const {
 
 Command KeyboardInput::peekCommand() const {
     if (m_commands.empty()) {
-        throw std::logic_error("KeyboardInput::peekCommand: 대기 중인 명령이 없습니다");
+        throw logic_error("KeyboardInput::peekCommand: 대기 중인 명령이 없습니다");
     }
     return m_commands.front();
 }

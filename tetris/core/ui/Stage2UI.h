@@ -30,7 +30,7 @@ inline void idItem(Frame& f, int x, int y, int) {
 
 inline void pills(Frame& f, int t) {
     uint8_t ol = C(42, 26, 28);
-    struct P { RGB a, b, lit; const char* key; };
+    class P { public: RGB a, b, lit; const char* key; };
     const P ps[2] = { { {70, 130, 230}, {40, 88, 186}, {170, 210, 255}, "1" }, { {226, 70, 70}, {168, 40, 48}, {255, 170, 160}, "2" } };
     for (int k = 0; k < 2; ++k) {
         int x = 28, y = 132 + k * 26;

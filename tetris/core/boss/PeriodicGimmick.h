@@ -8,7 +8,7 @@ public:
     PeriodicGimmick(int intervalMs, int warningMs);
 
     void onActivate(PlayContext& ctx) override;
-    void onTick(PlayContext& ctx, int dtMs) final;
+    void onTick(PlayContext& ctx, int dtMs) override;  // 자식은 다시 재정의하지 않는다
 
 protected:
     virtual void trigger(PlayContext& ctx) = 0;

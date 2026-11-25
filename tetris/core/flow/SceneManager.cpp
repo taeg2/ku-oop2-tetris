@@ -1,6 +1,7 @@
 #include "flow/SceneManager.h"
+using namespace std;
 
-void SceneManager::change(std::unique_ptr<Scene> next) {
+void SceneManager::change(unique_ptr<Scene> next) {
     m_current = std::move(next);
     ++m_changeCount;
     if (m_current) {
@@ -9,7 +10,7 @@ void SceneManager::change(std::unique_ptr<Scene> next) {
     applyRequests();  // onEnter()에서 바로 전환을 요청했을 수도 있다
 }
 
-void SceneManager::request(std::unique_ptr<Scene> next) {
+void SceneManager::request(unique_ptr<Scene> next) {
     m_pending = std::move(next);
 }
 

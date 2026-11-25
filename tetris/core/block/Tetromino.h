@@ -4,13 +4,14 @@
 #include "medicine/PillType.h"
 #include "common/Point.h"
 #include "block/TetrominoType.h"
+using namespace std;
 
 // 떨어지는 블록 하나. 값 타입이라 이동, 회전, 변신은 모두 "새 블록을 돌려주는" 방식이다.
 //     그래서 충돌 검사 전에 원본을 망가뜨리지 않는다.
 class Tetromino {
 public:
     inline static const int kCellCount = 4;
-    using Cells = std::array<Point, kCellCount>;
+    using Cells = array<Point, kCellCount>;
 
     explicit Tetromino(TetrominoType type = TetrominoType::T);
     Tetromino(TetrominoType type, Point position);

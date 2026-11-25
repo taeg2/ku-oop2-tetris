@@ -1,6 +1,8 @@
 #pragma once
 #include "ui/RoundScene.h"
 #include <deque>
+using namespace std;
+
 // Stage 3 보스 라운드. 1부(10줄): 집 안 작업실에서 뛰어다니는 바쁜 어른. 돈이 나가고, 마감, 야근, 청구서가 아래 두 줄을 쓸어 간다
 // 2부(15줄): 거실 소파에 앉은 노인. 안개, 잊힌 줄, TV 잡음, 흔들림이 오고, 마지막에 딸이 약과 물을 가져다주면 화면이 어두워지고 대화가 나온다
 class FadingRound : public RoundScene {
@@ -9,7 +11,7 @@ public:
     int goal() const override { return 25; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override { return endT_ >= 0 && last_ - endT_ >= END; }
     bool playing(int t) const override { return endT_ < 0 && !(laterT_ >= 0 && t - laterT_ < LATER); }
 protected:
@@ -22,7 +24,7 @@ private:
     static const int PART1 = 10, POP = 20, SWEEP = 18, FAST = 20, LATER = 50, THINK = 30, EV = 26;
     enum Event { NONE, FASTER, BILLS, YEARS, DEADLINE, OVERTIME, FORGOT, BLUR, STATIC };
     static const int WALK_IN = 30, OFFER = 46, DRINK = 62, PHOTO = 70, BLACK = 96, TALK1 = 104, TALK2 = 130, TALK3 = 156, END = 196;
-    std::deque<int> queue_;
+    deque<int> queue_;
     int cur_ = 0, curT_ = -1, last_ = 0, endT_ = -1, lines_ = 0, shown_ = 0, laterT_ = -1, sweepT_ = -100, fastT_ = -100, money_ = 5000, evT_ = -100;
     Event ev_ = NONE;
     enum Act { WANDER, ALERT, RUN, WORK, PHONE };
@@ -39,7 +41,7 @@ private:
     int dur() const { return ev_ == BLUR || ev_ == STATIC ? 44 : EV; }
     bool on(Event k, int t) const { return ev_ == k && t - evT_ >= 0 && t - evT_ < dur(); }
     float forgotten(int t) const;
-    std::vector<RGB> frozen_;
+    vector<RGB> frozen_;
     int frozenT_ = -1000;
     void drawOffice(Frame& f, int t);
     void drawLiving(Frame& f, int t);

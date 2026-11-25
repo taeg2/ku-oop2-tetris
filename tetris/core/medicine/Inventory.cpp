@@ -1,4 +1,5 @@
 #include "medicine/Inventory.h"
+using namespace std;
 
 Inventory::Inventory(int limitPerType) : m_limit(limitPerType) {}
 
@@ -16,7 +17,7 @@ void Inventory::add(PillType type) {
     add(Pill::create(type));
 }
 
-void Inventory::add(std::unique_ptr<Pill> pill) {
+void Inventory::add(unique_ptr<Pill> pill) {
     if (pill && canAdd(pill->type())) {
         m_slots[pill->type()].push_back(std::move(pill));
     }
@@ -32,7 +33,7 @@ void Inventory::use(PillType type, PlayContext& ctx) {
         return;
     }
     auto& slot = m_slots[type];
-    std::unique_ptr<Pill> taken = std::move(slot.back());
+    unique_ptr<Pill> taken = std::move(slot.back());
     slot.pop_back();
     taken->use(ctx, *this);
 }

@@ -71,6 +71,7 @@ Tetromino Tetromino::morphed(TetrominoType type) const {
 
 Tetromino Tetromino::withPill(PillType pill, int cellIndex) const {
     Tetromino copy = *this;
+    copy.m_hasPill = true;
     copy.m_pill = pill;
     copy.m_pillIndex = cellIndex % kCellCount;
     return copy;

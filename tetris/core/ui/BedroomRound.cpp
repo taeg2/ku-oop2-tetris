@@ -24,7 +24,7 @@ const int COCOON_X = 215, COCOON_Y = 150;
 float clamp01(float v) { return std::max(0.0f, std::min(1.0f, v)); }
 float ease(float t) { t = clamp01(t); return 0.5f - 0.5f * std::cos(PI * t); }
 float lerp(float a, float b, float u) { return a + (b - a) * u; }
-int rr(float v) { return (int)std::lround(v); }
+int rr(float v) { return static_cast<int>(std::lround(v)); }
 float hash01(unsigned a) { a = a * 2654435761u ^ (a >> 13); a *= 0x5bd1e995u; a ^= a >> 15; return (a & 0xFFFF) / 65535.0f; }
 bool inPoly(const float (*p)[2], int n, float x, float y) {
     bool in = false;
@@ -33,8 +33,8 @@ bool inPoly(const float (*p)[2], int n, float x, float y) {
     return in;
 }
 void disc(Frame& f, float cx, float cy, float r, uint8_t c) {
-    for (int y = (int)std::floor(cy - r); y <= (int)std::ceil(cy + r); ++y)
-        for (int x = (int)std::floor(cx - r); x <= (int)std::ceil(cx + r); ++x) {
+    for (int y = static_cast<int>(std::floor(cy - r)); y <= static_cast<int>(std::ceil(cy + r)); ++y)
+        for (int x = static_cast<int>(std::floor(cx - r)); x <= static_cast<int>(std::ceil(cx + r)); ++x) {
             float dx = x - cx, dy = y - cy;
             if (dx * dx + dy * dy <= r * r + 0.25f) f.set(x, y, c);
         }
@@ -133,9 +133,9 @@ void blitFrame(Frame& f, const Sprite& sp, int fw, int k, int x, int y, int clip
                 int lx = px - mx, ly = py - my;
                 if (lx < 0 || ly < 0 || lx >= mfw || ly >= mask->h || mask->rows[ly][mk * mfw + lx] != mch) continue;
             }
-            int& l = lut[(int)ch & 127];
-            if (l == -2) l = sp.has[(int)ch & 127] ? C(sp.key[(int)ch & 127]) : -1;
-            if (l >= 0) f.set(px, py, (uint8_t)l);
+            int& l = lut[static_cast<int>(ch) & 127];
+            if (l == -2) l = sp.has[static_cast<int>(ch) & 127] ? C(sp.key[static_cast<int>(ch) & 127]) : -1;
+            if (l >= 0) f.set(px, py, static_cast<uint8_t>(l));
         }
     }
 }
@@ -163,7 +163,7 @@ void BedroomRound::drawRoom(Frame& fr) {
         int y0 = floorTop(x);
         for (int y = y0; y < 270; ++y) {
             float u = (x - 238) * 146.0f / (y - 20) / 22.0f;
-            int b = (int)std::floor(u);
+            int b = static_cast<int>(std::floor(u));
             uint8_t c = (b & 1) ? fl : fl2;
             if (u - b < 0.07f) c = seam;
             fr.set(x, y, c);
@@ -211,10 +211,10 @@ void BedroomRound::drawWindow(Frame& fr, int pf, int ee) {
         }
     }
     if (pf >= L0 && !(ee >= GOO_DRY + 12)) {
-        unsigned h = (unsigned)pf * 2654435761u;
+        unsigned h = static_cast<unsigned>(pf) * 2654435761u;
         for (int k = 0; k < 22; ++k) {
-            h = h * 1103515245u + 12345u; int x = 14 + (int)((h >> 8) % 77);
-            h = h * 1103515245u + 12345u; int y = 26 + (int)((h >> 8) % 86);
+            h = h * 1103515245u + 12345u; int x = 14 + static_cast<int>((h >> 8) % 77);
+            h = h * 1103515245u + 12345u; int y = 26 + static_cast<int>((h >> 8) % 86);
             for (int i = 0; i < 5; ++i) if (inPoly(GL, 4, x - i / 2, y + i)) fr.set(x - i / 2, y + i, C(90, 100, 150));
         }
     }
@@ -394,7 +394,7 @@ void BedroomRound::drawToys(Frame& fr) {
     static const RGB B[3] = { {220, 70, 70}, {70, 120, 210}, {240, 200, 70} };
     for (int k = 0; k < 3; ++k) {
         int x = 92 + k * 9, y = 250;
-        fr.rect(x, y, 9, 9, C(OUT)); fr.rect(x + 1, y + 1, 7, 7, C(B[k])); text(fr, std::string(1, (char)('A' + k)), x + 3, y + 2, C(255, 255, 255));
+        fr.rect(x, y, 9, 9, C(OUT)); fr.rect(x + 1, y + 1, 7, 7, C(B[k])); text(fr, std::string(1, static_cast<char>('A' + k)), x + 3, y + 2, C(255, 255, 255));
     }
     disc(fr, 126, 255, 4, C(OUT)); disc(fr, 126, 255, 3, C(230, 90, 90)); fr.hline(123, 129, 255, C(250, 250, 250));
     fr.rect(134, 251, 16, 6, C(OUT)); fr.rect(135, 252, 14, 4, C(80, 160, 90)); disc(fr, 138, 258, 2, C(OUT)); disc(fr, 146, 258, 2, C(OUT));
@@ -457,7 +457,7 @@ void BedroomRound::drawBoardGoo(Frame& fr, int t) {
 void BedroomRound::drawStains(Frame& fr, int t) {
     for (auto& s : stains_) {
         float age = (t - s.born) / 70.0f;
-        int keep = age > 0.75f ? (int)(16 * (1 - (age - 0.75f) * 4)) : 16;
+        int keep = age > 0.75f ? static_cast<int>(16 * (1 - (age - 0.75f) * 4)) : 16;
         uint8_t c = C(20, 10, 30), sp = C(70, 40, 90), paw = C(60, 30, 70);
         float mx = 0, my = 0;
         for (auto& q : s.cells) {
@@ -476,10 +476,10 @@ void BedroomRound::drawStains(Frame& fr, int t) {
 }
 void BedroomRound::drawTentacle(Frame& fr, float bx, float by, float tx, float ty, int t, float w0, float w1, float curl, int seed) {
     const int n = 26;
-    float ph = hash01((unsigned)seed * 7 + 3) * 6.28f;
+    float ph = hash01(static_cast<unsigned>(seed) * 7 + 3) * 6.28f;
     std::vector<std::pair<float, float>> pts;
     for (int i = 0; i <= n; ++i) {
-        float k = (float)i / n, x = bx + (tx - bx) * k, y = by + (ty - by) * k;
+        float k = static_cast<float>(i) / n, x = bx + (tx - bx) * k, y = by + (ty - by) * k;
         float nx = -(ty - by), ny = (tx - bx), L = std::hypot(nx, ny); if (L == 0) L = 1;
         float wav = std::sin(k * 5 + t * 0.35f + ph) * 6 * k;
         pts.push_back({ x + nx / L * wav, y + ny / L * wav });
@@ -489,11 +489,11 @@ void BedroomRound::drawTentacle(Frame& fr, float bx, float by, float tx, float t
         for (int j = 1; j < 6; ++j) { float a = j * 0.6f * curl; pts.push_back({ lx + std::sin(a) * 4, ly - std::cos(a) * 4 + 4 }); }
     }
     uint8_t g0 = C(GOO0), g2 = C(GOO2), g3 = C(GOO3), suck = C(96, 64, 110);
-    for (size_t i = 0; i < pts.size(); ++i) disc(fr, pts[i].first, pts[i].second, (w0 + (w1 - w0) * std::min(1.0f, (float)i / n)) / 2, g0);
+    for (size_t i = 0; i < pts.size(); ++i) disc(fr, pts[i].first, pts[i].second, (w0 + (w1 - w0) * std::min(1.0f, static_cast<float>(i) / n)) / 2, g0);
     for (size_t i = 0; i < pts.size(); ++i) {
-        float r = (w0 + (w1 - w0) * std::min(1.0f, (float)i / n)) / 2, x = pts[i].first, y = pts[i].second;
+        float r = (w0 + (w1 - w0) * std::min(1.0f, static_cast<float>(i) / n)) / 2, x = pts[i].first, y = pts[i].second;
         if (r > 1.4f) fr.set(rr(x - r * 0.5f), rr(y - r * 0.8f), i % 3 == 0 ? g3 : g2);
-        if (i % 3 == 1 && r > 1.8f && (int)i < n) fr.set(rr(x + r * 0.5f), rr(y + r * 0.6f), suck);
+        if (i % 3 == 1 && r > 1.8f && static_cast<int>(i) < n) fr.set(rr(x + r * 0.5f), rr(y + r * 0.6f), suck);
     }
 }
 void BedroomRound::drawTentacles(Frame& fr, int t) {
@@ -503,7 +503,7 @@ void BedroomRound::drawTentacles(Frame& fr, int t) {
     if (snatchT_ >= 0) {
         int g = t - snatchT_;
         prog = g < 7 ? ease(g / 5.0f) : 1 - ease((g - 7) / 6.0f);
-        gx = (float)(pieceX_ + 8); gy = (float)(std::max(pieceY_, BY + 44) + 8);
+        gx = static_cast<float>(pieceX_ + 8); gy = static_cast<float>(std::max(pieceY_, BY + 44) + 8);
     }
     float tfx = CHEST[6][0], tfy = CHEST[6][1], tgx = CHEST[7][0], tgy = CHEST[7][1];
     for (int j = 0; j < 4; ++j) {
@@ -525,9 +525,9 @@ void BedroomRound::drawMist(Frame& fr, int t, float k) {
             float life = std::fmod(t * 0.6f + j * 7 + a * 20, 40.0f) / 40.0f;
             float x = SRC[si][0] + (b - 0.5f) * SRC[si][2] + std::sin(life * 6 + j) * 6 + life * dir * 18;
             float y = SRC[si][1] - life * 18 + d * 4, r = 3 + life * 8;
-            int keep = (int)(130 * (1 - life) * k / 255.0f * 16);
-            for (int py = (int)(y - r * 0.6f); py <= (int)(y + r * 0.6f); ++py)
-                for (int px = (int)(x - r); px <= (int)(x + r); ++px) {
+            int keep = static_cast<int>(130 * (1 - life) * k / 255.0f * 16);
+            for (int py = static_cast<int>(y - r * 0.6f); py <= static_cast<int>(y + r * 0.6f); ++py)
+                for (int px = static_cast<int>(x - r); px <= static_cast<int>(x + r); ++px) {
                     float u = (px - x) / r, v = (py - y) / (r * 0.6f);
                     if (u * u + v * v <= 1 && BAYER[py & 3][px & 3] < keep) fr.set(px, py, m);
                 }
@@ -575,8 +575,8 @@ void BedroomRound::drawIntro(Frame& fr, int pf) {
     }
     if (pf >= GOO1_0 && pf < JB + 2) {
         static const float PATH[4][2] = { {300,123}, {276,130}, {240,136}, {206,142} };
-        float u = clamp01((float)(pf - GOO1_0) / (GOO1_1 - GOO1_0)) * 3;
-        int i = std::min(2, (int)u); float k = u - i;
+        float u = clamp01(static_cast<float>(pf - GOO1_0) / (GOO1_1 - GOO1_0)) * 3;
+        int i = std::min(2, static_cast<int>(u)); float k = u - i;
         float x = lerp(PATH[i][0], PATH[i + 1][0], k), y = lerp(PATH[i][1], PATH[i + 1][1], k);
         if (pf >= GOO1_1) { float j = (pf - GOO1_1) / 4.0f; x = lerp(206, 140, j); y = lerp(142, 64, j) - std::sin(j * PI) * 20; }
         for (int s = 0; s < 5; ++s) disc(fr, x + s * 5, y + (pf >= GOO1_1 ? 0 : 1), 3.5f - s * 0.5f, g0);
@@ -585,7 +585,7 @@ void BedroomRound::drawIntro(Frame& fr, int pf) {
     if (pf >= WG0 && pf < S0) {
         static const float PATH[4][2] = { {30,112}, {52,110}, {70,107}, {84,105} };
         float x, y;
-        if (pf < GOO2_1) { float u = (float)(pf - WG0) / (GOO2_1 - WG0) * 3; int i = std::min(2, (int)u); float k = u - i; x = lerp(PATH[i][0], PATH[i + 1][0], k); y = lerp(PATH[i][1], PATH[i + 1][1], k); }
+        if (pf < GOO2_1) { float u = static_cast<float>(pf - WG0) / (GOO2_1 - WG0) * 3; int i = std::min(2, static_cast<int>(u)); float k = u - i; x = lerp(PATH[i][0], PATH[i + 1][0], k); y = lerp(PATH[i][1], PATH[i + 1][1], k); }
         else { float j = (pf - GOO2_1) / 7.0f; x = lerp(84, 136, j); y = lerp(105, 80, j) - std::sin(j * PI) * 16; }
         for (int s = 0; s < 6; ++s) disc(fr, x - s * 5, y + s * 0.3f, 4.5f - s * 0.6f, g0);
         fr.set(rr(x) + 1, rr(y) - 2, C(200, 30, 40)); fr.set(rr(x) + 3, rr(y) - 2, C(200, 30, 40));
@@ -604,18 +604,18 @@ void BedroomRound::drawEnding(Frame& fr, int t) {
     if (ee < CRAWL1 || ee >= ALL_GONE) return;
     auto kid = [&](const Sprite& sp, int k, float x, float y, int clipY = 100000) { blitFrame(fr, sp, 32, k, rr(x) - 16, rr(y) - 44, clipY); };
     if (ee < RISE1) {
-        float u = ease((ee - CRAWL1 + 1) / (float)(RISE1 - CRAWL1));
+        float u = ease((ee - CRAWL1 + 1) / static_cast<float>(RISE1 - CRAWL1));
         kid(BedroomArt::PJ_WALK, 0, 240, 182 + (1 - u) * 36, 182);
     } else if (ee < HOP1) {
         int h = ee - RISE1;
         if (h < 2) kid(BedroomArt::PJ_WALK, 0, 240, 184);
-        else { float u = (h - 2) / (float)(HOP1 - RISE1 - 2); kid(BedroomArt::PJ_WALK, 0, lerp(240, 256, u), lerp(182, 163, u) - std::sin(u * PI) * 16); }
+        else { float u = (h - 2) / static_cast<float>(HOP1 - RISE1 - 2); kid(BedroomArt::PJ_WALK, 0, lerp(240, 256, u), lerp(182, 163, u) - std::sin(u * PI) * 16); }
     } else if (ee < LOOK1) kid(BedroomArt::PJ_TURN, ee < HOP1 + 1 ? 2 : 0, 256, ee == HOP1 ? 165 : 163);
     else if (ee < KID_WALK0) kid(BedroomArt::PJ_TURN, 1, 256, 163);
     else {
         float x, y; int w = ee - KID_WALK0;
         static const float PATH[3][2] = { {256, 163}, {278, 166}, {300, FLOOR_Y + 3} };
-        float L0p = 22.2f, L1p = 46.0f, d = std::min(L0p + L1p, (float)w * (L0p + L1p) / (KID_DOOR - KID_WALK0));
+        float L0p = 22.2f, L1p = 46.0f, d = std::min(L0p + L1p, static_cast<float>(w) * (L0p + L1p) / (KID_DOOR - KID_WALK0));
         if (d < L0p) { float u = d / L0p; x = lerp(PATH[0][0], PATH[1][0], u); y = lerp(PATH[0][1], PATH[1][1], u); }
         else { float u = (d - L0p) / L1p; x = lerp(PATH[1][0], PATH[2][0], u); y = lerp(PATH[1][1], PATH[2][1], u); }
         bool moving = ee < KID_DOOR;
@@ -649,13 +649,13 @@ void BedroomRound::drawForeground(Frame& fr, const PlayStateReader&, int t) {
         for (int side = -1; side <= 1; side += 2)
             for (int j = 0; j < 3; ++j) {
                 float tq = 0.25f + j * 0.28f;
-                float fx = (float)(side < 0 ? BED_FL[0] : BED_FR[0]), hx = (float)(side < 0 ? BED_HL[0] : BED_HR[0]);
+                float fx = static_cast<float>(side < 0 ? BED_FL[0] : BED_FR[0]), hx = static_cast<float>(side < 0 ? BED_HL[0] : BED_HR[0]);
                 float y = BED_FL[1] + (BED_HL[1] - BED_FL[1]) * tq, x = fx + (hx - fx) * tq + side * 2, L = (28 + j * 8) * tk;
                 drawTentacle(fr, x, y + 3, x + side * L, y + 8 + j * 3 + std::sin(t * 0.3f + j) * 5, t, 9, 2, 1.0f, j + (side > 0 ? 10 : 0));
             }
         if (snatchT_ >= 0 && snatchSrc_ == 1) {
             int g = t - snatchT_;
-            float prog = g < 7 ? ease(g / 5.0f) : 1 - ease((g - 7) / 6.0f), gx = (float)(pieceX_ + 8), gy = (float)(std::max(pieceY_, BY + 44) + 8);
+            float prog = g < 7 ? ease(g / 5.0f) : 1 - ease((g - 7) / 6.0f), gx = static_cast<float>(pieceX_ + 8), gy = static_cast<float>(std::max(pieceY_, BY + 44) + 8);
             float bx = BED_FL[0] + (BED_HL[0] - BED_FL[0]) * 0.4f, by = BED_FL[1] + (BED_HL[1] - BED_FL[1]) * 0.4f;
             drawTentacle(fr, bx, by, bx + (gx - bx) * prog, by + (gy - by) * prog, t, 8, 3, prog > 0.9f ? 1.0f : 0.3f, 77);
         }
@@ -706,10 +706,10 @@ void BedroomRound::reset() {
     eyeT_ = closT_ = chestT_ = endT_ = -1;
     stains_.clear(); nextStainT_ = snatchT_ = nextSnatchT_ = -1;
 }
-void BedroomRound::specialEvent(int t) { if (chestT_ >= 0 && snatchT_ < 0 && endT_ < 0) { snatchT_ = t; snatchSrc_ = (int)(rnd() % 2); } }
+void BedroomRound::specialEvent(int t) { if (chestT_ >= 0 && snatchT_ < 0 && endT_ < 0) { snatchT_ = t; snatchSrc_ = static_cast<int>(rnd() % 2); } }
 void BedroomRound::onLinesCleared(const std::vector<int>& rows, int totalLines, int t) {
     lines_ = std::min(20, totalLines);
-    clearT_ = t; clearN_ = std::max(1, (int)rows.size());
+    clearT_ = t; clearN_ = std::max(1, static_cast<int>(rows.size()));
     if (lines_ >= 3 && eyeT_ < 0) eyeT_ = t;
     if (lines_ >= 7 && closT_ < 0) closT_ = t;
     if (lines_ >= 9 && chestT_ < 0) chestT_ = t;
@@ -720,8 +720,8 @@ void BedroomRound::track(const PlayStateReader& g, int t) {
     if (chestT_ >= 0 && !ending && playing(t)) {
         if (nextSnatchT_ < 0) nextSnatchT_ = chestT_ + 20;
         if (snatchT_ < 0 && t >= nextSnatchT_ && !g.clearing()) {
-            snatchT_ = t; snatchSrc_ = (int)(rnd() % 2);
-            nextSnatchT_ = t + std::max(24, 70 - lines_ * 2) + (int)(rnd() % 30);
+            snatchT_ = t; snatchSrc_ = static_cast<int>(rnd() % 2);
+            nextSnatchT_ = t + std::max(24, 70 - lines_ * 2) + static_cast<int>(rnd() % 30);
         }
     }
     if (snatchT_ >= 0 && t - snatchT_ >= 14) snatchT_ = -1;

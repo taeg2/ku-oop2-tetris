@@ -1,6 +1,5 @@
 #pragma once
 #include <deque>
-#include <optional>
 #include "ui/IInputSource.h"
 
 // 키보드 입력의 공통 부분: 명령 대기열과 "키 -> 명령" 변환표.
@@ -19,7 +18,7 @@ protected:
     void pushEscape();
 
 private:
-    static std::optional<Command> translate(int key);
+    static bool translate(int key, Command& command);  // 명령이 있는 키면 command를 채우고 true
 
     std::deque<Command> m_commands;
 };

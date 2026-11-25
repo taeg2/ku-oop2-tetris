@@ -6,7 +6,7 @@
 #include <cmath>
 static const RGB OL{ 40, 30, 36 };
 static const int SIT_X = 380, SIT_Y = 238;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 static const Sprite HEAD_SIDE("uni student head, facing right", {
 "....HHHHHH......",
 "...HHHHHHHH.....",
@@ -159,11 +159,11 @@ static void shade(Frame& f, int x0, int y0, int x1, int y1, int level) {
             if (lit) map[c] = c;
             else {
                 float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f;
-                int q = std::min(7, (int)(lum * 8));
+                int q = std::min(7, static_cast<int>(lum * 8));
                 map[c] = C(mix(lo[l], hi[l], q / 7.0f));
             }
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 void UniRound::reset() { queue_.clear(); curT_ = -1; last_ = 0; gradT_ = -1; lines_ = 0; shown_ = 0; season_ = 0; cups_ = 0; nightT_ = -1000; nightLine_ = 0; lineT_ = 0; }
@@ -456,7 +456,7 @@ void UniRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (gradT_ >= 0) {
         int a = t - gradT_;
         if (a >= WHITE_OUT && a < WHITE_IN + 10) {
-            float k = a < WHITE_IN ? (a - WHITE_OUT + 1) / (float)(WHITE_IN - WHITE_OUT) : 1 - (a - WHITE_IN) / 10.0f;
+            float k = a < WHITE_IN ? (a - WHITE_OUT + 1) / static_cast<float>(WHITE_IN - WHITE_OUT) : 1 - (a - WHITE_IN) / 10.0f;
             k = std::max(0.0f, std::min(1.0f, k));
             for (auto& c : palette()) c = mix(c, RGB{ 255, 255, 255 }, k);
         }
@@ -488,9 +488,9 @@ void UniRound::nightLamp(Frame& f, const PlayStateReader& g) {
         if (map[c] < 0) {
             RGB v = palette()[c];
             float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f;
-            map[c] = C(mix(RGB{ 6, 8, 20 }, RGB{ 46, 52, 90 }, std::min(7, (int)(lum * 8)) / 7.0f));
+            map[c] = C(mix(RGB{ 6, 8, 20 }, RGB{ 46, 52, 90 }, std::min(7, static_cast<int>(lum * 8)) / 7.0f));
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 void UniRound::petalGust(Frame& f, int t) {
@@ -500,7 +500,7 @@ void UniRound::petalGust(Frame& f, int t) {
     uint8_t p0 = C(s.leaf), p1 = C(s.leafL), p2 = C(s.leafD);
     int bx = boardX(), by = boardY();
     float k = a < 6 ? a / 6.0f : a > 28 ? (36 - a) / 8.0f : 1.0f;
-    int n = (int)(220 * k);
+    int n = static_cast<int>(220 * k);
     for (int i = 0; i < n; ++i) {
         int x = bx - 10 + (i * 37 + a * (5 + i % 3)) % 100, y = by + (i * 53 + rnd(std::sin((a + i) * 0.4f) * 5)) % 160;
         if (x < bx || x > bx + 78) continue;
@@ -520,8 +520,8 @@ void UniRound::sunGlare(Frame& f, int t) {
         if (d2 > (r + 4) * (r + 4)) continue;
         if (d2 > r * r && (x + y) % 2) continue;
         uint8_t c = f.get(x, y);
-        if (map[c] < 0) { RGB v = palette()[c]; float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f; map[c] = C(mix(RGB{ 236, 230, 200 }, RGB{ 255, 254, 244 }, std::min(3, (int)(lum * 4)) / 3.0f)); }
-        f.set(x, y, (uint8_t)map[c]);
+        if (map[c] < 0) { RGB v = palette()[c]; float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f; map[c] = C(mix(RGB{ 236, 230, 200 }, RGB{ 255, 254, 244 }, std::min(3, static_cast<int>(lum * 4)) / 3.0f)); }
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
     if (a < 10) Font::center(f, "GLARE", bx + 40, by - 18, C(255, 240, 170), C(OL));
 }
@@ -532,9 +532,9 @@ void UniRound::frost(Frame& f, int t) {
     for (int y = by; y < by + 160; ++y) for (int x = bx; x < bx + 80; ++x) {
         int e = std::min({ x - bx, bx + 79 - x, (y - by) * 2 });
         if (e >= w) continue;
-        unsigned hsh = ((unsigned)x * 73856093u) ^ ((unsigned)y * 19349663u);
+        unsigned hsh = (static_cast<unsigned>(x) * 73856093u) ^ (static_cast<unsigned>(y) * 19349663u);
         int dens = 100 - e * 100 / w;
-        if ((int)(hsh % 100) < dens) f.set(x, y, hsh % 7 == 0 ? f2 : hsh % 3 ? f0 : f1);
+        if (static_cast<int>(hsh % 100) < dens) f.set(x, y, hsh % 7 == 0 ? f2 : hsh % 3 ? f0 : f1);
     }
     if (w == 26 && (t / 5) % 2) Font::center(f, "FROST", bx + 40, by - 18, C(220, 236, 255), C(OL));
 }
@@ -574,9 +574,9 @@ void UniRound::drawHall(Frame& f, int t) {
     static const RGB flag[4] = { {240, 96, 80}, {250, 210, 90}, {110, 170, 240}, {120, 200, 120} };
     for (int side = 0; side < 2; ++side) {
         int x0 = side ? 318 : 0, x1 = side ? 480 : 186;
-        for (int x = x0; x < x1; x += 2) f.set(x, 30 + (int)(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), ol);
+        for (int x = x0; x < x1; x += 2) f.set(x, 30 + static_cast<int>(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), ol);
         for (int x = x0 + 6, k = 0; x < x1 - 6; x += 12, ++k) {
-            int y = 30 + (int)(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), sway = (t / 4 + k) % 2;
+            int y = 30 + static_cast<int>(std::sin((x - x0) * 3.1416f / (x1 - x0)) * 8), sway = (t / 4 + k) % 2;
             f.poly({ {x - 4, y}, {x + 4, y}, {x + sway, y + 9} }, ol); f.poly({ {x - 3, y + 1}, {x + 3, y + 1}, {x + sway, y + 7} }, C(flag[k % 4]));
         }
     }
@@ -603,12 +603,12 @@ void UniRound::drawCeremony(Frame& f, int t) {
         for (int k = 0; k < 16; ++k) {
             int y0 = k < 8 ? 114 : k < 14 ? 160 : 210;
             float v = 9.0f + (k % 3), g = 0.3f;
-            int y = y0 - (int)(v * a - g * a * a), x = sx[k] + (k % 2 ? 1 : -1) * a / 2;
+            int y = y0 - static_cast<int>(v * a - g * a * a), x = sx[k] + (k % 2 ? 1 : -1) * a / 2;
             if (y > -10 && y < 270) flyingCap(f, x, y, a / 2 + k);
         }
         static const RGB cc[4] = { {240, 96, 80}, {250, 220, 120}, {120, 180, 250}, {250, 250, 250} };
         for (int k = 0; k < 40; ++k) {
-            int cx = 190 + (k * 53 + (int)(std::sin((a + k) * 0.3f) * 6)) % 290, cy = (k * 29 + a * (2 + k % 3)) % 260;
+            int cx = 190 + (k * 53 + static_cast<int>(std::sin((a + k) * 0.3f) * 6)) % 290, cy = (k * 29 + a * (2 + k % 3)) % 260;
             f.rect(cx, cy, 2, 1 + (a + k) % 2, C(cc[k % 4]));
         }
     }

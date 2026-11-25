@@ -7,7 +7,7 @@
 #include <cmath>
 using namespace Stage3Art;
 static const int FLOOR_Y = 236, GROOM_X = 344, BRIDE_X = 388, ARCH_X = 366;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 static void ringItem(Frame& f, int x, int y, int t) {
     uint8_t ol = C(OLC), gold = C(240, 200, 90), goldD = C(196, 150, 50), gem = C(220, 240, 255);
     f.disc(x, y + 2, 6, ol); f.disc(x, y + 2, 5, gold); f.disc(x, y + 2, 3, ol); f.disc(x, y + 2, 2, C(255, 0, 255));
@@ -93,7 +93,7 @@ void WeddingRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     int e = endT_ >= 0 ? t - endT_ : -1;
     int bx = BRIDE_X + std::max(0, 3 - shown_) * 30;
     bool walking = curT_ >= 0 && t - curT_ < CHEER && shown_ <= 3 && e < 0;
-    if (walking) bx += rnd((1.0f - (t - curT_) / (float)CHEER) * 30);
+    if (walking) bx += rnd((1.0f - (t - curT_) / static_cast<float>(CHEER)) * 30);
     bool vows = shown_ >= 4 && shown_ < 7 && curT_ >= 0 && t - curT_ < CHEER;
     Arm ga = e >= 0 && e < KISS ? OUT : REST, ba = e >= 0 && e < KISS ? OUT : HOLD;
     Mood gm = e >= RINGS ? SMILE : vows ? TALK : shown_ >= 4 ? SMILE : CALM, bm = e >= 0 || shown_ >= 4 ? SMILE : CALM;
@@ -144,7 +144,7 @@ void WeddingRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (t - gustT_ >= 0 && t - gustT_ < GUST && endT_ < 0) {
         int a = t - gustT_;
         float k = a < 6 ? a / 6.0f : a > 22 ? (GUST - a) / 8.0f : 1.0f;
-        int n = (int)(240 * k);
+        int n = static_cast<int>(240 * k);
         for (int i = 0; i < n; ++i) {
             int x = bx - 10 + (i * 37 + a * (5 + i % 3)) % 100, y = by + (i * 53 + rnd(std::sin((a + i) * 0.4f) * 5)) % 160;
             if (x < bx || x > bx + 78) continue;

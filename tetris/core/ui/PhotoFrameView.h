@@ -10,8 +10,8 @@ public:
     void update(int dtMs) override;
     void draw(Console& console) const override;
 
-    static constexpr int kWidthColumns = 54;
-    static constexpr int kHeightRows = 19;
+    inline static const int kWidthColumns = 54;
+    inline static const int kHeightRows = 19;
 
     Point center() const;
 

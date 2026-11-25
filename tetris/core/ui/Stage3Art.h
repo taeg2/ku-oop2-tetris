@@ -96,7 +96,7 @@ inline void person(Frame& f, int cx, int floor, const Look& lk, bool flip, Pose 
 }
 inline void chair(Frame& f, int cx, int floor, bool flip, bool rocking, int t) {
     uint8_t ol = C(OLC), wood = C(170, 120, 80), woodD = C(130, 90, 60), woodL = C(200, 150, 100);
-    int d = flip ? -1 : 1, rock = rocking ? (int)std::lround(std::sin(t * 0.3f) * 2) : 0;
+    int d = flip ? -1 : 1, rock = rocking ? static_cast<int>(std::lround(std::sin(t * 0.3f) * 2)) : 0;
     int back = cx - 13 * d, front = cx + 8 * d, seat = floor - 17;
     auto vbar = [&](int x, int y0, int y1) { f.rect(x - 2, y0, 5, y1 - y0, ol); f.rect(x - 1, y0, 3, y1 - y0, wood); f.vline(x - 1, y0, y1 - 1, woodL); };
     vbar(back, seat - 34 + rock, floor - (rocking ? 4 : 0));
@@ -104,7 +104,7 @@ inline void chair(Frame& f, int cx, int floor, bool flip, bool rocking, int t) {
     int x0 = std::min(back, front) - 2, x1 = std::max(back, front) + 2;
     f.rect(x0, seat - 1, x1 - x0 + 1, 5, ol); f.rect(x0 + 1, seat, x1 - x0 - 1, 3, wood); f.hline(x0 + 1, x1 - 1, seat, woodL);
     f.rect(std::min(back, back + 6 * d) - 1, seat - 22 + rock, 8, 3, ol); f.hline(std::min(back, back + 6 * d), std::max(back, back + 6 * d), seat - 21 + rock, woodD);
-    if (rocking) for (int x = x0 - 6; x <= x1 + 6; ++x) { float u = (x - (x0 + x1) / 2.0f) / ((x1 - x0) / 2.0f + 6); int y = floor - 3 + (int)std::lround(u * u * 3) + (int)std::lround(u * rock); f.set(x, y, ol); f.set(x, y - 1, wood); }
+    if (rocking) for (int x = x0 - 6; x <= x1 + 6; ++x) { float u = (x - (x0 + x1) / 2.0f) / ((x1 - x0) / 2.0f + 6); int y = floor - 3 + static_cast<int>(std::lround(u * u * 3)) + static_cast<int>(std::lround(u * rock)); f.set(x, y, ol); f.set(x, y - 1, wood); }
 }
 inline void shade(Frame& f, int x0, int y0, int x1, int y1, int level) {
     if (level <= 0) return;
@@ -120,9 +120,9 @@ inline void shade(Frame& f, int x0, int y0, int x1, int y1, int level) {
             bool lit = false;
             for (auto& k : keep) if (k.r == v.r && k.g == v.g && k.b == v.b) lit = true;
             float lum = (v.r * 0.3f + v.g * 0.59f + v.b * 0.11f) / 255.0f;
-            map[c] = lit ? c : C(mix(lo[l], hi[l], std::min(7, (int)(lum * 8)) / 7.0f));
+            map[c] = lit ? c : C(mix(lo[l], hi[l], std::min(7, static_cast<int>(lum * 8)) / 7.0f));
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 inline void gray(Frame& f, int x0, int y0, int x1, int y1, float k) {
@@ -133,11 +133,11 @@ inline void gray(Frame& f, int x0, int y0, int x1, int y1, float k) {
         uint8_t c = f.get(x, y);
         if (map[c] < 0) {
             RGB v = palette()[c];
-            int lum = (int)(v.r * 0.3f + v.g * 0.59f + v.b * 0.11f);
+            int lum = static_cast<int>(v.r * 0.3f + v.g * 0.59f + v.b * 0.11f);
             lum = lum / 24 * 24 + 12;
             map[c] = C(mix(v, RGB{ lum, lum, lum }, std::min(1.0f, k)));
         }
-        f.set(x, y, (uint8_t)map[c]);
+        f.set(x, y, static_cast<uint8_t>(map[c]));
     }
 }
 inline void armchairBack(Frame& f, int cx, int floor, RGB c) {

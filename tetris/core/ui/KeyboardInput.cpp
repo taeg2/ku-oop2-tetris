@@ -2,9 +2,9 @@
 #include <stdexcept>
 
 namespace {
-constexpr int kEnter = 13;
-constexpr int kNewLine = 10;
-constexpr int kSpace = 32;
+const int kEnter = 13;
+const int kNewLine = 10;
+const int kSpace = 32;
 }  // namespace
 
 bool KeyboardInput::hasCommand() const {
@@ -25,8 +25,9 @@ void KeyboardInput::popCommand() {
 }
 
 void KeyboardInput::pushKey(int key) {
-    if (const auto command = translate(key)) {
-        m_commands.push_back(*command);
+    Command command = Command::Confirm;
+    if (translate(key, command)) {
+        m_commands.push_back(command);
     }
 }
 
@@ -43,17 +44,17 @@ void KeyboardInput::pushEscape() {
     m_commands.push_back(Command::Pause);
 }
 
-std::optional<Command> KeyboardInput::translate(int key) {
+bool KeyboardInput::translate(int key, Command& command) {
     switch (key) {
-        case kSpace: return Command::HardDrop;
-        case kEnter: case kNewLine: return Command::Confirm;
-        case '1': return Command::UseBluePill;
-        case '2': return Command::UseRedPill;
-        case 'q': case 'Q': return Command::Quit;
-        case 'a': case 'A': return Command::MoveLeft;
-        case 'd': case 'D': return Command::MoveRight;
-        case 'w': case 'W': return Command::Rotate;
-        case 's': case 'S': return Command::SoftDrop;
-        default: return std::nullopt;
+        case kSpace: command = Command::HardDrop; return true;
+        case kEnter: case kNewLine: command = Command::Confirm; return true;
+        case '1': command = Command::UseBluePill; return true;
+        case '2': command = Command::UseRedPill; return true;
+        case 'q': case 'Q': command = Command::Quit; return true;
+        case 'a': case 'A': command = Command::MoveLeft; return true;
+        case 'd': case 'D': command = Command::MoveRight; return true;
+        case 'w': case 'W': command = Command::Rotate; return true;
+        case 's': case 'S': command = Command::SoftDrop; return true;
+        default: return false;
     }
 }

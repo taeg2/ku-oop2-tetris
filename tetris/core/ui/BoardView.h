@@ -8,8 +8,8 @@ public:
     BoardView(Point origin, const StageSession& session);
     void draw(Console& console) const override;
 
-    static constexpr int kWidthColumns = (Board::kWidth + 2) * 2;
-    static constexpr int kHeightRows = Board::kHeight + 2;
+    inline static const int kWidthColumns = (Board::kWidth + 2) * 2;
+    inline static const int kHeightRows = Board::kHeight + 2;
 
 private:
     Point toScreen(Point cell) const;

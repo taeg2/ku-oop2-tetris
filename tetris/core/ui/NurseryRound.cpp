@@ -7,7 +7,7 @@
 #include <cmath>
 using namespace Stage3Art;
 static const int FLOOR_Y = 228, DAD_X = 336, CRIB_X = 438;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 static void drawingItem(Frame& f, int x, int y, int) {
     uint8_t ol = C(OLC), paper = C(252, 250, 240);
     f.rect(x - 10, y - 8, 21, 17, ol); f.rect(x - 9, y - 7, 19, 15, paper);

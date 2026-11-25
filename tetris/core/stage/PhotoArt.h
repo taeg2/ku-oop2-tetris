@@ -10,9 +10,9 @@
 //     4분할 조각마다 "무엇이 드러나는지" 설명과 앨범 문구도 함께 가진다. (기획안 4, 7장)
 class PhotoArt {
 public:
-    static constexpr int kWidth = 24;
-    static constexpr int kHeight = 16;
-    static constexpr int kPieceCount = 4;
+    inline static const int kWidth = 24;
+    inline static const int kHeight = 16;
+    inline static const int kPieceCount = 4;
 
     PhotoArt(std::string title, std::vector<std::string> pixels,
              std::array<std::string, kPieceCount> pieceCaptions, std::string albumCaption);

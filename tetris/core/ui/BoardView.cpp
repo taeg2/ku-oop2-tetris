@@ -61,8 +61,8 @@ void BoardView::drawPiece(Console& console, const Tetromino& piece, bool ghost) 
             if (!board.cellAt(cell).isFilled()) {
                 console.draw(pos, "[]", Color::DarkGray, Color::Black);
             }
-        } else if (piece.pill() && piece.pillCellIndex() == i) {
-            const Color pillColor = *piece.pill() == PillType::Blue ? Color::Blue : Color::Red;
+        } else if (piece.hasPill() && piece.pillCellIndex() == i) {
+            const Color pillColor = piece.pill() == PillType::Blue ? Color::Blue : Color::Red;
             console.draw(pos, "()", pillColor, Color::White);
         } else {
             console.draw(pos, "  ", piece.color(), piece.color());

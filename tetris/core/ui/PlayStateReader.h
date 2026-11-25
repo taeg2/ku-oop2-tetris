@@ -5,8 +5,8 @@
 // 게임에서는 SessionPlayState(StageSession), 앨범 미리보기에서는 EmptyPlayState를 쓴다
 class PlayStateReader {
 public:
-    static constexpr int kCols = 10;
-    static constexpr int kRows = 20;
+    inline static const int kCols = 10;
+    inline static const int kRows = 20;
     using Cells = std::vector<std::pair<int, int>>;
     virtual ~PlayStateReader() = default;
     virtual int at(int x, int y) const = 0;

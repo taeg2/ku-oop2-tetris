@@ -8,8 +8,8 @@ public:
     NextBlockView(Point origin, const StageSession& session);
     void draw(Console& console) const override;
 
-    static constexpr int kWidthColumns = 16;
-    static constexpr int kHeightRows = 6;
+    inline static const int kWidthColumns = 16;
+    inline static const int kHeightRows = 6;
 
 private:
     const StageSession& m_session;

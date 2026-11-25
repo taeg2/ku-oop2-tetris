@@ -8,7 +8,7 @@ public:
     HudView(Point origin, const StageSession& session);
     void draw(Console& console) const override;
 
-    static constexpr int kWidthColumns = 17;
+    inline static const int kWidthColumns = 17;
 
 private:
     void drawPills(Console& console, int y) const;

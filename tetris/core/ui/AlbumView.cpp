@@ -67,10 +67,10 @@ void AlbumView::render() const {
     std::fill(m_frame.px.begin(), m_frame.px.end(), 0);
     if (m_album.inDetail()) {
         int want = m_album.stage() * AlbumScreen::SLOTS + m_album.selected();
-        if (want < (int)m_previews.size() && m_previews[(std::size_t)want]) {
-            if (m_shown != want) { m_shown = want; m_previews[(std::size_t)want]->reset(); }
+        if (want < static_cast<int>(m_previews.size()) && m_previews[static_cast<std::size_t>(want)]) {
+            if (m_shown != want) { m_shown = want; m_previews[static_cast<std::size_t>(want)]->reset(); }
             std::fill(m_preview.px.begin(), m_preview.px.end(), 0);
-            m_previews[(std::size_t)want]->draw(m_preview, m_empty, 0, 40 + m_t % 400);
+            m_previews[static_cast<std::size_t>(want)]->draw(m_preview, m_empty, 0, 40 + m_t % 400);
             m_album.draw(m_frame, m_t, &m_preview);
             return;
         }

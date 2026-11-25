@@ -18,7 +18,7 @@ public:
     static void paint(Console& console, Point origin, const PhotoArt& photo, const Rect& pixelArea, PhotoTone tone);
     static void paintThumbnail(Console& console, Point origin, const PhotoArt& photo);  // 가로세로 절반 크기
 
-    static constexpr int widthInColumns(int pixels) { return pixels * 2; }
+    static int widthInColumns(int pixels) { return pixels * 2; }
 
 private:
     static Color toned(Color color, PhotoTone tone);

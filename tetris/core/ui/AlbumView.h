@@ -12,8 +12,8 @@
 // 스테이지를 다 깨면 스스로 페이지를 넘기고 stageFinished()가 true가 된다. 이후 PrologueView::start(새 stage)로 집 장면을 연다
 class AlbumView : public View {
 public:
-    static constexpr int kScale = 2;
-    static constexpr int kFrameMs = 100;
+    inline static const int kScale = 2;
+    inline static const int kFrameMs = 100;
     explicit AlbumView(Point origin);
     void open(int stage, int clearedRound);  // clearedRound: 방금 깬 라운드 번호, 처음 열 때는 -1
     void handle(Command command);

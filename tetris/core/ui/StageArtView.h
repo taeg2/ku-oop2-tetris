@@ -12,8 +12,8 @@
 // 장면은 wantsPause()가 true인 동안 블록 진행을 멈추고, 라운드가 끝나면 앨범을 연다
 class StageArtView : public View, public IGameEventListener {
 public:
-    static constexpr int kScale = 2;
-    static constexpr int kFrameMs = 100;
+    inline static const int kScale = 2;
+    inline static const int kFrameMs = 100;
     StageArtView(Point origin, const StageSession& session, int linesPerRound);  // linesPerRound: 라운드 하나를 끝내는 실제 줄 수
     void update(int dtMs) override;
     void draw(Console& console) const override;

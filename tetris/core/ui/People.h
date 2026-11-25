@@ -1,17 +1,18 @@
 #pragma once
 #include "ui/PixelArt.h"
-#define PEOPLE_COLORS {                                                                         \
-    {'O', {42, 26, 28}},                                                \
-    {'H', {110, 70, 44}}, {'h', {84, 52, 34}}, {'L', {146, 98, 62}},              \
-    {'S', {246, 204, 164}}, {'s', {222, 168, 132}}, {'Q', {204, 152, 120}},    \
-    {'E', {34, 26, 34}}, {'W', {255, 255, 255}}, {'P', {240, 150, 150}}, {'M', {176, 80, 84}},  \
-    {'Y', {250, 210, 64}}, {'y', {208, 160, 44}},                   \
-    {'B', {72, 100, 170}}, {'b', {52, 74, 130}},                    \
-    {'K', {70, 44, 40}},                                            \
-    {'D', {214, 110, 124}}, {'d', {172, 78, 96}},                   \
-    {'A', {246, 240, 228}}, {'a', {212, 204, 192}},                 \
-    {'R', {96, 58, 40}}, {'r', {72, 42, 30}}, {'l', {128, 84, 56}}            \
-}
+// 사람 그림에 쓰는 글자 -> 색 표 (여러 Sprite가 같이 쓴다)
+inline const std::vector<std::pair<char, RGB>> kPeopleColors = {
+    {'O', {42, 26, 28}},
+    {'H', {110, 70, 44}}, {'h', {84, 52, 34}}, {'L', {146, 98, 62}},
+    {'S', {246, 204, 164}}, {'s', {222, 168, 132}}, {'Q', {204, 152, 120}},
+    {'E', {34, 26, 34}}, {'W', {255, 255, 255}}, {'P', {240, 150, 150}}, {'M', {176, 80, 84}},
+    {'Y', {250, 210, 64}}, {'y', {208, 160, 44}},
+    {'B', {72, 100, 170}}, {'b', {52, 74, 130}},
+    {'K', {70, 44, 40}},
+    {'D', {214, 110, 124}}, {'d', {172, 78, 96}},
+    {'A', {246, 240, 228}}, {'a', {212, 204, 192}},
+    {'R', {96, 58, 40}}, {'r', {72, 42, 30}}, {'l', {128, 84, 56}}
+};
 namespace People {
 inline const Sprite KID_HEAD_F("kid head front", {
     "....OOOOOOOO....",
@@ -29,7 +30,7 @@ inline const Sprite KID_HEAD_F("kid head front", {
     "..OSSSSSSSSSsO..",
     "...OOSSSSSSOO...",
     ".....OSSSSO.....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_HEAD_B("kid head back", {
     "....OOOOOOOO....",
     "..OOHHHHHHHHOO..",
@@ -46,7 +47,7 @@ inline const Sprite KID_HEAD_B("kid head back", {
     "..OhhHHHHHhhhO..",
     "...OOhhhhhhOO...",
     ".....OSSSSO.....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_HEAD_S("kid head side", {
     "....OOOOOO....",
     "..OOHHLLHHOO..",
@@ -63,7 +64,7 @@ inline const Sprite KID_HEAD_S("kid head side", {
     "..OSSSSSsO....",
     "...OOSSsO.....",
     "....OSSO......",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_BODY_F("kid body front", {
     "....OOYYYYOO....",
     "..OOYYYYYYYYOO..",
@@ -74,7 +75,7 @@ inline const Sprite KID_BODY_F("kid body front", {
     ".OSSOyyyyyyOSsO.",
     "..OOOBBBBBBOOO..",
     "....OBBbbBBO....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_LEGS_F("kid legs front", {
     "....OBBOOBBO....",
     "....OSSOOSSO....",
@@ -85,7 +86,7 @@ inline const Sprite KID_LEGS_F("kid legs front", {
     "....OSsOOSsO....",
     "...OKKKOOKKKO...",
     "...OOOOOOOOOO...",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_LEGS_F_STEP("kid legs front, left foot up", {
     "....OBBOOBBO....",
     "....OSSOOSSO....",
@@ -96,7 +97,7 @@ inline const Sprite KID_LEGS_F_STEP("kid legs front, left foot up", {
     "...OKKKOOSsO....",
     "....OOOOOKKKO...",
     "........OOOOO...",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_BODY_S("kid body side, arm down", {
     "....OYYYYO....",
     "...OYYYYYYO...",
@@ -107,7 +108,7 @@ inline const Sprite KID_BODY_S("kid body side, arm down", {
     "...OSOyyyyO...",
     "...OOBBBBbO...",
     "...OBBBBBbO...",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_BODY_S_BACK("kid body side, arm swung back", {
     "....OYYYYO....",
     "...OYYYYYYO...",
@@ -118,7 +119,7 @@ inline const Sprite KID_BODY_S_BACK("kid body side, arm swung back", {
     "...OyyyyyOSO..",
     "...OBBBBBOO...",
     "...OBBBBBbO...",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_BODY_S_FWD("kid body side, arm swung forward", {
     "....OYYYYO....",
     "...OYYYYYYO...",
@@ -129,7 +130,7 @@ inline const Sprite KID_BODY_S_FWD("kid body side, arm swung forward", {
     ".OSOyyyyyyO...",
     "..OOBBBBBbO...",
     "...OBBBBBbO...",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_LEGS_S("kid legs side, standing", {
     "....OBBBBbO...",
     "....OBBBBbO...",
@@ -140,7 +141,7 @@ inline const Sprite KID_LEGS_S("kid legs side, standing", {
     ".....OSSsO....",
     "...OKKKKKO....",
     "...OOOOOOO....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_LEGS_S_NEAR("kid legs side, near leg forward", {
     "....OBBBBbO...",
     "...OBBBBBBbO..",
@@ -151,7 +152,7 @@ inline const Sprite KID_LEGS_S_NEAR("kid legs side, near leg forward", {
     ".OSsO....OQQO.",
     "OKKKO....OKKKO",
     "OOOO.....OOOO.",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite KID_LEGS_S_FAR("kid legs side, far leg forward", {
     "....OBBBBbO...",
     "...OBBBBBBbO..",
@@ -162,7 +163,7 @@ inline const Sprite KID_LEGS_S_FAR("kid legs side, far leg forward", {
     ".OQQO....OSsO.",
     "OKKKO....OKKKO",
     "OOOO.....OOOO.",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_HEAD_F("mom head front", {
     "......OOOO......",
     ".....OlRRRO.....",
@@ -179,7 +180,7 @@ inline const Sprite MOM_HEAD_F("mom head front", {
     "...OrSSSSSSrO...",
     "....OOSSSSOO....",
     "......OSSO......",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_HEAD_B("mom head back", {
     "......OOOO......",
     ".....OlRRRO.....",
@@ -196,7 +197,7 @@ inline const Sprite MOM_HEAD_B("mom head back", {
     "....OOrrrrOO....",
     "....OOSSSSOO....",
     "......OSSO......",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_HEAD_S("mom head side", {
     "........OOO...",
     "...OOOOOlRlO..",
@@ -212,7 +213,7 @@ inline const Sprite MOM_HEAD_S("mom head side", {
     "..OSSSSSsO....",
     "...OOSSSO.....",
     "....OSSO......",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_BODY_F("mom body front", {
     "....OODDDDOO....",
     "...ODDAAAADDO...",
@@ -232,7 +233,7 @@ inline const Sprite MOM_BODY_F("mom body front", {
     ".ODDDDDDDDDDDdO.",
     ".OdDDDDDDDDDddO.",
     "..OOOOOOOOOOOO..",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_BODY_B("mom body back", {
     "....OODDDDOO....",
     "...ODDADDADDO...",
@@ -252,7 +253,7 @@ inline const Sprite MOM_BODY_B("mom body back", {
     ".ODDDDDDDDDDDdO.",
     ".OdDDDDDDDDDddO.",
     "..OOOOOOOOOOOO..",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_LEGS_F("mom legs front", {
     ".....OSOOSO.....",
     ".....OSOOSO.....",
@@ -263,7 +264,7 @@ inline const Sprite MOM_LEGS_F("mom legs front", {
     ".....OSOOsO.....",
     "....OKKOOKKO....",
     "....OOOOOOOO....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_LEGS_F_STEP("mom legs front, left foot up", {
     ".....OSOOSO.....",
     ".....OSOOSO.....",
@@ -274,7 +275,7 @@ inline const Sprite MOM_LEGS_F_STEP("mom legs front, left foot up", {
     "....OKKOOsO.....",
     "....OOOOOKKO....",
     ".........OOO....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_BODY_S("mom body side, arm down", {
     "...ODDDDO.....",
     "..OADDDDDO....",
@@ -293,7 +294,7 @@ inline const Sprite MOM_BODY_S("mom body side, arm down", {
     "ODDDDDDDDDDdO.",
     "OdDDDDDDDDddO.",
     ".OOOOOOOOOOO..",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_BODY_S_REACH("mom body side, arm out (drawn by code)", {
     "...ODDDDO.....",
     "..OADDDDDO....",
@@ -312,7 +313,7 @@ inline const Sprite MOM_BODY_S_REACH("mom body side, arm out (drawn by code)", {
     "ODDDDDDDDDDdO.",
     "OdDDDDDDDDddO.",
     ".OOOOOOOOOOO..",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_LEGS_S("mom legs side, standing", {
     ".....OSSO.....",
     ".....OSSO.....",
@@ -323,7 +324,7 @@ inline const Sprite MOM_LEGS_S("mom legs side, standing", {
     ".....OSsO.....",
     "....OKKKO.....",
     "....OOOOO.....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_LEGS_S_NEAR("mom legs side, near leg forward", {
     ".....OSQO.....",
     ".....OSQO.....",
@@ -334,7 +335,7 @@ inline const Sprite MOM_LEGS_S_NEAR("mom legs side, near leg forward", {
     ".OSsO.....OQO.",
     "OKKKO.....OKKO",
     "OOOO......OOOO",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 inline const Sprite MOM_LEGS_S_FAR("mom legs side, far leg forward", {
     ".....OQSO.....",
     ".....OQSO.....",
@@ -345,7 +346,7 @@ inline const Sprite MOM_LEGS_S_FAR("mom legs side, far leg forward", {
     ".OQQO.....OsO.",
     "OKKKO.....OKKO",
     "OOOO......OOOO",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 enum Facing { FRONT, BACK, LEFT, RIGHT };
 inline void drawKid(Frame& f, int x, int y, Facing face, int step = -1, bool talk = false, bool blink = false) {
     int bob = (step >= 0 && step % 2 == 1) ? -1 : 0;

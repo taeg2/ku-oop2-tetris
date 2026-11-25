@@ -3,9 +3,9 @@
 #include "ui/PhotoPainter.h"
 
 namespace {
-constexpr int kHighlightMs = 1400;
-constexpr int kQuadrantColumns = PhotoArt::kWidth;    // 12픽셀 x 2칸
-constexpr int kQuadrantRows = PhotoArt::kHeight / 2;  // 8줄
+const int kHighlightMs = 1400;
+const int kQuadrantColumns = PhotoArt::kWidth;    // 12픽셀 x 2칸
+const int kQuadrantRows = PhotoArt::kHeight / 2;  // 8줄
 }  // namespace
 
 PhotoFrameView::PhotoFrameView(Point origin, const StageSession& session) : View(origin), m_session(session) {}

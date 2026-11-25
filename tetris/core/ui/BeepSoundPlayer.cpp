@@ -7,7 +7,7 @@
 #include <windows.h>
 
 namespace {
-constexpr std::size_t kMaxQueuedNotes = 24;  // 너무 밀리면 버린다 (소리가 화면보다 늦지 않게)
+const std::size_t kMaxQueuedNotes = 24;  // 너무 밀리면 버린다 (소리가 화면보다 늦지 않게)
 
 // 주파수 0 = 쉼표
 const std::map<SoundId, std::vector<std::pair<int, int>>> kMelodies = {

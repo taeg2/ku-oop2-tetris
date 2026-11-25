@@ -1,5 +1,4 @@
 #pragma once
-#include <optional>
 #include "common/Color.h"
 #include "medicine/PillType.h"
 
@@ -12,10 +11,12 @@ public:
 
     bool isFilled() const { return m_filled; }
     Color color() const { return m_color; }
-    std::optional<PillType> pill() const { return m_pill; }
+    bool hasPill() const { return m_hasPill; }
+    PillType pill() const { return m_pill; }  // hasPill()이 true일 때만 의미가 있다
 
 private:
     bool m_filled = false;
     Color m_color = Color::Black;
-    std::optional<PillType> m_pill;
+    bool m_hasPill = false;
+    PillType m_pill = PillType::Blue;
 };

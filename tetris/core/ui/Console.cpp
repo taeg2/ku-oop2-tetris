@@ -51,8 +51,8 @@ void Console::draw(Point pos, const Cell& cell) {
         draw(pos, "  ");
         return;
     }
-    if (cell.pill()) {
-        const Color pillColor = *cell.pill() == PillType::Blue ? Color::Blue : Color::Red;
+    if (cell.hasPill()) {
+        const Color pillColor = cell.pill() == PillType::Blue ? Color::Blue : Color::Red;
         draw(pos, "()", pillColor, Color::White);
         return;
     }

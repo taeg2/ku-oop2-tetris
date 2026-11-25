@@ -24,11 +24,11 @@ const int PATS = 4, PAT_LEN = 2, HAPPY = 3, STAND = 2, KNEEL = 2;
 const float SPEED = 6.0f, PI = 3.14159265f;
 enum { P_KNEEL = 0, P_BUILD = 8, P_HAPPY = 88, P_STANDUP = 90, P_RUN_R = 92, P_RUN_L = 96, P_END = 100, P_WAVE = 102 };
 int wave(int t, float period, float amp, float phase = 0) {
-    return (int)std::lround(std::sin(t * 6.2832f / period + phase) * amp);
+    return static_cast<int>(std::lround(std::sin(t * 6.2832f / period + phase) * amp));
 }
 float clamp01(float v) { return std::max(0.0f, std::min(1.0f, v)); }
 float ease(float t) { t = clamp01(t); return 0.5f - 0.5f * std::cos(PI * t); }
-int rnd(float v) { return (int)std::lround(v); }
+int rnd(float v) { return static_cast<int>(std::lround(v)); }
 const int BAYER[4][4] = { {0,8,2,10}, {12,4,14,6}, {3,11,1,9}, {15,7,13,5} };
 void blendPixel(Frame& f, int x, int y, RGB c, float a) {
     if (x < 0 || y < 0 || x >= Frame::W || y >= Frame::H) return;
@@ -36,7 +36,7 @@ void blendPixel(Frame& f, int x, int y, RGB c, float a) {
 }
 void blendEllipse(Frame& f, float x0, float y0, float x1, float y1, RGB c, float a) {
     float cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, rx = (x1 - x0) / 2, ry = (y1 - y0) / 2;
-    for (int y = (int)y0; y <= (int)y1; ++y) for (int x = (int)x0; x <= (int)x1; ++x) {
+    for (int y = static_cast<int>(y0); y <= static_cast<int>(y1); ++y) for (int x = static_cast<int>(x0); x <= static_cast<int>(x1); ++x) {
         float u = (x - cx) / rx, v = (y - cy) / ry;
         if (u * u + v * v <= 1) blendPixel(f, x, y, c, a);
     }
@@ -54,7 +54,7 @@ void tower(Frame& f, int x0, int y0, int w, int h, bool crenel, int windows, boo
     if (crenel) for (int cx = x0 + 1; cx < x1; cx += 4) { f.rect(cx, y0 - 3, 2, 4, s); f.set(cx + 1, y0 - 3, sl); }
     if (slump) f.ellipse((x0 + x1) / 2, y0, (x1 - x0) / 2, slump, s);
     for (int k = 0; k < windows; ++k) {
-        int wx = x0 + w / 2 - 1 + (int)((k - (windows - 1) / 2.0f) * 5);
+        int wx = x0 + w / 2 - 1 + static_cast<int>((k - (windows - 1) / 2.0f) * 5);
         f.rect(wx, y0 + 4, 2, 2, win);
     }
     if (door) {
@@ -86,7 +86,7 @@ const Sprite KID_LEGS_KNEEL("kid legs kneeling", {
     "..OSSSOOOOSSSO..",
     ".OKSSSSOOSSSSKO.",
     ".OOOOOOOOOOOOOO.",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 const Sprite KID_BODY_ONE_ARM("kid body, right arm free", {
     "....OOYYYYOO....",
     "..OOYYYYYYYOO...",
@@ -97,12 +97,12 @@ const Sprite KID_BODY_ONE_ARM("kid body, right arm free", {
     ".OSSOyyyyyyyO...",
     "..OOOBBBBBBO....",
     "....OBBbbBBO....",
-}, PEOPLE_COLORS);
+}, kPeopleColors);
 }
 void BeachRound::drawSky(Frame& f, int t) {
     for (int y = 0; y < HORIZON; ++y) {
-        float v = (float)y / HORIZON * 4;
-        int i = std::min(3, (int)v); float fr = v - i;
+        float v = static_cast<float>(y) / HORIZON * 4;
+        int i = std::min(3, static_cast<int>(v)); float fr = v - i;
         for (int x = 0; x < 480; ++x) f.set(x, y, C(SKY[(fr * 16 > BAYER[y % 4][x % 4]) ? i + 1 : i]));
     }
     f.disc(360, 78, 12, C(255, 232, 170)); f.disc(360, 78, 8, C(255, 244, 206));
@@ -116,7 +116,7 @@ void BeachRound::drawSky(Frame& f, int t) {
 void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawSky(f, t);
     for (int x = 0; x < 480; ++x) {
-        int h = (int)(7 + 4 * std::sin(x * 0.03f) + 2 * std::sin(x * 0.11f));
+        int h = static_cast<int>(7 + 4 * std::sin(x * 0.03f) + 2 * std::sin(x * 0.11f));
         f.vline(x, HORIZON - h, HORIZON, C(TREE2));
     }
     for (int k = 0; k < 40; ++k) {
@@ -132,7 +132,7 @@ void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     for (int k = 0; k < 26; ++k) { int x = (k * 73) % 470, y = HORIZON + 4 + (k * 17) % (SHORE - HORIZON - 8); f.hline(x, x + 3 + k % 5, y, C(186, 150, 190)); }
     f.rect(0, SHORE, 480, 270 - SHORE, C(SAND));
     for (int y = SHORE; y < SHORE + 7; ++y) f.hline(0, 479, y, y < SHORE + 4 ? C(WET) : C(196, 152, 110));
-    int foam = SHORE + (int)(1.5f + 1.5f * std::sin(t * 6.2832f / 40));
+    int foam = SHORE + static_cast<int>(1.5f + 1.5f * std::sin(t * 6.2832f / 40));
     f.hline(0, 479, foam, C(236, 220, 214));
     for (int x = 0; x < 480; x += 7) f.set(x + (t / 4) % 7, foam + 1, C(236, 220, 214));
     for (int k = 0; k < 70; ++k) {
@@ -148,7 +148,7 @@ void BeachRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     for (int i = 0; i < 5; ++i) {
         float b = build(i);
         if (b <= 0) continue;
-        int x = SPOTS[i].x, y = SPOTS[i].y, w = SHAPE[SPOTS[i].v][4], len = (int)(SHAPE[SPOTS[i].v][3] * b);
+        int x = SPOTS[i].x, y = SPOTS[i].y, w = SHAPE[SPOTS[i].v][4], len = static_cast<int>(SHAPE[SPOTS[i].v][3] * b);
         f.poly({ {x - w + 4, y}, {x + 2, y}, {x - len - 6, y - 4}, {x - len - w, y - 3} }, C(196, 150, 104));
     }
     if (goneT_ < 0) blendEllipse(f, kx_ - 12, ky_ - 3, kx_ + 12, ky_ + 2, RGB{ 150, 104, 80 }, 0.35f);
@@ -188,7 +188,7 @@ void BeachRound::drawCastle(Frame& f, int i, float b, int t) {
         int x = cx - 24 + (k * 17 + i * 5) % 48, y = base - 40 + (k * 11) % 38;
         if (tmp.get(x, y) == C(SAND) && tmp.get(x + 1, y) == C(SAND)) tmp.hline(x, x + 1, y, (k % 2) ? C(SAND_HL) : C(SAND_D));
     }
-    int top = (int)(base + 2 - 54 * b);
+    int top = static_cast<int>(base + 2 - 54 * b);
     uint8_t edge = C(112, 76, 54);
     for (int y = std::max(top, base - 50); y <= base; ++y)
         for (int x = cx - 40; x <= cx + 40; ++x) {
@@ -308,10 +308,10 @@ void BeachRound::drawTentacle(Frame& f, int x0, int y0, int x1, int y1, int bend
     const int N = 14;
     int px[N + 1], py[N + 1];
     for (int i = 0; i <= N; ++i) {
-        float u = (float)i / N;
+        float u = static_cast<float>(i) / N;
         float cx = (x0 + x1) / 2.0f + bend, cy = (y0 + y1) / 2.0f;
-        px[i] = (int)((1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1) + (int)(std::sin(t * 0.3f + u * 4) * u * 1.5f);
-        py[i] = (int)((1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1);
+        px[i] = static_cast<int>((1 - u) * (1 - u) * x0 + 2 * (1 - u) * u * cx + u * u * x1) + static_cast<int>(std::sin(t * 0.3f + u * 4) * u * 1.5f);
+        py[i] = static_cast<int>((1 - u) * (1 - u) * y0 + 2 * (1 - u) * u * cy + u * u * y1);
     }
     for (int i = 0; i < N; ++i) { float w = w0 - (w0 - 2) * i / N; f.taper(px[i], py[i], px[i + 1], py[i + 1], w + 2, w + 1.5f, ol); }
     for (int i = 0; i < N; ++i) { float w = w0 - (w0 - 2) * i / N; f.taper(px[i], py[i], px[i + 1], py[i + 1], w, w - 0.5f, c); }
@@ -367,10 +367,10 @@ void BeachRound::drawOcto(Frame& f, int t) {
 void BeachRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     struct Item { float y; int order, kind, k; };
     std::vector<Item> items;
-    for (int k = 0; k < 5; ++k) if (build(k) > 0) items.push_back({ (float)SPOTS[k].y, 0, 0, k });
+    for (int k = 0; k < 5; ++k) if (build(k) > 0) items.push_back({ static_cast<float>(SPOTS[k].y), 0, 0, k });
     items.push_back({ ky_ + 0.5f, 1, 1, 0 });
-    items.push_back({ (float)(BKT_Y + 52), 0, 2, 0 });
-    items.push_back({ (float)(OCTO_Y + 54), 0, 3, 0 });
+    items.push_back({ static_cast<float>(BKT_Y + 52), 0, 2, 0 });
+    items.push_back({ static_cast<float>(OCTO_Y + 54), 0, 3, 0 });
     std::sort(items.begin(), items.end(), [](const Item& a, const Item& b) { return a.y != b.y ? a.y < b.y : a.order < b.order; });
     int goo0 = goneT_ >= 0 ? goneT_ + 4 : -1;
     for (auto& it : items) {
@@ -434,7 +434,7 @@ void BeachRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     if (goo0 >= 0 && t >= goo0 + 52) black = std::min(1.0f, (t - goo0 - 52 + 1) / 10.0f);
     for (auto& c : palette()) c = mix(mix(c, RGB{ 60, 50, 110 }, dusk), RGB{ 0, 0, 0 }, black);
 }
-void BeachRound::kneelPoint(int i, float& x, float& y) const { x = (float)(SPOTS[i].x - SHAPE[SPOTS[i].v][0] - 18); y = (float)SPOTS[i].y; }
+void BeachRound::kneelPoint(int i, float& x, float& y) const { x = static_cast<float>(SPOTS[i].x - SHAPE[SPOTS[i].v][0] - 18); y = static_cast<float>(SPOTS[i].y); }
 void BeachRound::patReach(int i, int& dx, int& h) const { const int* s = SHAPE[SPOTS[i].v]; dx = s[0] + 18 + s[2]; h = s[3]; }
 float BeachRound::pathLen() const {
     float L = 0;
@@ -458,8 +458,8 @@ void BeachRound::reset() {
 void BeachRound::specialEvent(int) { if (cur_ < 5 && endT_ < 0) ++pending_; }
 void BeachRound::onLinesCleared(const std::vector<int>& rows, int totalLines, int t) {
     lines_ = std::min(10, totalLines);
-    clearT_ = t; clearN_ = (int)rows.size();
-    pending_ += (int)rows.size();
+    clearT_ = t; clearN_ = static_cast<int>(rows.size());
+    pending_ += static_cast<int>(rows.size());
 }
 void BeachRound::update(const PlayStateReader& g, int t) {
     if (t < lastT_ || lastT_ == 0) startT_ = t;
@@ -510,7 +510,7 @@ void BeachRound::update(const PlayStateReader& g, int t) {
     case Run: {
         float x, y, nx, ny;
         along(mt_ * SPEED, x, y); along(mt_ * SPEED + 2, nx, ny);
-        kx_ = (float)rnd(x); ky_ = (float)rnd(y);
+        kx_ = static_cast<float>(rnd(x)); ky_ = static_cast<float>(rnd(y));
         pose_ = (nx >= x - 0.1f ? P_RUN_R : P_RUN_L) + t % 4;
         if (++mt_ * SPEED >= pathLen()) { kx_ = path_.back().first; ky_ = path_.back().second; mode_ = Kneel; mt_ = 0; }
         break;
@@ -534,7 +534,7 @@ void BeachRound::update(const PlayStateReader& g, int t) {
                 path_.push_back({ -40, 196 });
             }
             float x, y; along((e - 30) * SPEED, x, y);
-            kx_ = (float)rnd(x); ky_ = (float)rnd(y);
+            kx_ = static_cast<float>(rnd(x)); ky_ = static_cast<float>(rnd(y));
             pose_ = P_RUN_L + t % 4;
             if ((e - 30) * SPEED > pathLen()) goneT_ = t;
         }

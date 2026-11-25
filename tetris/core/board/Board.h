@@ -12,8 +12,8 @@
 //     가림(hidden)·표시(marked)는 보드 위에 덮는 막이라, 줄이 내려가도 같이 움직이지 않는다.
 class Board {
 public:
-    static constexpr int kWidth = 10;
-    static constexpr int kHeight = 20;
+    inline static const int kWidth = 10;
+    inline static const int kHeight = 20;
 
     Board();
 

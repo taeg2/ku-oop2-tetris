@@ -17,6 +17,6 @@ private:
         Color color;
         int ageMs;
     };
-    static constexpr int kLifeMs = 550;
+    inline static const int kLifeMs = 550;
     std::vector<Particle> m_particles;
 };

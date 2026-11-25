@@ -55,8 +55,8 @@ void Board::lock(const Tetromino& piece) {
         if (!isInside(p)) {
             continue;  // 보드 밖 칸은 버린다 (canLock()으로 먼저 확인할 것)
         }
-        if (piece.pill() && piece.pillCellIndex() == i) {
-            at(p).fill(piece.color(), *piece.pill());
+        if (piece.hasPill() && piece.pillCellIndex() == i) {
+            at(p).fill(piece.color(), piece.pill());
         } else {
             at(p).fill(piece.color());
         }
@@ -78,8 +78,9 @@ std::vector<PillType> Board::pillsInRows(const std::vector<int>& rows) const {
     std::vector<PillType> pills;
     for (int y : rows) {
         for (int x = 0; x < kWidth; ++x) {
-            if (const auto pill = cellAt({x, y}).pill()) {
-                pills.push_back(*pill);
+            const Cell& cell = cellAt({x, y});
+            if (cell.hasPill()) {
+                pills.push_back(cell.pill());
             }
         }
     }

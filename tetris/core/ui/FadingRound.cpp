@@ -9,7 +9,7 @@
 #include <cmath>
 using namespace Stage3Art;
 static const int FLOOR_Y = 222, SOFA_X = 340, DOOR_X = 470;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 struct Expense { const char* what; int amount; };
 static const Expense COSTS[10] = { {"RENT", -1200}, {"GROCERIES", -300}, {"PAYDAY", 2000}, {"SCHOOL FEES", -800}, {"CAR REPAIR", -600}, {"PAYDAY", 2000}, {"LOAN", -900}, {"TAXES", -700}, {"PAYDAY", 2000}, {"HOSPITAL", -500} };
 static const RGB HAIRS[4][2] = { { {168, 92, 44}, {206, 128, 64} }, { {130, 84, 56}, {170, 120, 90} }, { {150, 136, 126}, {190, 180, 172} }, { {186, 182, 182}, {220, 218, 218} } };
@@ -192,8 +192,8 @@ void FadingRound::drawThought(Frame& f, int t) {
         for (int y = 0; y < 38; ++y) for (int x = 4; x < 56; ++x) {
             uint8_t c = tmp.get(x, y + 2);
             if (c == key) continue;
-            unsigned hsh = ((unsigned)x * 73856093u) ^ ((unsigned)y * 19349663u) ^ ((unsigned)m * 83492791u);
-            if ((int)(hsh % 40) < hole) continue;
+            unsigned hsh = (static_cast<unsigned>(x) * 73856093u) ^ (static_cast<unsigned>(y) * 19349663u) ^ (static_cast<unsigned>(m) * 83492791u);
+            if (static_cast<int>(hsh % 40) < hole) continue;
             f.set(cx - 26 + (x - 4), cy - 26 + y, c);
         }
         f.rect(cx - 27, cy - 27, 54, 1, ol); f.rect(cx - 27, cy + 12, 54, 1, ol); f.rect(cx - 27, cy - 27, 1, 40, ol); f.rect(cx + 26, cy - 27, 1, 40, ol);
@@ -216,7 +216,7 @@ void FadingRound::drawOld(Frame& f, int t) {
     uint8_t glass = C(210, 232, 248), water = C(150, 200, 240);
     if (e >= DRINK && e < PHOTO) { f.rect(hx - 2, hy - 8, 6, 9, ol); f.rect(hx - 1, hy - 7, 4, 7, glass); f.rect(hx - 1, hy - 4, 4, 4, water); }
     if (e >= 0) {
-        float u = std::min(1.0f, e / (float)WALK_IN);
+        float u = std::min(1.0f, e / static_cast<float>(WALK_IN));
         int dx = rnd(DOOR_X + (SOFA_X + 44 - DOOR_X) * u);
         int dhx = 0, dhy = 0;
         bool hasTray = e < DRINK;
@@ -368,7 +368,7 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
             bool piece = false;
             if (playing(t)) for (auto& pc : g.pieceCells()) if (pc.first == x && pc.second == y) piece = true;
             if (piece) continue;
-            unsigned hsh = ((unsigned)x * 2654435761u) ^ ((unsigned)(PlayStateReader::kRows - y) * 40503u);
+            unsigned hsh = (static_cast<unsigned>(x) * 2654435761u) ^ (static_cast<unsigned>(PlayStateReader::kRows - y) * 40503u);
             float v = (hsh % 1000) / 1000.0f;
             if (v >= fg) continue;
             int cx = bx + x * cs, cy = by + y * cs;
@@ -382,8 +382,8 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
         std::vector<uint8_t> copy(BW * BH);
         for (int y = 0; y < BH; ++y) for (int x = 0; x < BW; ++x) copy[y * BW + x] = f.get(bx + x, by + y);
         for (int y = 0; y < BH; ++y) for (int x = 0; x < BW; ++x) {
-            unsigned h = ((unsigned)x * 73856093u) ^ ((unsigned)y * 19349663u) ^ ((unsigned)(t / 2) * 83492791u);
-            int dx = (int)(h % (2 * r + 1)) - r, dy = (int)((h >> 8) % (2 * r + 1)) - r;
+            unsigned h = (static_cast<unsigned>(x) * 73856093u) ^ (static_cast<unsigned>(y) * 19349663u) ^ (static_cast<unsigned>(t / 2) * 83492791u);
+            int dx = static_cast<int>(h % (2 * r + 1)) - r, dy = static_cast<int>((h >> 8) % (2 * r + 1)) - r;
             int sx = std::min(BW - 1, std::max(0, x + dx)), sy = std::min(BH - 1, std::max(0, y + dy));
             f.set(bx + x, by + y, copy[sy * BW + sx]);
         }
@@ -395,7 +395,7 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
     }
     if (on(STATIC, t)) {
         int a = t - evT_;
-        for (int y = by; y < by + BH; ++y) for (int x = bx; x < bx + BW; ++x) { unsigned h = ((unsigned)x * 2654435761u) ^ ((unsigned)y * 40503u) ^ ((unsigned)t * 97u); if (h % 9 == 0) f.set(x, y, C(240, 240, 240)); else if (h % 9 == 1) f.set(x, y, C(90, 90, 96)); }
+        for (int y = by; y < by + BH; ++y) for (int x = bx; x < bx + BW; ++x) { unsigned h = (static_cast<unsigned>(x) * 2654435761u) ^ (static_cast<unsigned>(y) * 40503u) ^ (static_cast<unsigned>(t) * 97u); if (h % 9 == 0) f.set(x, y, C(240, 240, 240)); else if (h % 9 == 1) f.set(x, y, C(90, 90, 96)); }
         int band = by + (a * 13) % BH;
         for (int y = band; y < std::min(by + BH, band + 6); ++y) for (int x = bx; x < bx + BW; ++x) if ((x + t) % 3) f.set(x, y, C(200, 200, 206));
         Font::center(f, "SSSHHHH...", bx + BW / 2, by - 18, C(230, 230, 230), ol);
@@ -414,7 +414,7 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
         int pad = z ? 6 : 7;
         for (int y = by - pad; y < by + BH + pad; ++y) for (int x = bx - pad; x < bx + BW + pad; ++x) keep[f.get(x, y)] = true;
         auto& pal = palette();
-        for (std::size_t i = 0; i < pal.size() && i < 256; ++i) { if (keep[i]) continue; RGB v = pal[i]; int lum = (int)(v.r * 0.3f + v.g * 0.59f + v.b * 0.11f); pal[i] = mix(v, RGB{ lum, lum, lum + 6 }, k); }
+        for (std::size_t i = 0; i < pal.size() && i < 256; ++i) { if (keep[i]) continue; RGB v = pal[i]; int lum = static_cast<int>(v.r * 0.3f + v.g * 0.59f + v.b * 0.11f); pal[i] = mix(v, RGB{ lum, lum, lum + 6 }, k); }
     }
     if (e >= BLACK - 10) {
         float q = std::min(1.0f, (e - BLACK + 10) / 10.0f);
@@ -423,7 +423,7 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
         auto line = [&](int start, const char* text, int y) {
             if (e < start) return;
             std::string s = text;
-            int n = std::min((int)s.size(), (e - start) * 2);
+            int n = std::min(static_cast<int>(s.size()), (e - start) * 2);
             Font::center(f, s.substr(0, n), 240, y + 12, C(250, 250, 250));
         };
         if (e >= BLACK) {

@@ -4,7 +4,7 @@
 #include <cmath>
 using namespace Stage3Art;
 static const int FLOOR_Y = 222;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 static void clock(Frame& f, int cx, int cy, int spd, int t) {
     uint8_t ol = C(OLC);
     f.disc(cx, cy, 13, ol); f.disc(cx, cy, 12, C(250, 248, 238)); f.disc(cx, cy, 10, C(244, 240, 228));
@@ -60,7 +60,7 @@ void LivingRoom::draw(Frame& f, int t, int SOFA_X, int DOOR_X, bool tvStatic, in
     bx(f, tvx - 8, FLOOR_Y - 30, 16, 5, { 160, 160, 170 });
     bx(f, tvx - 22, FLOOR_Y - 62, 44, 33, { 40, 44, 60 });
     int sx = tvx - 20, sy = FLOOR_Y - 60, sw = 40, sh = 29;
-    if (tvStatic) { for (int y = sy; y < sy + sh; ++y) for (int x = sx; x < sx + sw; ++x) { unsigned h = ((unsigned)x * 2654435761u) ^ ((unsigned)y * 40503u) ^ ((unsigned)t * 97u); f.set(x, y, h % 3 == 0 ? C(240, 240, 240) : h % 3 == 1 ? C(130, 130, 136) : C(40, 40, 44)); } }
+    if (tvStatic) { for (int y = sy; y < sy + sh; ++y) for (int x = sx; x < sx + sw; ++x) { unsigned h = (static_cast<unsigned>(x) * 2654435761u) ^ (static_cast<unsigned>(y) * 40503u) ^ (static_cast<unsigned>(t) * 97u); f.set(x, y, h % 3 == 0 ? C(240, 240, 240) : h % 3 == 1 ? C(130, 130, 136) : C(40, 40, 44)); } }
     else { f.rect(sx, sy, sw, sh, C(50, 120, 170)); f.line(sx + 2, sy + 2, sx + 14, sy + 14, C(110, 170, 210)); f.rect(sx + 2, sy + 21, 16, 3, C(220, 120, 120)); int bob = (t / 5) % 4; f.ellipse(sx + 28, sy + 12 + (bob == 1), 4, 5, C(240, 200, 170)); f.rect(sx + 24, sy + 17, 9, 8, C(250, 220, 120)); }
     f.rect(DOOR_X - 12, 104, 28, FLOOR_Y - 104, ol); f.rect(DOOR_X - 10, 106, 24, FLOOR_Y - 106, C(14, 10, 14)); f.rect(DOOR_X - 12, 104, 28, 2, C(150, 140, 136)); f.vline(DOOR_X - 12, 104, FLOOR_Y - 1, C(150, 140, 136)); f.vline(DOOR_X + 15, 104, FLOOR_Y - 1, C(150, 140, 136));
     int vx = 404;

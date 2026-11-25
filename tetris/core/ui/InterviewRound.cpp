@@ -6,7 +6,7 @@
 #include <cmath>
 static const RGB OL{ 40, 30, 36 };
 static const int MAIN_X = 288, FLOOR_Y = 214, EX_X = 424;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(std::lround(v)); }
 static const Sprite HEAD_SIDE("interview head, facing right", {
 "....HHHHHH......",
 "...HHHHHHHH.....",

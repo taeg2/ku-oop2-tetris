@@ -1,9 +1,9 @@
 #pragma once
-#include <functional>
 #include <vector>
 #include "play/IGameEventListener.h"
 
-// 이벤트를 구독자 모두에게 전달한다. 구독자를 소유하지 않는다 (reference_wrapper).
+// 이벤트를 구독자 모두에게 전달한다. (옵저버 패턴)
+//     구독자를 소유하지 않으므로 관찰용 포인터로만 들고 있다. 구독자는 버스보다 오래 살아 있어야 한다.
 class EventBus {
 public:
     void subscribe(IGameEventListener& listener);
@@ -12,5 +12,5 @@ public:
     void publish(GameEvent::Type type, int value);
 
 private:
-    std::vector<std::reference_wrapper<IGameEventListener>> m_listeners;
+    std::vector<IGameEventListener*> m_listeners;
 };

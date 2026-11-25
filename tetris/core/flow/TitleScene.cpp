@@ -6,8 +6,8 @@
 #include "flow/StoryArt.h"
 
 namespace {
-constexpr int kShuffleMs = 1200;
-constexpr int kLetterRows = 5;
+const int kShuffleMs = 1200;
+const int kLetterRows = 5;
 // T E T R I S 를 3x5 도트로 표현 ('#' = 칸)
 const std::array<std::array<const char*, kLetterRows>, 6> kLogo = {{
     {{"###", ".#.", ".#.", ".#.", ".#."}},

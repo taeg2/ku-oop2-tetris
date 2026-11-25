@@ -5,7 +5,7 @@
 //     스테이지의 네 칸이 다 차면 앨범이 스스로 페이지를 넘기고 다음 집 장면으로, 마지막 스테이지면 엔딩으로 간다.
 class AlbumScene : public Scene {
 public:
-    static constexpr int kNoRoundCleared = -1;
+    inline static const int kNoRoundCleared = -1;
 
     AlbumScene(GameServices& services, int stageIndex, int clearedRound);
 

@@ -12,7 +12,7 @@ StoryArt::StoryArt(const StageCatalog& catalog, ISoundPlayer& sound, std::mt1993
 }
 
 void StoryArt::restart() {
-    m_stageArt.reset();  // 세션을 참조하므로 세션보다 먼저 지운다
+    m_stageArt.reset();  // 세션을 읽으므로 세션보다 먼저 지운다
     m_session.reset();
     m_stageIndex = -1;
     m_roundInStage = 0;
@@ -35,17 +35,18 @@ void StoryArt::beginStage(int stageIndex) {
         }
         return;
     }
-    // 같은 자리에 새 세션을 만든다. StageArtView가 들고 있는 참조는 새 세션을 가리킨다.
-    m_session.emplace(m_catalog.get(stageIndex), m_sound, m_rng);
+    if (m_session) {
+        m_session->changeStage(m_catalog.get(stageIndex));  // 그림(StageArtView)은 같은 세션을 계속 읽는다
+    } else {
+        m_session = std::make_unique<StageSession>(m_catalog.get(stageIndex), m_sound, m_rng);
+        m_stageArt = std::make_unique<StageArtView>(kArtOrigin, *m_session, config::kLinesPerPiece);
+        m_session->subscribe(*this);
+        m_session->subscribe(*m_stageArt);
+    }
     m_stageIndex = stageIndex;
     m_roundInStage = 0;
     m_lastCleared = -1;
     m_roundEndPending = false;
-    m_session->subscribe(*this);
-    if (!m_stageArt) {
-        m_stageArt = std::make_unique<StageArtView>(kArtOrigin, *m_session, config::kLinesPerPiece);
-    }
-    m_session->subscribe(*m_stageArt);
 }
 
 void StoryArt::clearRoundEnd() {

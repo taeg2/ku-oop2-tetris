@@ -31,7 +31,7 @@
 class CaptureTerminal : public ITerminal {
 public:
     struct Cell { char32_t ch = U' '; int fg = 7; int bg = 0; bool cont = false; };
-    static constexpr int W = 100, H = 30;
+    inline static const int W = 100, H = 30;
     void open(int, int) override {}
     void close() override {}
     void clearScreen() override { for (auto& c : screen) c = Cell{}; }
@@ -210,21 +210,25 @@ int main() {
     // --- 장면 흐름: 타이틀 -> 집 오프닝 -> (앨범 -> 플레이) x 12 라운드 -> 집 -> ... -> 엔딩 ---
     // 그림(Sixel) 만들기는 느리므로 봇이 플레이하는 동안에는 renderEvery 프레임마다 한 번만 그린다
     int renderEvery = 1, frameNo = 0;
-    auto frame = [&](int n, std::optional<Command> cmd = std::nullopt) {
+    // frame(n): n 프레임 진행, press(cmd, n): 키를 한 번 누르고 n 프레임 진행
+    auto frame = [&](int n) {
         for (int i = 0; i < n; ++i) {
-            if (cmd && i == 0) scenes.handle(*cmd);
             scenes.update(16);
             if (!scenes.isRunning()) return;
             if (++frameNo % renderEvery == 0) { console.clear(); scenes.render(console); console.present(); }
         }
     };
+    auto press = [&](Command cmd, int n) {
+        scenes.handle(cmd);
+        frame(n);
+    };
     scenes.change(std::make_unique<TitleScene>(services));
     frame(10); dump("scene_title");
     CHECK(g_terminal.images == 0);  // 타이틀은 글자 화면
-    frame(5, Command::Confirm); frame(120);
+    press(Command::Confirm, 5); frame(120);
     CHECK(g_terminal.images > 0);   // 집 오프닝은 그림(Sixel)으로 그린다
     story.house().render(); dumpArt("art_house_opening", story.house().frame());
-    for (int i = 0; i < 40; ++i) frame(20, Command::Confirm);  // 대사 넘기기
+    for (int i = 0; i < 40; ++i) press(Command::Confirm, 20);  // 대사 넘기기
     story.house().render(); dumpArt("art_house_talk", story.house().frame());
 
     // 집 안을 걸어 다니는 건 봇이 하기 어려우므로, 스테이지마다 앨범부터 시작한다
@@ -241,7 +245,7 @@ int main() {
                                 !story.album().isOpen() && !story.roundEndPending();
             if (stage == 2 && story.ending().finished()) break;
             if (stage < 2 && story.house().stage() == stage + 1) break;  // 다음 집 장면이 열렸다
-            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); frame(5, Command::Confirm); continue; }
+            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); press(Command::Confirm, 5); continue; }
             if (inPlay && !story.stageArt().wantsPause()) {
                 if (!dumpedPlay && story.session().board().filledCells().size() > 20) {
                     dumpedPlay = true;
@@ -250,23 +254,23 @@ int main() {
                 if (!menuChecked && story.session().progress().pieces() == 1) {
                     // 메뉴 -> 기억의 책 -> 닫기 -> 설정에서 소리 끄기 -> 닫기 -> 계속하기
                     menuChecked = true;
-                    frame(5, Command::Pause); story.menu().render(); dumpArt("art_menu", story.menu().frame());
+                    press(Command::Pause, 5); story.menu().render(); dumpArt("art_menu", story.menu().frame());
                     CHECK(story.menu().isOpen());
-                    frame(5, Command::SoftDrop); frame(5, Command::Confirm);
+                    press(Command::SoftDrop, 5); press(Command::Confirm, 5);
                     CHECK(story.book().isOpen()); story.book().render(); dumpArt("art_memory_book", story.book().frame());
                     CHECK(story.book().rememberedCount() == 1);
-                    frame(5, Command::Pause); CHECK(!story.book().isOpen());
-                    frame(5, Command::SoftDrop); frame(5, Command::Confirm);
-                    CHECK(story.settings().isOpen()); frame(5, Command::Confirm); CHECK(!sound.isOn());
+                    press(Command::Pause, 5); CHECK(!story.book().isOpen());
+                    press(Command::SoftDrop, 5); press(Command::Confirm, 5);
+                    CHECK(story.settings().isOpen()); press(Command::Confirm, 5); CHECK(!sound.isOn());
                     story.settings().render(); dumpArt("art_settings", story.settings().frame());
-                    frame(5, Command::Confirm); CHECK(sound.isOn());
-                    frame(5, Command::Pause); CHECK(!story.settings().isOpen());
-                    frame(5, Command::Pause); CHECK(!story.menu().isOpen());
+                    press(Command::Confirm, 5); CHECK(sound.isOn());
+                    press(Command::Pause, 5); CHECK(!story.settings().isOpen());
+                    press(Command::Pause, 5); CHECK(!story.menu().isOpen());
                     continue;
                 }
-                if (frames % 14 == 0) { frame(1, botCommand(story.session(), stuck)); continue; }
+                if (frames % 14 == 0) { press(botCommand(story.session(), stuck), 1); continue; }
             } else if (!inPlay && frames % 30 == 0) {
-                frame(1, Command::Confirm);  // 앨범에서 다음 라운드 고르기
+                press(Command::Confirm, 1);  // 앨범에서 다음 라운드 고르기
                 continue;
             }
             frame(1);
@@ -283,7 +287,7 @@ int main() {
     CHECK(menuChecked);
     story.ending().render(); dumpArt("art_ending", story.ending().frame());
     CHECK(album.isComplete());
-    frame(5, Command::Confirm);  // 엔딩 -> 타이틀
+    press(Command::Confirm, 5);  // 엔딩 -> 타이틀
     CHECK(scenes.isRunning());
     std::printf("scene flow ok, images=%d\n", g_terminal.images);
     return 0;

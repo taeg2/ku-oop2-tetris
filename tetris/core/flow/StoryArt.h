@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-#include <optional>
 #include <random>
 #include <vector>
 #include "play/IGameEventListener.h"
@@ -23,7 +22,7 @@ class StageCatalog;
 // 장면(Scene)은 이 객체를 GameServices로 빌려 쓰고, 다음 장면으로 넘어가도 그림 상태가 유지된다.
 class StoryArt : public IGameEventListener {
 public:
-    static constexpr int kRoundsPerStage = 4;
+    inline static const int kRoundsPerStage = 4;
 
     StoryArt(const StageCatalog& catalog, ISoundPlayer& sound, std::mt19937& rng);
 
@@ -32,7 +31,7 @@ public:
     void clearRoundEnd();            // 라운드 끝을 처리했다고 표시
     void onEvent(const GameEvent& event) override;
 
-    bool hasSession() const { return m_session.has_value(); }
+    bool hasSession() const { return m_session != nullptr; }
     StageSession& session() { return *m_session; }
     const StageSession& session() const { return *m_session; }
     int stageIndex() const { return m_stageIndex; }
@@ -61,8 +60,8 @@ private:
     ISoundPlayer& m_sound;
     std::mt19937& m_rng;
 
-    // StageArtView가 세션을 참조로 들고 있으므로, 세션은 optional 안의 같은 자리에서 다시 만든다.
-    std::optional<StageSession> m_session;
+    // StageArtView가 세션을 참조로 들고 있으므로, 세션은 한 판 동안 하나만 만들고 changeStage()로 스테이지를 바꾼다.
+    std::unique_ptr<StageSession> m_session;
     int m_stageIndex = -1;
     int m_roundInStage = 0;
     int m_lastCleared = -1;

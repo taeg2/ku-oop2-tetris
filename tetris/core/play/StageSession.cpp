@@ -1,14 +1,15 @@
 #include "play/StageSession.h"
+#include <algorithm>
 #include <array>
 #include "common/GameConfig.h"
 
 namespace {
 // 회전할 때 벽이나 블록에 막히면 옆으로 살짝 밀어 본다 (wall kick)
-constexpr std::array<Point, 6> kKicks{{{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {-2, 0}, {2, 0}}};
+const std::array<Point, 6> kKicks{{{0, 0}, {-1, 0}, {1, 0}, {0, -1}, {-2, 0}, {2, 0}}};
 }  // namespace
 
 StageSession::StageSession(const StageConfig& config, ISoundPlayer& sound, std::mt19937& rng)
-    : m_config(config),
+    : m_config(&config),
       m_rng(rng),
       m_generator(rng, config::kPillBlockChancePercent),
       m_progress(m_bus),
@@ -35,13 +36,18 @@ void StageSession::reset() {
     m_board.reset();
     m_generator.reset();
     m_progress.reset();
-    m_speed.reset(m_config.baseDropMs);
-    m_boss = m_config.makeBoss();  // 같은 객체 자리에 새 보스를 넣으므로 구독은 그대로 유지된다
+    m_speed.reset(m_config->baseDropMs);
+    m_boss = m_config->makeBoss();  // 같은 객체 자리에 새 보스를 넣으므로 구독은 그대로 유지된다
     m_inventory.clear();
     m_flashRows.clear();
     m_dropTimerMs = 0;
     m_state = State::Falling;
     spawnNext();
+}
+
+void StageSession::changeStage(const StageConfig& config) {
+    m_config = &config;
+    reset();
 }
 
 void StageSession::restartBoard() {
@@ -102,19 +108,21 @@ void StageSession::move(Point delta) {
     }
 }
 
-std::optional<Tetromino> StageSession::findRotation() const {
+bool StageSession::findRotation(Tetromino& result) const {
     const Tetromino rotated = m_current.rotated();
-    for (Point kick : kKicks) {
-        if (m_board.canPlace(rotated, kick)) {
-            return rotated.moved(kick);
-        }
+    const auto found = std::find_if(kKicks.begin(), kKicks.end(),
+                                    [&](Point kick) { return m_board.canPlace(rotated, kick); });
+    if (found == kKicks.end()) {
+        return false;
     }
-    return std::nullopt;
+    result = rotated.moved(*found);
+    return true;
 }
 
 void StageSession::rotate() {
-    if (const auto rotated = findRotation()) {
-        m_current = *rotated;
+    Tetromino rotated = m_current;
+    if (findRotation(rotated)) {
+        m_current = rotated;
     }
 }
 

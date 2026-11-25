@@ -1,5 +1,4 @@
 #pragma once
-#include <optional>
 #include <random>
 #include <vector>
 #include "block/BlockGenerator.h"
@@ -26,14 +25,15 @@ public:
     void subscribe(IGameEventListener& listener);
     void handle(Command command);
     void update(int dtMs);
-    void reset();         // 재도전: 스테이지 시작 상태로
+    void reset();                                 // 재도전: 스테이지 시작 상태로
+    void changeStage(const StageConfig& config);  // 다른 스테이지의 시작 상태로 (구독자는 그대로 유지)
     void restartBoard();  // 재도전: 사진 진행·보스·약·속도는 그대로 두고 보드만 비워 지금 라운드부터 다시
 
     bool isCleared() const { return m_state == State::Cleared; }
     bool isFailed() const { return m_state == State::Failed; }
     bool hasActivePiece() const { return m_state == State::Falling; }
 
-    const StageConfig& config() const { return m_config; }
+    const StageConfig& config() const { return *m_config; }
     const Board& board() const { return m_board; }
     const Tetromino& current() const { return m_current; }
     Tetromino ghost() const;
@@ -50,7 +50,7 @@ private:
     PlayContext context();
     bool canMove(Point delta) const;
     void move(Point delta);
-    std::optional<Tetromino> findRotation() const;  // 벽 차기(wall kick)까지 고려한 회전 결과
+    bool findRotation(Tetromino& result) const;  // 벽 차기(wall kick)까지 고려해 회전할 수 있으면 result를 채운다
     void rotate();
     void stepDown();
     void hardDrop();
@@ -60,7 +60,7 @@ private:
     void usePill(PillType type);
     void fail();
 
-    const StageConfig& m_config;
+    const StageConfig* m_config;  // 스테이지 데이터 (StageCatalog가 소유, changeStage로 바뀐다)
     std::mt19937& m_rng;
     EventBus m_bus;
     Board m_board;

@@ -50,6 +50,14 @@
 - **연결**: 로직끼리는 `EventBus`(옵저버)로 연결한다. 사진 진행은 속도·보스·약·사운드·화면을 직접 부르지 않는다.
 - **소유와 예외**: 원시 `new`/`delete`는 쓰지 않는다. 데이터 오류는 `ConfigException`, 콘솔 오류는 `ConsoleException`을 던지고, `Game::run()`이 받는다.
 
+## 코드 수준 (강의 가이드)
+- C++17, 강의에서 다룬 문법 위주로 쓴다. 강의 밖 기능(`optional`, `function`, `constexpr`, 매크로, `printf` 등)은 꼭 필요할 때만 쓴다.
+- include 아래에 `using namespace std;`를 두고 `std::`를 붙이지 않는다. 예외는 `std::move`(clang 경고)와 멤버 함수와 이름이 겹치는 곳(`std::fill` 등)이다.
+- `struct` 대신 `class`를 쓰고 필요한 곳에 `public:`을 적는다. 상속은 `public`을 명시한다.
+- 형 변환은 `static_cast`를 쓴다. C 스타일 캐스트 `(int)x`는 쓰지 않는다.
+- 클래스 상수는 `inline static const`로 쓴다.
+- 우리 함수 이름이 표준 함수와 겹치지 않게 한다 (예: `lerp` 대신 `lerpValue`). Windows 파일은 `<windows.h>`를 가장 먼저 include한다.
+
 ## 화면 문자열
 - ASCII와 한글만 쓴다. ■, ━, ·, —, ← 같은 기호는 터미널마다 폭이 달라 화면이 깨진다. 블록은 배경색을 칠한 공백으로 그린다.
 - 수치는 `common/GameConfig.h`에, 화면 배치는 그 안의 `layout`에 둔다.

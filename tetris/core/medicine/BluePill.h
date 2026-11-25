@@ -5,7 +5,7 @@
 class BluePill : public Pill {
 public:
     BluePill(double slowFactor, int durationMs);
-    void use(PlayContext& ctx) override;
+    void use(PlayContext& ctx, Inventory& bag) override;
     std::string name() const override { return "파란 약"; }
 
 private:

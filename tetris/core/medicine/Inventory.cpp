@@ -34,7 +34,7 @@ void Inventory::use(PillType type, PlayContext& ctx) {
     auto& slot = m_slots[type];
     std::unique_ptr<Pill> taken = std::move(slot.back());
     slot.pop_back();
-    taken->use(ctx);
+    taken->use(ctx, *this);
 }
 
 int Inventory::count(PillType type) const {

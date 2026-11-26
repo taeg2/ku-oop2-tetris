@@ -1,3 +1,4 @@
 #include "common/GameException.h"
+using namespace std;
 
-GameException::GameException(const std::string& message) : std::runtime_error(message) {}
+GameException::GameException(const string& message) : runtime_error(message) {}

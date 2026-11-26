@@ -1,17 +1,18 @@
 #include "stage/PhotoArt.h"
 #include <stdexcept>
 #include "common/ConfigException.h"
+using namespace std;
 
-PhotoArt::PhotoArt(std::string title, std::vector<std::string> pixels,
-                   std::array<std::string, kPieceCount> pieceCaptions, std::string albumCaption)
+PhotoArt::PhotoArt(string title, vector<string> pixels,
+                   array<string, kPieceCount> pieceCaptions, string albumCaption)
     : m_title(std::move(title)), m_pixels(std::move(pixels)),
       m_pieceCaptions(std::move(pieceCaptions)), m_albumCaption(std::move(albumCaption)) {
-    if (m_pixels.size() != static_cast<std::size_t>(kHeight)) {
-        throw ConfigException("사진 '" + m_title + "' 높이가 " + std::to_string(kHeight) + "이 아닙니다");
+    if (m_pixels.size() != static_cast<size_t>(kHeight)) {
+        throw ConfigException("사진 '" + m_title + "' 높이가 " + to_string(kHeight) + "이 아닙니다");
     }
-    for (const std::string& row : m_pixels) {
-        if (row.size() != static_cast<std::size_t>(kWidth)) {
-            throw ConfigException("사진 '" + m_title + "' 너비가 " + std::to_string(kWidth) + "이 아닙니다");
+    for (const string& row : m_pixels) {
+        if (row.size() != static_cast<size_t>(kWidth)) {
+            throw ConfigException("사진 '" + m_title + "' 너비가 " + to_string(kWidth) + "이 아닙니다");
         }
         for (char key : row) {
             colorOf(key);  // 모르는 색 문자면 여기서 예외
@@ -20,20 +21,20 @@ PhotoArt::PhotoArt(std::string title, std::vector<std::string> pixels,
 }
 
 Color PhotoArt::pixel(int x, int y) const {
-    return colorOf(m_pixels.at(static_cast<std::size_t>(y)).at(static_cast<std::size_t>(x)));
+    return colorOf(m_pixels.at(static_cast<size_t>(y)).at(static_cast<size_t>(x)));
 }
 
 Color PhotoArt::pixel(Point p) const {
     return pixel(p.x, p.y);
 }
 
-const std::string& PhotoArt::pieceCaption(int index) const {
-    return m_pieceCaptions.at(static_cast<std::size_t>(index));
+const string& PhotoArt::pieceCaption(int index) const {
+    return m_pieceCaptions.at(static_cast<size_t>(index));
 }
 
 Rect PhotoArt::quadrant(int index) {
     if (index < 0 || index >= kPieceCount) {
-        throw std::out_of_range("PhotoArt::quadrant " + std::to_string(index));
+        throw out_of_range("PhotoArt::quadrant " + to_string(index));
     }
     const int halfW = kWidth / 2;
     const int halfH = kHeight / 2;
@@ -57,6 +58,6 @@ Color PhotoArt::colorOf(char key) {
         case 'C': return Color::DarkCyan;
         case 'a': return Color::Gray;
         case 'A': return Color::DarkGray;
-        default: throw ConfigException(std::string("알 수 없는 사진 색 문자 '") + key + "'");
+        default: throw ConfigException(string("알 수 없는 사진 색 문자 '") + key + "'");
     }
 }

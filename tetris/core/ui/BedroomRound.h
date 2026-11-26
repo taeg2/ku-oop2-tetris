@@ -1,5 +1,7 @@
 #pragma once
 #include "ui/RoundScene.h"
+using namespace std;
+
 class BedroomRound : public RoundScene {
 public:
     const char* name() const override { return "Bedtime"; }
@@ -9,7 +11,7 @@ public:
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
     void track(const PlayStateReader& g, int t);
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override;
     bool playing(int t) const override { return started_ && t - start_ >= PLAY0 && (endT_ < 0 || t < endT_); }
     bool swapLeftRight() const;
@@ -26,11 +28,11 @@ private:
     static const int SHAKE2 = 16, SHAKE3 = 32, TENT_HIDE = 21, GOO_DRY = 37, DOOR_IN = 53;
     static const int TALK1 = 61, TALK2 = 83, TALK3 = 105, TALK_LEN = 20, KID_UP = 127, CRAWL1 = 143, RISE1 = 149, HOP1 = 157, LOOK1 = 163, KID_WALK0 = 165, KID_DOOR = 199;
     static const int ALL_GONE = 205, END_FADE = 216, END_LEN = 228;
-    struct Stain { std::vector<std::pair<int, int>> cells; int born; };
+    class Stain { public: vector<pair<int, int>> cells; int born; };
     bool started_ = false;
     int start_ = 0, lastT_ = 0, lines_ = 0, clearT_ = -100, clearN_ = 1;
     int eyeT_ = -1, closT_ = -1, chestT_ = -1, endT_ = -1;
-    std::vector<Stain> stains_;
+    vector<Stain> stains_;
     int nextStainT_ = -1, snatchT_ = -1, nextSnatchT_ = -1, snatchSrc_ = 0;
     int pieceX_ = 0, pieceY_ = 0;
     unsigned rng_ = 12345;

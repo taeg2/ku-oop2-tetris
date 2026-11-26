@@ -1,6 +1,7 @@
 #pragma once
 #include "block/Tetromino.h"
 #include "boss/PeriodicGimmick.h"
+using namespace std;
 
 class Board;
 
@@ -11,7 +12,7 @@ public:
     ShapeShiftGimmick(int intervalMs, int warningMs);
 
     void onPieceSpawn(PlayContext& ctx) override;
-    std::string statusText() const override;
+    string statusText() const override;
 
 protected:
     void trigger(PlayContext& ctx) override;

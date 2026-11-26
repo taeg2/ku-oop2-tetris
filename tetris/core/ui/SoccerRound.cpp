@@ -4,10 +4,12 @@
 #include "ui/Stage2UI.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 static const RGB OL{ 40, 30, 36 };
 static const int MAIN_X = 286, MAIN_Y = 250, PAL_X = 404, PAL_Y = 224, KEEP_X = 341, KEEP_Y = 147, GOAL_X = 362, GOAL_Y = 132;
-static float ease(float u) { u = std::max(0.0f, std::min(1.0f, u)); return u * u * (3 - 2 * u); }
-static int rnd(float v) { return (int)std::lround(v); }
+static float ease(float u) { u = max(0.0f, min(1.0f, u)); return u * u * (3 - 2 * u); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static const Sprite HEAD_SIDE("player head, facing right", {
 "....HHHHHH......",
 "...HHHHHHHH.....",
@@ -34,7 +36,7 @@ static const Sprite BODY_SIDE("player jersey and shorts, facing right", {
 "...KKKKKKKKK....",
 "...kKKK.KKKk....",
 }, { {'J', {54, 108, 214}}, {'j', {36, 76, 160}}, {'L', {120, 170, 250}}, {'W', {250, 250, 250}}, {'K', {246, 246, 240}}, {'k', {200, 200, 196}} });
-struct Look { RGB hair, hairL, jersey, jerseyD; };
+class Look { public: RGB hair, hairL, jersey, jerseyD; };
 static const Look MAIN{ {168, 92, 44}, {206, 128, 64}, {54, 108, 214}, {36, 76, 160} };
 static const Look PAL{ {44, 34, 44}, {78, 64, 80}, {54, 108, 214}, {36, 76, 160} };
 static void outlineCopy(Frame& f, const Frame& tmp, uint8_t key, int w, int h, int dx, int dy, bool flip) {
@@ -134,8 +136,8 @@ static void ball(Frame& f, int x, int y, int h, int t) {
     f.set(x - 1 + r, by - 1, C(OL)); f.set(x + 1 - r, by + 1, C(OL)); f.set(x - 2, by + 1 - r, C(OL)); f.set(x + 2, by - 2 + r, C(80, 80, 90));
 }
 void SoccerRound::reset() { queue_.clear(); curT_ = -1; holder_ = 0; shooter_ = 0; passes_ = 0; saves_ = 0; last_ = 0; goalT_ = -1; drop_ = false; armed_ = false; dropT_ = -100; lines_ = 0; }
-void SoccerRound::onLinesCleared(const std::vector<int>&, int totalLines, int) {
-    for (int l = lines_ + 1; l <= std::min(totalLines, 10); ++l) {
+void SoccerRound::onLinesCleared(const vector<int>&, int totalLines, int) {
+    for (int l = lines_ + 1; l <= min(totalLines, 10); ++l) {
         if (l == 10) queue_.push_back({ GOAL, l });
         else if (l == 3 || l == 5 || l == 7) queue_.push_back({ BLOCK, l });
         else queue_.push_back({ PASS, l });
@@ -165,7 +167,7 @@ void SoccerRound::update(const PlayStateReader& g, int t) {
 }
 int SoccerRound::pieceTop(const PlayStateReader& g) {
     int y = PlayStateReader::kRows;
-    for (auto& p : g.pieceCells()) y = std::min(y, p.second);
+    for (auto& p : g.pieceCells()) y = min(y, p.second);
     return y;
 }
 void SoccerRound::track(const PlayStateReader& g, int t) {
@@ -180,18 +182,18 @@ void SoccerRound::ballPos(int t, float& x, float& y, float& h) const {
     float mx = MAIN_X + 9, my = MAIN_Y, px = PAL_X - 9, py = PAL_Y;
     x = holder_ == 0 ? mx : px; y = holder_ == 0 ? my : py; h = 0;
     if (goalT_ >= 0) { x = GOAL_X; y = GOAL_Y; h = 6; return; }
-    if (curT_ < 0) { h = (float)((t / 4) % 2); return; }
+    if (curT_ < 0) { h = static_cast<float>((t / 4) % 2); return; }
     int a = t - curT_;
     float fx = holder_ == 0 ? mx : px, fy = holder_ == 0 ? my : py;
     if (cur_.k == PASS) {
-        float u = ease(a / (float)PASS_LEN), tx = holder_ == 0 ? px : mx, ty = holder_ == 0 ? py : my;
-        x = fx + (tx - fx) * u; y = fy + (ty - fy) * u; h = std::sin(u * 3.1416f) * 6;
+        float u = ease(a / static_cast<float>(PASS_LEN)), tx = holder_ == 0 ? px : mx, ty = holder_ == 0 ? py : my;
+        x = fx + (tx - fx) * u; y = fy + (ty - fy) * u; h = sin(u * 3.1416f) * 6;
         return;
     }
     float gx = cur_.k == GOAL ? GOAL_X : KEEP_X + 8, gy = cur_.k == GOAL ? GOAL_Y : KEEP_Y - 2;
-    if (a < SHOT_LEN) { float u = a / (float)SHOT_LEN; x = fx + (gx - fx) * u; y = fy + (gy - fy) * u; h = std::sin(u * 3.1416f) * 22 + u * 14; return; }
-    float u = ease((a - SHOT_LEN) / (float)BOUNCE_LEN), tx = shooter_ == 0 ? px : mx, ty = shooter_ == 0 ? py : my;
-    x = gx + (tx - gx) * u; y = gy + (ty - gy) * u; h = 14 * (1 - u) + std::sin(u * 3.1416f) * 20;
+    if (a < SHOT_LEN) { float u = a / static_cast<float>(SHOT_LEN); x = fx + (gx - fx) * u; y = fy + (gy - fy) * u; h = sin(u * 3.1416f) * 22 + u * 14; return; }
+    float u = ease((a - SHOT_LEN) / static_cast<float>(BOUNCE_LEN)), tx = shooter_ == 0 ? px : mx, ty = shooter_ == 0 ? py : my;
+    x = gx + (tx - gx) * u; y = gy + (ty - gy) * u; h = 14 * (1 - u) + sin(u * 3.1416f) * 20;
 }
 void SoccerRound::drawSchool(Frame& f, int t) {
     uint8_t ol = C(OL), wall = C(242, 230, 204), wallL = C(250, 242, 222), wallD = C(218, 202, 170), band = C(206, 186, 150), trim = C(170, 72, 60), trimD = C(126, 50, 44), trimL = C(206, 108, 88);
@@ -219,8 +221,8 @@ void SoccerRound::drawSchool(Frame& f, int t) {
     f.rect(203, 2, 98, 7, ol); f.rect(204, 3, 96, 5, trim); f.hline(204, 299, 3, trimL);
     const int cy = 9;
     f.disc(252, cy, 10, ol); f.disc(252, cy, 9, trim); f.disc(252, cy, 7, ol); f.disc(252, cy, 6, C(252, 250, 240));
-    for (int h = 0; h < 12; h += 3) { float a = h * 0.5236f; f.set(252 + rnd(std::cos(a) * 5), cy + rnd(std::sin(a) * 5), ol); }
-    float ha = t * 0.01f - 1.5708f; f.line(252, cy, 252 + rnd(std::cos(ha) * 3), cy + rnd(std::sin(ha) * 3), ol); f.line(252, cy, 252 + rnd(std::cos(ha * 12) * 5), cy + rnd(std::sin(ha * 12) * 5), C(200, 60, 60));
+    for (int h = 0; h < 12; h += 3) { float a = h * 0.5236f; f.set(252 + rnd(cos(a) * 5), cy + rnd(sin(a) * 5), ol); }
+    float ha = t * 0.01f - 1.5708f; f.line(252, cy, 252 + rnd(cos(ha) * 3), cy + rnd(sin(ha) * 3), ol); f.line(252, cy, 252 + rnd(cos(ha * 12) * 5), cy + rnd(sin(ha * 12) * 5), C(200, 60, 60));
     f.rect(212, 21, 80, 12, ol); f.rect(213, 22, 78, 10, C(36, 70, 56)); f.hline(213, 290, 22, C(60, 100, 80));
     Font::center(f, older(t) ? "HIGH SCHOOL" : "MIDDLE SCHOOL", 252, 24, C(244, 214, 120));
     win(218, 38, 2); win(244, 38, 4); win(270, 38, 6);
@@ -233,7 +235,7 @@ void SoccerRound::drawField(Frame& f) {
     uint8_t line = C(244, 248, 236), lineF = C(222, 236, 214);
     for (int y = 120; y < 270; ++y) {
         float d = (y - 120) / 150.0f;
-        int band = (int)(std::pow(d + 0.08f, 0.75f) * 8);
+        int band = static_cast<int>(pow(d + 0.08f, 0.75f) * 8);
         f.hline(0, 479, y, band % 2 ? C(104, 172, 74) : C(118, 186, 84));
     }
     uint8_t fence = C(70, 120, 84), fenceL = C(96, 150, 104), post = C(60, 70, 66);
@@ -247,15 +249,15 @@ void SoccerRound::drawField(Frame& f) {
     f.line(262, 138, 236, 186, line); f.line(236, 186, 446, 186, line); f.line(446, 186, 420, 138, line);
     f.line(300, 138, 294, 150, line); f.line(294, 150, 388, 150, line); f.line(388, 150, 382, 138, line);
     f.disc(341, 170, 1, line);
-    for (int i = 0; i <= 40; ++i) { float a = 3.1416f * i / 40; int x = 341 + rnd(std::cos(a) * 34), y = 186 + rnd(std::sin(a) * 9); if (y > 186) f.set(x, y, line); }
+    for (int i = 0; i <= 40; ++i) { float a = 3.1416f * i / 40; int x = 341 + rnd(cos(a) * 34), y = 186 + rnd(sin(a) * 9); if (y > 186) f.set(x, y, line); }
     f.hline(0, 479, 262, line);
-    for (int i = 0; i <= 120; ++i) { float a = 3.1416f + 3.1416f * i / 120; int x = 341 + rnd(std::cos(a) * 74), y = 280 + rnd(std::sin(a) * 30); f.set(x, y, line); f.set(x, y + 1, line); }
+    for (int i = 0; i <= 120; ++i) { float a = 3.1416f + 3.1416f * i / 120; int x = 341 + rnd(cos(a) * 74), y = 280 + rnd(sin(a) * 30); f.set(x, y, line); f.set(x, y + 1, line); }
     for (int k = 0; k < 40; ++k) { int x = (k * 73) % 470 + 5, y = 140 + (k * 41) % 126; f.set(x, y, C(146, 204, 104)); f.set(x + 1, y - 1, C(146, 204, 104)); }
 }
 void SoccerRound::drawGoal(Frame& f, int t, bool front) {
     const int L = 296, R = 386, B = 138, T = 104, dx = 6, dy = 10;
     uint8_t post = C(252, 252, 250), postD = C(196, 198, 204), net = C(214, 226, 232), netD = C(176, 192, 200), ol = C(OL);
-    int bulge = goalT_ >= 0 && t - goalT_ < 8 ? 3 - std::abs(t - goalT_ - 3) : 0;
+    int bulge = goalT_ >= 0 && t - goalT_ < 8 ? 3 - abs(t - goalT_ - 3) : 0;
     if (!front) {
         int bl = L + dx, br = R - dx, bt = T - dy + 6, bb = B - dy;
         f.poly({ {bl, bt}, {br, bt}, {br, bb}, {bl, bb} }, C(150, 190, 150));
@@ -275,7 +277,7 @@ void SoccerRound::drawGoal(Frame& f, int t, bool front) {
 }
 void SoccerRound::drawKeeper(Frame& f, int t) {
     if (older(t)) return;
-    int pose = (t / 6) % 2 == 0 ? 0 : 1, x = KEEP_X + (int)std::lround(std::sin(t * 0.3f) * 2);
+    int pose = (t / 6) % 2 == 0 ? 0 : 1, x = KEEP_X + static_cast<int>(lround(sin(t * 0.3f) * 2));
     if (curT_ >= 0 && cur_.k == BLOCK) { int a = t - curT_; if (a >= SHOT_LEN - 3 && a < SHOT_LEN + 6) pose = 2; }
     if (goalT_ >= 0) pose = 3;
     keeperSprite(f, x, KEEP_Y, pose);
@@ -298,7 +300,7 @@ void SoccerRound::drawPlayers(Frame& f, int t) {
         int g = t - goalT_;
         int jump = (g % 6 < 3) ? -(g % 6) * 3 : -(6 - g % 6) * 3;
         pm = 4; pp = 4; my += jump; py += jump;
-        if (g > 16) { mx = MAIN_X + std::min(40, (g - 16) * 3); }
+        if (g > 16) { mx = MAIN_X + min(40, (g - 16) * 3); }
     }
     bool palFlip = !(kicker == 1 && cur_.k != PASS) && goalT_ < 0;
     player(f, px, py, PAL, pp, palFlip);
@@ -332,9 +334,9 @@ void SoccerRound::drawNext(Frame& f, int piece, int t) {
     f.rect(x - 2, y - 2, 76, 64, ol); f.rect(x - 1, y - 1, 74, 62, C(200, 200, 206)); f.rect(x + 1, y + 1, 70, 58, panel);
     f.rect(x + 40, y + 24, 28, 32, ol); f.rect(x + 41, y + 25, 26, 30, C(24, 34, 30));
     Font::center(f, "NEXT", x + 54, y + 27, C(250, 220, 120));
-    std::vector<std::pair<int, int>> cs = SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
-    for (auto& c : cs) { mx = std::min(mx, c.first); my = std::min(my, c.second); Mx = std::max(Mx, c.first); My = std::max(My, c.second); }
+    for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
     int bw = (Mx - mx + 1) * 6, bh = (My - my + 1) * 6;
     if (goalT_ < 0 || older(t)) for (auto& c : cs) ToyBlocks::cell6(f, x + 54 - bw / 2 + (c.first - mx) * 6, y + 44 - bh / 2 + (c.second - my) * 6, piece);
 }
@@ -344,8 +346,8 @@ void SoccerRound::drawHud(Frame& f, int, int t) {
     uint8_t lit = C(250, 220, 120), dim = C(90, 110, 96), red = C(240, 96, 80);
     int score = goalT_ >= 0 && t - goalT_ > 4 && !older(t) ? 1 : 0;
     Font::draw(f, "HOME", x + 4, y + 4, lit); Font::draw(f, "AWAY", x + 46, y + 4, lit);
-    Font::center(f, std::to_string(score), x + 15, y + 12, score ? red : lit); Font::center(f, ":", x + 36, y + 12, lit); Font::center(f, "0", x + 57, y + 12, lit);
-    int n = older(t) ? 0 : std::min(lines_, 10);
+    Font::center(f, to_string(score), x + 15, y + 12, score ? red : lit); Font::center(f, ":", x + 36, y + 12, lit); Font::center(f, "0", x + 57, y + 12, lit);
+    int n = older(t) ? 0 : min(lines_, 10);
     Font::draw(f, "PASS", x + 4, y + 26, lit);
     for (int i = 0; i < 10; ++i) {
         int bx = x + 4 + (i % 5) * 7, by = y + 36 + (i / 5) * 8;
@@ -367,26 +369,26 @@ void SoccerRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     }
     if (goalT_ >= 0) {
         int g = t - goalT_;
-        if (g < PAN_UP && (g / 3) % 4 != 3) Font::center(f, "GOAL!!", 341, 160 - std::min(g, 8), C(250, 220, 120), ol);
+        if (g < PAN_UP && (g / 3) % 4 != 3) Font::center(f, "GOAL!!", 341, 160 - min(g, 8), C(250, 220, 120), ol);
         for (int k = 0; k < 24 && g < PAN_UP; ++k) {
             int cx = (k * 41 + g * (2 + k % 3)) % 300 + 180, cy = (k * 23 + g * 3) % 150 + 20;
             static const RGB cc[4] = { {240, 96, 80}, {250, 220, 120}, {120, 180, 250}, {250, 250, 250} };
             f.rect(cx, cy, 2, 2, C(cc[k % 4]));
         }
         int p = 0;
-        if (g >= PAN_UP && g < LAPSE) p = rnd(270 * ease((g - PAN_UP) / (float)(LAPSE - PAN_UP)));
+        if (g >= PAN_UP && g < LAPSE) p = rnd(270 * ease((g - PAN_UP) / static_cast<float>(LAPSE - PAN_UP)));
         else if (g >= LAPSE && g < PAN_DOWN) p = 270;
-        else if (g >= PAN_DOWN && g < HOLD) p = rnd(270 * (1 - ease((g - PAN_DOWN) / (float)(HOLD - PAN_DOWN))));
+        else if (g >= PAN_DOWN && g < HOLD) p = rnd(270 * (1 - ease((g - PAN_DOWN) / static_cast<float>(HOLD - PAN_DOWN))));
         if (p > 0) {
-            static Frame sky, copy;
+            static Frame sky, saved;
             drawSky(sky, g);
-            copy.px = f.px;
+            saved.px = f.px;
             for (int y = 0; y < 270; ++y) {
-                if (y < p) std::copy(sky.px.begin() + (270 - p + y) * 480, sky.px.begin() + (271 - p + y) * 480, f.px.begin() + y * 480);
-                else std::copy(copy.px.begin() + (y - p) * 480, copy.px.begin() + (y - p + 1) * 480, f.px.begin() + y * 480);
+                if (y < p) copy(sky.px.begin() + (270 - p + y) * 480, sky.px.begin() + (271 - p + y) * 480, f.px.begin() + y * 480);
+                else copy(saved.px.begin() + (y - p) * 480, saved.px.begin() + (y - p + 1) * 480, f.px.begin() + y * 480);
             }
         }
-        if (g >= END - 12) { float k = std::min(1.0f, (g - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
+        if (g >= END - 12) { float k = min(1.0f, (g - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
     }
 }
 static float pathX(float y) { return 252 + (y - 113) / 156.0f * 88; }
@@ -411,7 +413,7 @@ void SoccerRound::drawPlaza(Frame& f, int t) {
     f.poly({ {380, 160}, {479, 160}, {479, 269}, {400, 269} }, grass); for (int k = 0; k < 30; ++k) { int gx = 392 + (k * 37) % 86, gy = 166 + (k * 23) % 100; f.vline(gx, gy, gy + 2, grassD); f.set(gx + 1, gy, grassD); }
     f.poly({ {380, 160}, {479, 160}, {479, 162}, {381, 162} }, ol);
     f.poly({ {236, 113}, {268, 113}, {380, 269}, {300, 269} }, walk);
-    for (int y = 120, s = 5; y < 270; y += s, s += 1) { float c = pathX((float)y), w = 16 + (y - 113) / 156.0f * 24; f.hline((int)(c - w), (int)(c + w), y, walkD); }
+    for (int y = 120, s = 5; y < 270; y += s, s += 1) { float c = pathX(static_cast<float>(y)), w = 16 + (y - 113) / 156.0f * 24; f.hline(static_cast<int>(c - w), static_cast<int>(c + w), y, walkD); }
     f.line(236, 113, 300, 269, ol); f.line(268, 113, 380, 269, ol);
     f.rect(212, 34, 80, 14, ol); f.rect(213, 35, 78, 12, red); f.hline(213, 290, 35, redL); f.hline(213, 290, 46, redD);
     f.poly({ {213, 47}, {219, 47}, {216, 51} }, red); f.poly({ {285, 47}, {291, 47}, {288, 51} }, red);
@@ -435,16 +437,16 @@ void SoccerRound::drawPlaza(Frame& f, int t) {
 }
 void SoccerRound::drawFirstDay(Frame& f, int t) {
     int h = t - goalT_ - PAN_DOWN;
-    struct A { int x, feet; RGB hair; bool flip; int step; bool smile; bool bag; };
-    std::vector<A> as;
+    class A { public: int x, feet; RGB hair; bool flip; int step; bool smile; bool bag; };
+    vector<A> as;
     static const RGB hair[6] = { {44, 34, 44}, {96, 60, 40}, {30, 26, 30}, {140, 96, 56}, {60, 44, 36}, {20, 20, 24} };
-    auto lit = [](RGB c) { return RGB{ std::min(255, c.r + 30), std::min(255, c.g + 24), std::min(255, c.b + 20) }; };
+    auto lit = [](RGB c) { return RGB{ min(255, c.r + 30), min(255, c.g + 24), min(255, c.b + 20) }; };
     for (int k = 0; k < 5; ++k) {
         int a = (h + k * 16) % 80;
         float y = 276 - a * 3.0f;
         if (y < 118 || y > 280) continue;
         int side = k % 2 ? -14 : -4;
-        as.push_back({ (int)pathX(y) + side, (int)y, hair[k % 6], true, a / 2, false, true });
+        as.push_back({ static_cast<int>(pathX(y)) + side, static_cast<int>(y), hair[k % 6], true, a / 2, false, true });
     }
     as.push_back({ 204, 238, hair[3], false, 0, true, true });
     as.push_back({ 228, 238, hair[2], true, 0, (t / 10) % 3 == 0, true });
@@ -453,21 +455,21 @@ void SoccerRound::drawFirstDay(Frame& f, int t) {
     float my = 262;
     int mstep = 0;
     if (h >= 46) { my = 262 - (h - 46) * 3.5f; mstep = (h - 46) / 2; }
-    if (my >= 118) as.push_back({ (int)pathX(my) + 14, (int)my, RGB{ 168, 92, 44 }, true, mstep, h >= 30, true });
-    std::sort(as.begin(), as.end(), [](const A& p, const A& q) { return p.feet < q.feet; });
+    if (my >= 118) as.push_back({ static_cast<int>(pathX(my)) + 14, static_cast<int>(my), RGB{ 168, 92, 44 }, true, mstep, h >= 30, true });
+    sort(as.begin(), as.end(), [](const A& p, const A& q) { return p.feet < q.feet; });
     for (auto& a : as) studentSprite(f, a.x, a.feet, a.hair, lit(a.hair), a.flip, a.step, a.smile, a.bag);
     uint8_t pk = C(244, 178, 198), pkL = C(252, 214, 226);
     for (int k = 0; k < 36; ++k) {
-        int px = (k * 53 + t * (1 + k % 2) + (int)(std::sin((t + k * 7) * 0.2f) * 5)) % 480, py = (k * 31 + t * (2 + k % 3)) % 270;
+        int px = (k * 53 + t * (1 + k % 2) + static_cast<int>(sin((t + k * 7) * 0.2f) * 5)) % 480, py = (k * 31 + t * (2 + k % 3)) % 270;
         if (px > 90 && px < 190 && py > 50 && py < 230) continue;
         f.set(px, py, k % 3 ? pk : pkL); if (k % 2) f.set(px + 1, py, pk);
     }
 }
 
 void SoccerRound::drawSky(Frame& f, int g) {
-    float u = std::max(0.0f, std::min(1.0f, (g - LAPSE) / (float)(PAN_DOWN - LAPSE)));
+    float u = max(0.0f, min(1.0f, (g - LAPSE) / static_cast<float>(PAN_DOWN - LAPSE)));
     float ph = 6.2832f * 7 * u * u;
-    float night = (1 - std::cos(ph)) / 2, dusk = std::max(0.0f, std::sin(ph * 2)) * (1 - std::abs(night - 0.5f) * 2) * 0.8f;
+    float night = (1 - cos(ph)) / 2, dusk = max(0.0f, sin(ph * 2)) * (1 - abs(night - 0.5f) * 2) * 0.8f;
     auto mixc = [](RGB a, RGB b, float k) { return RGB{ rnd(a.r + (b.r - a.r) * k), rnd(a.g + (b.g - a.g) * k), rnd(a.b + (b.b - a.b) * k) }; };
     RGB top = mixc(mixc({ 110, 180, 240 }, { 12, 18, 48 }, night), { 120, 80, 150 }, dusk * 0.5f);
     RGB mid = mixc(mixc({ 150, 206, 244 }, { 28, 36, 80 }, night), { 240, 140, 110 }, dusk);
@@ -476,14 +478,14 @@ void SoccerRound::drawSky(Frame& f, int g) {
     for (int k = 0; k < 70; ++k) {
         int x = (k * 137) % 480, y = (k * 71) % 250;
         float tw = night - 0.35f - ((k * 13) % 7) * 0.04f;
-        if (tw > 0) f.set(x, y, C(mixc(bot, { 255, 255, 240 }, std::min(1.0f, tw * 2))));
+        if (tw > 0) f.set(x, y, C(mixc(bot, { 255, 255, 240 }, min(1.0f, tw * 2))));
         if (tw > 0.4f && k % 5 == 0) { f.set(x + 1, y, C(200, 210, 240)); f.set(x - 1, y, C(200, 210, 240)); f.set(x, y + 1, C(200, 210, 240)); f.set(x, y - 1, C(200, 210, 240)); }
     }
     float sa = 3.1416f + ph, ma = ph;
-    int sx = 240 + rnd(std::cos(sa) * 230), sy = 300 + rnd(std::sin(sa) * 250), mx = 240 + rnd(std::cos(ma) * 230), my = 300 + rnd(std::sin(ma) * 250);
+    int sx = 240 + rnd(cos(sa) * 230), sy = 300 + rnd(sin(sa) * 250), mx = 240 + rnd(cos(ma) * 230), my = 300 + rnd(sin(ma) * 250);
     if (sy < 290) {
         uint8_t ray = C(mixc({ 255, 236, 150 }, bot, 0.4f));
-        for (int k = 0; k < 8; ++k) { float a = k * 0.785f + ph * 0.2f; f.line(sx + rnd(std::cos(a) * 18), sy + rnd(std::sin(a) * 18), sx + rnd(std::cos(a) * 25), sy + rnd(std::sin(a) * 25), ray); }
+        for (int k = 0; k < 8; ++k) { float a = k * 0.785f + ph * 0.2f; f.line(sx + rnd(cos(a) * 18), sy + rnd(sin(a) * 18), sx + rnd(cos(a) * 25), sy + rnd(sin(a) * 25), ray); }
         f.disc(sx, sy, 14, C(255, 214, 90)); f.disc(sx, sy, 12, C(255, 236, 140)); f.disc(sx - 4, sy - 4, 4, C(255, 250, 210));
     }
     if (my < 290) {
@@ -492,9 +494,9 @@ void SoccerRound::drawSky(Frame& f, int g) {
     }
     float speed = 1 + u * u * 30;
     for (int k = 0; k < 6; ++k) {
-        int cx = ((int)(k * 97 + g * speed * (1 + k % 3))) % 600 - 60, cy = 30 + k * 36;
+        int cx = (static_cast<int>(k * 97 + g * speed * (1 + k % 3))) % 600 - 60, cy = 30 + k * 36;
         RGB cc = mixc({ 252, 252, 252 }, { 70, 80, 120 }, night);
-        int len = std::min(60, (int)(speed * 1.5f));
+        int len = min(60, static_cast<int>(speed * 1.5f));
         f.ellipse(cx, cy, 18 + len / 2, 5, C(cc)); f.ellipse(cx + 10, cy - 4, 10 + len / 3, 5, C(cc));
     }
 }

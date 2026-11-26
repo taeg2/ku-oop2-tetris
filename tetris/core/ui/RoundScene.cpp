@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <cmath>
 #include "ui/PixelFont.h"
+using namespace std;
+
 static const RGB OUTLINE{ 42, 26, 28 }, WOOD_L{ 224, 180, 118 }, WOOD{ 156, 104, 62 }, WOOD_D{ 114, 72, 50 };
 void RoundScene::drawBoardFrame(Frame& f, int ) {
     int bx = boardX(), by = boardY();
@@ -65,15 +67,15 @@ void RoundScene::flyToBook(Frame& f, int m, int sx, int sy, ItemDraw item, const
     if (m < 0 || m >= 26) return;
     uint8_t ol = C(OUTLINE), glow = C(255, 250, 200), gold = C(250, 222, 110);
     auto star = [&](int x, int y) { f.set(x, y, glow); f.set(x - 1, y, gold); f.set(x + 1, y, gold); f.set(x, y - 1, gold); f.set(x, y + 1, gold); };
-    if (m < 10) for (int k = 0; k < 8; ++k) { float a = k * 0.785f + m * 0.3f, r = 10.0f + m * 2; star(sx + (int)std::lround(std::cos(a) * r), sy + (int)std::lround(std::sin(a) * r * 0.6f)); }
-    float u = std::max(0.0f, std::min(1.0f, (m - 4) / 10.0f));
-    int ix = sx + (int)std::lround((34 - sx) * u), iy = sy + (int)std::lround((236 - sy) * u) - (int)std::lround(std::sin(u * 3.14159f) * 60);
+    if (m < 10) for (int k = 0; k < 8; ++k) { float a = k * 0.785f + m * 0.3f, r = 10.0f + m * 2; star(sx + static_cast<int>(lround(cos(a) * r)), sy + static_cast<int>(lround(sin(a) * r * 0.6f))); }
+    float u = max(0.0f, min(1.0f, (m - 4) / 10.0f));
+    int ix = sx + static_cast<int>(lround((34 - sx) * u)), iy = sy + static_cast<int>(lround((236 - sy) * u)) - static_cast<int>(lround(sin(u * 3.14159f) * 60));
     int bounce = (m >= 14 && m < 18) ? (m % 2 ? 3 : 1) : 0;
     if (m >= 14) drawMemoryBook(f, 6, 226 - bounce);
     if (m < 15) { item(f, ix, iy - (m < 4 ? m : 4), t); if (m >= 4) { star(ix - 10, iy + 2); star(ix + 10, iy - 4); } }
     if (m >= 14 && m < 24) {
         int r = (m - 14) * 3 + 6;
-        for (int k = 0; k < 8; ++k) { float a = k * 0.785f; star(34 + (int)std::lround(std::cos(a) * r), 242 + (int)std::lround(std::sin(a) * r * 0.7f)); }
+        for (int k = 0; k < 8; ++k) { float a = k * 0.785f; star(34 + static_cast<int>(lround(cos(a) * r)), 242 + static_cast<int>(lround(sin(a) * r * 0.7f))); }
         if (m < 20) Font::center(f, label, 40, 212 - (m - 14), C(252, 228, 152), ol);
     }
 }

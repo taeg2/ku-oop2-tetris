@@ -1,14 +1,16 @@
 #include "block/Tetromino.h"
+using namespace std;
 
 namespace {
 
-struct ShapeData {
-    std::array<Point, Tetromino::kCellCount> cells;
+class ShapeData {
+public:
+    array<Point, Tetromino::kCellCount> cells;
     int boxSize;  // 회전 기준이 되는 정사각형 크기
 };
 
 // 회전 0 상태의 모양. 나머지 회전은 boxSize 안에서 시계 방향으로 계산한다.
-const std::array<ShapeData, kTetrominoTypeCount> kShapes = {{
+const array<ShapeData, kTetrominoTypeCount> kShapes = {{
     {{{{0, 1}, {1, 1}, {2, 1}, {3, 1}}}, 4},  // I
     {{{{0, 0}, {1, 0}, {0, 1}, {1, 1}}}, 2},  // O
     {{{{1, 0}, {0, 1}, {1, 1}, {2, 1}}}, 3},  // T

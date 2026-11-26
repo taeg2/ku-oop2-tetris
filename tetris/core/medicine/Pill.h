@@ -3,6 +3,7 @@
 #include <string>
 #include "medicine/PillType.h"
 #include "play/PlayContext.h"
+using namespace std;
 
 class Inventory;
 
@@ -15,10 +16,10 @@ public:
 
     virtual bool canUse(const PlayContext& ctx) const;
     virtual void use(PlayContext& ctx, Inventory& bag) = 0;
-    virtual std::string name() const = 0;
+    virtual string name() const = 0;
     PillType type() const { return m_type; }
 
-    static std::unique_ptr<Pill> create(PillType type);  // 팩토리
+    static unique_ptr<Pill> create(PillType type);  // 팩토리
 
 protected:
     PillType m_type;

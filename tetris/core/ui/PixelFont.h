@@ -1,5 +1,7 @@
 #pragma once
 #include "ui/PixelArt.h"
+using namespace std;
+
 class Font {
 public:
     static const char* glyph(char ch) {
@@ -77,21 +79,21 @@ public:
         default:  return nullptr;
         }
     }
-    static int width(const std::string& s) { return (int)s.size() * 6 - 1; }
-    static void draw(Frame& f, const std::string& s, int x, int y, uint8_t c, int shadow = -1) {
+    static int width(const string& s) { return static_cast<int>(s.size()) * 6 - 1; }
+    static void draw(Frame& f, const string& s, int x, int y, uint8_t c, int shadow = -1) {
         for (size_t k = 0; k < s.size(); ++k) {
             const char* g = glyph(s[k]);
             if (!g) continue;
             for (int i = 0; i < 25; ++i)
                 if (g[i] == '#') {
-                    int px = x + (int)k * 6 + i % 5, py = y + i / 5;
-                    if (shadow >= 0) f.set(px, py + 1, (uint8_t)shadow);
+                    int px = x + static_cast<int>(k) * 6 + i % 5, py = y + i / 5;
+                    if (shadow >= 0) f.set(px, py + 1, static_cast<uint8_t>(shadow));
                 }
             for (int i = 0; i < 25; ++i)
-                if (g[i] == '#') f.set(x + (int)k * 6 + i % 5, y + i / 5, c);
+                if (g[i] == '#') f.set(x + static_cast<int>(k) * 6 + i % 5, y + i / 5, c);
         }
     }
-    static void center(Frame& f, const std::string& s, int cx, int y, uint8_t c, int shadow = -1) {
+    static void center(Frame& f, const string& s, int cx, int y, uint8_t c, int shadow = -1) {
         draw(f, s, cx - width(s) / 2, y, c, shadow);
     }
 };

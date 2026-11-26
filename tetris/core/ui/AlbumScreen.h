@@ -1,6 +1,8 @@
 #pragma once
 #include "ui/PixelArt.h"
 #include <algorithm>
+using namespace std;
+
 // 앨범 그림과 상태 (책, 걸린 사진, 상세 보기, 페이지 넘김). 입력 연결은 AlbumView가 한다
 class AlbumScreen {
 public:
@@ -24,7 +26,7 @@ public:
     void startFlip(int t) { flipT_ = t; }
     bool flipping() const { return flipT_ >= 0; }
     bool flipDone(int t) const { return flipT_ >= 0 && t - flipT_ >= FLIP_END; }
-    void endFlip() { flipT_ = -1; stage_ = std::min(STAGES - 1, stage_ + 1); }
+    void endFlip() { flipT_ = -1; stage_ = min(STAGES - 1, stage_ + 1); }
     int openedAt() const { return openT_; }
     static int available(int) { return SLOTS; }
     static void drawIcon(Frame& f, int slot, int cx, int cy);  // 라운드 사진 그림 (52x36), slot = stage * 4 + 칸

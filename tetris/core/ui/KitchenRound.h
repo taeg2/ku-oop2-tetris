@@ -1,11 +1,13 @@
 #pragma once
 #include "ui/RoundScene.h"
+using namespace std;
+
 class KitchenRound : public RoundScene {
 public:
     const char* name() const override { return "Dinner"; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override { return endStart_ >= 0 && endFrame_ >= FADE0 + 12; }
     void specialEvent(int t);
 protected:
@@ -20,12 +22,12 @@ private:
     static const int KID_STAND = 45, KID_HOP = 4, KID_WALK0 = 55, KID_WALK1 = 119, KID_IN0 = 121, KID_GONE = 129;
     static const int DOOR_CLOSE = 130, WORM0 = 2, WORM_END = 44, THROW = 12, THROW_LEN = 12;
     static const int BEAR0 = 136, BEAR_STAND = 174, BEAR_WALK0 = 177, BEAR_WALK1 = 274, KNOB = 278, BEAR_TURN = 288, FADE0 = 302;
-    struct Flyer { int start; int col[3]; float sx[3], sy[3], tx; };
-    struct Fish { int born; float sx; int col; };
-    std::vector<Flyer> flyers_;
-    std::vector<Fish> fish_;
-    std::vector<int> bites_;
-    std::vector<int> splashes_; std::vector<float> splashX_;
+    class Flyer { public: int start; int col[3]; float sx[3], sy[3], tx; };
+    class Fish { public: int born; float sx; int col; };
+    vector<Flyer> flyers_;
+    vector<Fish> fish_;
+    vector<int> bites_;
+    vector<int> splashes_; vector<float> splashX_;
     int lastT_ = 0, earnedT_ = -1, endStart_ = -1, endFrame_ = 0, kickT_ = -100, lastNext_ = -1, endPiece_ = 0;
     int c() const { return endStart_ >= 0 ? endFrame_ : -1000; }
     void bitePose(int t, float& bite, bool& chew, int& eaten) const;

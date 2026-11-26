@@ -1,7 +1,8 @@
 #include "boss/Boss.h"
 #include "common/ConfigException.h"
+using namespace std;
 
-Boss::Boss(std::string name, std::string symptom, std::string entranceLine, std::unique_ptr<BossGimmick> gimmick)
+Boss::Boss(string name, string symptom, string entranceLine, unique_ptr<BossGimmick> gimmick)
     : m_name(std::move(name)), m_symptom(std::move(symptom)), m_entranceLine(std::move(entranceLine)),
       m_gimmick(std::move(gimmick)) {
     if (!m_gimmick) {
@@ -39,6 +40,6 @@ void Boss::onPieceSpawn(PlayContext& ctx) {
     }
 }
 
-std::string Boss::statusText() const {
+string Boss::statusText() const {
     return m_active ? m_gimmick->statusText() : "";
 }

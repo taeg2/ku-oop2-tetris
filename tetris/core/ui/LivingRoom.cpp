@@ -2,15 +2,17 @@
 #include "ui/Stage3Art.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 using namespace Stage3Art;
 static const int FLOOR_Y = 222;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static void clock(Frame& f, int cx, int cy, int spd, int t) {
     uint8_t ol = C(OLC);
     f.disc(cx, cy, 13, ol); f.disc(cx, cy, 12, C(250, 248, 238)); f.disc(cx, cy, 10, C(244, 240, 228));
-    for (int k = 0; k < 4; ++k) f.set(cx + rnd(std::cos(k * 1.5708f) * 10), cy + rnd(std::sin(k * 1.5708f) * 10), ol);
+    for (int k = 0; k < 4; ++k) f.set(cx + rnd(cos(k * 1.5708f) * 10), cy + rnd(sin(k * 1.5708f) * 10), ol);
     float am = t * 0.1f * spd, ah = am / 12;
-    f.line(cx, cy, cx + rnd(std::cos(ah) * 5), cy + rnd(std::sin(ah) * 5), ol); f.line(cx, cy, cx + rnd(std::cos(am) * 9), cy + rnd(std::sin(am) * 9), C(200, 60, 60));
+    f.line(cx, cy, cx + rnd(cos(ah) * 5), cy + rnd(sin(ah) * 5), ol); f.line(cx, cy, cx + rnd(cos(am) * 9), cy + rnd(sin(am) * 9), C(200, 60, 60));
 }
 static RGB dk(RGB c, float k) { return mix(c, RGB{ 40, 20, 24 }, k); }
 static RGB lt(RGB c, float k) { return mix(c, RGB{ 255, 246, 220 }, k); }
@@ -27,7 +29,7 @@ void LivingRoom::draw(Frame& f, int t, int SOFA_X, int DOOR_X, bool tvStatic, in
     f.rect(0, FLOOR_Y, 480, 270 - FLOOR_Y, C(plank)); f.hline(0, 479, FLOOR_Y, ol);
     for (int r = 0; FLOOR_Y + 1 + r * 8 < 270; ++r) { int y = FLOOR_Y + 1 + r * 8; f.hline(0, 479, y + 7, C(dk(plank, 0.25f))); f.hline(0, 479, y, C(lt(plank, 0.12f))); for (int x = (r * 37) % 68; x < 480; x += 68) f.vline(x, y, y + 6, C(dk(plank, 0.25f))); for (int x = (r * 53 + 20) % 90; x < 480; x += 90) f.hline(x, x + 6, y + 3, C(dk(plank, 0.08f))); }
     int fx = 280, fy = FLOOR_Y - 2;
-    for (int y = fy - 4; y < 270; ++y) for (int x = fx - 46; x < fx + 46; ++x) { int d = std::abs(x - fx) + (y - fy) * 3; if (d < 40 + ((t / 2) % 3) * 2 && (x + y) % 2 == 0) f.set(x, y, C(lt(plank, 0.35f))); }
+    for (int y = fy - 4; y < 270; ++y) for (int x = fx - 46; x < fx + 46; ++x) { int d = abs(x - fx) + (y - fy) * 3; if (d < 40 + ((t / 2) % 3) * 2 && (x + y) % 2 == 0) f.set(x, y, C(lt(plank, 0.35f))); }
     f.rect(fx - 4, 0, 9, fy - 62, ol); f.rect(fx - 3, 0, 7, fy - 62, C(110, 110, 116)); f.vline(fx - 2, 0, fy - 63, C(150, 150, 156)); for (int y = 20; y < fy - 66; y += 30) f.hline(fx - 4, fx + 4, y, ol);
     f.disc(fx, fy - 34, 26, ol); f.disc(fx, fy - 34, 25, C(stone)); f.rect(fx - 26, fy - 34, 53, 35, ol); f.rect(fx - 25, fy - 34, 51, 34, C(stone));
     for (int k = 0; k < 14; ++k) { int sx = fx - 20 + (k * 29) % 40, sy = fy - 50 + (k * 17) % 46; if ((sx - fx) * (sx - fx) + (sy - fy + 34) * (sy - fy + 34) < 22 * 22 || sy > fy - 34) { f.hline(sx, sx + 3, sy, C(dk(stone, 0.15f))); f.set(sx, sy - 1, C(lt(stone, 0.3f))); } }
@@ -60,11 +62,11 @@ void LivingRoom::draw(Frame& f, int t, int SOFA_X, int DOOR_X, bool tvStatic, in
     bx(f, tvx - 8, FLOOR_Y - 30, 16, 5, { 160, 160, 170 });
     bx(f, tvx - 22, FLOOR_Y - 62, 44, 33, { 40, 44, 60 });
     int sx = tvx - 20, sy = FLOOR_Y - 60, sw = 40, sh = 29;
-    if (tvStatic) { for (int y = sy; y < sy + sh; ++y) for (int x = sx; x < sx + sw; ++x) { unsigned h = ((unsigned)x * 2654435761u) ^ ((unsigned)y * 40503u) ^ ((unsigned)t * 97u); f.set(x, y, h % 3 == 0 ? C(240, 240, 240) : h % 3 == 1 ? C(130, 130, 136) : C(40, 40, 44)); } }
+    if (tvStatic) { for (int y = sy; y < sy + sh; ++y) for (int x = sx; x < sx + sw; ++x) { unsigned h = (static_cast<unsigned>(x) * 2654435761u) ^ (static_cast<unsigned>(y) * 40503u) ^ (static_cast<unsigned>(t) * 97u); f.set(x, y, h % 3 == 0 ? C(240, 240, 240) : h % 3 == 1 ? C(130, 130, 136) : C(40, 40, 44)); } }
     else { f.rect(sx, sy, sw, sh, C(50, 120, 170)); f.line(sx + 2, sy + 2, sx + 14, sy + 14, C(110, 170, 210)); f.rect(sx + 2, sy + 21, 16, 3, C(220, 120, 120)); int bob = (t / 5) % 4; f.ellipse(sx + 28, sy + 12 + (bob == 1), 4, 5, C(240, 200, 170)); f.rect(sx + 24, sy + 17, 9, 8, C(250, 220, 120)); }
     f.rect(DOOR_X - 12, 104, 28, FLOOR_Y - 104, ol); f.rect(DOOR_X - 10, 106, 24, FLOOR_Y - 106, C(14, 10, 14)); f.rect(DOOR_X - 12, 104, 28, 2, C(150, 140, 136)); f.vline(DOOR_X - 12, 104, FLOOR_Y - 1, C(150, 140, 136)); f.vline(DOOR_X + 15, 104, FLOOR_Y - 1, C(150, 140, 136));
     int vx = 404;
     f.rect(vx - 12, FLOOR_Y - 16, 25, 4, ol); f.rect(vx - 11, FLOOR_Y - 15, 23, 2, C(244, 240, 232)); f.rect(vx - 10, FLOOR_Y - 12, 2, 12, ol); f.rect(vx + 9, FLOOR_Y - 12, 2, 12, ol);
     f.rect(vx - 2, FLOOR_Y - 24, 5, 8, ol); f.rect(vx - 1, FLOOR_Y - 23, 3, 7, C(60, 150, 170));
-    for (int k = 0; k < 5; ++k) { int ex = vx - 6 + k * 3, ey = FLOOR_Y - 34 + (k % 2) * 3 + rnd(std::sin(t * 0.1f + k) * 0.6f); f.line(vx, FLOOR_Y - 24, ex, ey + 2, C(70, 130, 70)); f.set(ex, ey, C(250, 250, 244)); f.set(ex + 1, ey, C(250, 250, 244)); f.set(ex, ey + 1, C(250, 230, 120)); }
+    for (int k = 0; k < 5; ++k) { int ex = vx - 6 + k * 3, ey = FLOOR_Y - 34 + (k % 2) * 3 + rnd(sin(t * 0.1f + k) * 0.6f); f.line(vx, FLOOR_Y - 24, ex, ey + 2, C(70, 130, 70)); f.set(ex, ey, C(250, 250, 244)); f.set(ex + 1, ey, C(250, 250, 244)); f.set(ex, ey + 1, C(250, 230, 120)); }
 }

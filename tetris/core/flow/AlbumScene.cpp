@@ -5,6 +5,7 @@
 #include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
 #include "stage/StageCatalog.h"
+using namespace std;
 
 AlbumScene::AlbumScene(GameServices& services, int stageIndex, int clearedRound)
     : Scene(services), m_stageIndex(stageIndex), m_clearedRound(clearedRound) {}
@@ -33,7 +34,7 @@ void AlbumScene::handle(Command command) {
         // 스테이지의 네 칸을 다 채웠다. 앨범이 스스로 페이지를 넘길 때까지 입력을 받지 않고,
         //     마지막 스테이지면 Enter로 바로 엔딩에 간다.
         if (isLastStage() && (command == Command::Confirm || command == Command::HardDrop)) {
-            changeTo(std::make_unique<EndingScene>(m_services));
+            changeTo(make_unique<EndingScene>(m_services));
         }
         return;
     }
@@ -48,13 +49,13 @@ void AlbumScene::update(int dtMs) {
     if (album.hasPick()) {
         album.takePick();  // 라운드는 순서대로 이어서 하므로 고른 칸 번호는 쓰지 않는다
         m_services.sound.play(SoundId::Select);
-        changeTo(std::make_unique<PlayScene>(m_services, m_stageIndex));
+        changeTo(make_unique<PlayScene>(m_services, m_stageIndex));
         return;
     }
     if (album.stageFinished()) {
-        changeTo(std::make_unique<PrologueScene>(m_services, m_stageIndex + 1));
+        changeTo(make_unique<PrologueScene>(m_services, m_stageIndex + 1));
     } else if (isStageDone() && isLastStage() && m_timeMs >= config::kFinalAlbumMs) {
-        changeTo(std::make_unique<EndingScene>(m_services));
+        changeTo(make_unique<EndingScene>(m_services));
     }
 }
 

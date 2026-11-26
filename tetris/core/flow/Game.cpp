@@ -4,9 +4,10 @@
 #include "common/GameConfig.h"
 #include "common/GameException.h"
 #include "flow/PrologueScene.h"
+using namespace std;
 
 Game::Game(ITerminal& terminal, IInputSource& input, ISoundPlayer& sound)
-    : m_rng(std::random_device{}()),
+    : m_rng(random_device{}()),
       m_console(terminal, config::kScreenWidth, config::kScreenHeight),
       m_input(input),
       m_sound(sound),
@@ -16,10 +17,10 @@ Game::Game(ITerminal& terminal, IInputSource& input, ISoundPlayer& sound)
 
 void Game::run() {
     try {
-        m_scenes.change(std::make_unique<PrologueScene>(m_services, 0));  // 집 오프닝부터 시작한다
+        m_scenes.change(make_unique<PrologueScene>(m_services, 0));  // 집 오프닝부터 시작한다
         m_clock.restart();
         while (m_scenes.isRunning()) {
-            const int dt = std::min(m_clock.elapsedMs(), config::kMaxFrameDeltaMs);
+            const int dt = min(m_clock.elapsedMs(), config::kMaxFrameDeltaMs);
             m_clock.restart();
             tick(dt);
             Clock::sleepMs(config::kFrameMs - m_clock.elapsedMs());
@@ -27,11 +28,11 @@ void Game::run() {
         m_exitCode = 0;
     } catch (const GameException& e) {
         m_console.clearScreen();
-        std::cerr << "[게임 오류] " << e.what() << std::endl;
+        cerr << "[게임 오류] " << e.what() << endl;
         m_exitCode = 1;
-    } catch (const std::exception& e) {
+    } catch (const exception& e) {
         m_console.clearScreen();
-        std::cerr << "[예상하지 못한 오류] " << e.what() << std::endl;
+        cerr << "[예상하지 못한 오류] " << e.what() << endl;
         m_exitCode = 1;
     }
 }

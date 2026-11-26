@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <string>
+using namespace std;
 
 Board::Board() {
     reset();
@@ -13,13 +14,16 @@ bool Board::isInside(Point pos) const {
 
 const Cell& Board::cellAt(Point pos) const {
     if (!isInside(pos)) {
-        throw std::out_of_range("Board::cellAt(" + std::to_string(pos.x) + ", " + std::to_string(pos.y) + ")");
+        throw out_of_range("Board::cellAt(" + to_string(pos.x) + ", " + to_string(pos.y) + ")");
     }
     return m_grid[pos.y][pos.x];
 }
 
 Cell& Board::at(Point pos) {
-    return const_cast<Cell&>(static_cast<const Board&>(*this).cellAt(pos));
+    if (!isInside(pos)) {
+        throw out_of_range("Board::cellAt(" + to_string(pos.x) + ", " + to_string(pos.y) + ")");
+    }
+    return m_grid[pos.y][pos.x];
 }
 
 bool Board::canPlace(const Tetromino& piece) const {
@@ -63,19 +67,19 @@ void Board::lock(const Tetromino& piece) {
     }
 }
 
-std::vector<int> Board::findFullLines() const {
-    std::vector<int> rows;
+vector<int> Board::findFullLines() const {
+    vector<int> rows;
     for (int y = 0; y < kHeight; ++y) {
         const auto& row = m_grid[y];
-        if (std::all_of(row.begin(), row.end(), [](const Cell& c) { return c.isFilled(); })) {
+        if (all_of(row.begin(), row.end(), [](const Cell& c) { return c.isFilled(); })) {
             rows.push_back(y);
         }
     }
     return rows;
 }
 
-std::vector<PillType> Board::pillsInRows(const std::vector<int>& rows) const {
-    std::vector<PillType> pills;
+vector<PillType> Board::pillsInRows(const vector<int>& rows) const {
+    vector<PillType> pills;
     for (int y : rows) {
         for (int x = 0; x < kWidth; ++x) {
             const Cell& cell = cellAt({x, y});
@@ -87,18 +91,18 @@ std::vector<PillType> Board::pillsInRows(const std::vector<int>& rows) const {
     return pills;
 }
 
-void Board::clearRows(const std::vector<int>& rows) {
+void Board::clearRows(const vector<int>& rows) {
     for (int y : rows) {
         if (y < 0 || y >= kHeight) {
-            throw std::out_of_range("Board::clearRows row " + std::to_string(y));
+            throw out_of_range("Board::clearRows row " + to_string(y));
         }
     }
 
     // 지우지 않을 줄만 아래에서부터 다시 쌓는다.
-    Grid<Cell> next{};
+    array<array<Cell, kWidth>, kHeight> next{};
     int target = kHeight - 1;
     for (int y = kHeight - 1; y >= 0; --y) {
-        if (std::find(rows.begin(), rows.end(), y) == rows.end()) {
+        if (find(rows.begin(), rows.end(), y) == rows.end()) {
             next[target--] = m_grid[y];
         }
     }
@@ -114,8 +118,8 @@ void Board::clearRow() {
 }
 
 bool Board::isRowEmpty(int y) const {
-    const auto& row = m_grid.at(static_cast<std::size_t>(y));
-    return std::none_of(row.begin(), row.end(), [](const Cell& c) { return c.isFilled(); });
+    const auto& row = m_grid.at(static_cast<size_t>(y));
+    return none_of(row.begin(), row.end(), [](const Cell& c) { return c.isFilled(); });
 }
 
 void Board::removeCell(Point pos) {
@@ -124,7 +128,7 @@ void Board::removeCell(Point pos) {
     }
 }
 
-void Board::removeCells(const std::vector<Point>& cells) {
+void Board::removeCells(const vector<Point>& cells) {
     for (Point p : cells) {
         removeCell(p);
     }
@@ -148,7 +152,7 @@ bool Board::isHidden(Point pos) const {
     return isInside(pos) && m_hidden[pos.y][pos.x];
 }
 
-void Board::setMarked(const std::vector<Point>& cells, bool marked) {
+void Board::setMarked(const vector<Point>& cells, bool marked) {
     for (Point p : cells) {
         if (isInside(p)) {
             m_marked[p.y][p.x] = marked;
@@ -166,8 +170,8 @@ bool Board::isMarked(Point pos) const {
     return isInside(pos) && m_marked[pos.y][pos.x];
 }
 
-std::vector<Point> Board::filledCells() const {
-    std::vector<Point> cells;
+vector<Point> Board::filledCells() const {
+    vector<Point> cells;
     for (int y = 0; y < kHeight; ++y) {
         for (int x = 0; x < kWidth; ++x) {
             if (m_grid[y][x].isFilled()) {

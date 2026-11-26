@@ -11,6 +11,7 @@
 #include "ui/PrologueView.h"
 #include "ui/SettingsView.h"
 #include "ui/StageArtView.h"
+using namespace std;
 
 class ISoundPlayer;
 class StageCatalog;
@@ -24,7 +25,7 @@ class StoryArt : public IGameEventListener {
 public:
     inline static const int kRoundsPerStage = 4;
 
-    StoryArt(const StageCatalog& catalog, ISoundPlayer& sound, std::mt19937& rng);
+    StoryArt(const StageCatalog& catalog, ISoundPlayer& sound, mt19937& rng);
 
     void restart();                  // 새 게임: 모든 그림과 진행을 처음 상태로
     void beginStage(int stageIndex); // 이 스테이지를 플레이할 준비 (진행 중이면 이어서, 실패했으면 보드만 비움)
@@ -38,7 +39,7 @@ public:
 
     bool roundEndPending() const { return m_roundEndPending; }
     int lastClearedRound() const { return m_lastCleared; }  // 이 스테이지에서 방금 끝낸 칸 (0~3)
-    const std::vector<bool>& remembered() const { return m_remembered; }
+    const vector<bool>& remembered() const { return m_remembered; }
 
     StageArtView& stageArt() { return *m_stageArt; }
     const StageArtView& stageArt() const { return *m_stageArt; }
@@ -58,21 +59,21 @@ public:
 private:
     const StageCatalog& m_catalog;
     ISoundPlayer& m_sound;
-    std::mt19937& m_rng;
+    mt19937& m_rng;
 
     // StageArtView가 세션을 참조로 들고 있으므로, 세션은 한 판 동안 하나만 만들고 changeStage()로 스테이지를 바꾼다.
-    std::unique_ptr<StageSession> m_session;
+    unique_ptr<StageSession> m_session;
     int m_stageIndex = -1;
     int m_roundInStage = 0;
     int m_lastCleared = -1;
     bool m_roundEndPending = false;
-    std::vector<bool> m_remembered;
+    vector<bool> m_remembered;
 
-    std::unique_ptr<StageArtView> m_stageArt;
-    std::unique_ptr<PrologueView> m_house;
-    std::unique_ptr<AlbumView> m_album;
-    std::unique_ptr<MenuView> m_menu;
-    std::unique_ptr<SettingsView> m_settings;
-    std::unique_ptr<MemoryBookView> m_book;
-    std::unique_ptr<EndingView> m_ending;
+    unique_ptr<StageArtView> m_stageArt;
+    unique_ptr<PrologueView> m_house;
+    unique_ptr<AlbumView> m_album;
+    unique_ptr<MenuView> m_menu;
+    unique_ptr<SettingsView> m_settings;
+    unique_ptr<MemoryBookView> m_book;
+    unique_ptr<EndingView> m_ending;
 };

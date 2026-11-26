@@ -1,13 +1,15 @@
 #pragma once
 #include "ui/RoundScene.h"
 #include <deque>
+using namespace std;
+
 class UniRound : public RoundScene {
 public:
     const char* name() const override { return "Uni"; }
     int goal() const override { return 12; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override { return gradT_ >= 0 && last_ - gradT_ >= END; }
     bool playing(int t) const override;
 protected:
@@ -19,9 +21,9 @@ protected:
     void drawEffects(Frame& f, const PlayStateReader& g, int t) override;
 private:
     enum Kind { TYPE, GRAD };
-    struct Ev { Kind k; int line; };
+    class Ev { public: Kind k; int line; };
     static const int TYPE_LEN = 8, DAWN = 64, STAND = 10, WHITE_OUT = 22, WHITE_IN = 34, CEREMONY = 44, RAISE = 58, TOSS = 72, END = 132;
-    std::deque<Ev> queue_;
+    deque<Ev> queue_;
     Ev cur_{ TYPE, 0 };
     int curT_ = -1, last_ = 0, gradT_ = -1, lines_ = 0, shown_ = 0, season_ = 0, cups_ = 0, nightT_ = -1000, nightLine_ = 0, lineT_ = 0;
     void start(int t);

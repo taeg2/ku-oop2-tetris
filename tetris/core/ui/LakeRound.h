@@ -1,11 +1,13 @@
 #pragma once
 #include "ui/RoundScene.h"
+using namespace std;
+
 class LakeRound : public RoundScene {
 public:
     const char* name() const override { return "Breeze"; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     static const int FADE0 = 114;
     bool endingDone() const override { return endStart_ >= 0 && endFrame_ >= FADE0 + 12; }
     void specialEvent(int t);
@@ -16,8 +18,8 @@ protected:
     void drawHud(Frame& f, int lines, int t) override;
     void drawEffects(Frame& f, const PlayStateReader& g, int t) override;
 private:
-    struct Flyer { float x0, y0; int start; int type; };
-    std::vector<Flyer> flyers_;
+    class Flyer { public: float x0, y0; int start; int type; };
+    vector<Flyer> flyers_;
     int arrived_ = 0;
     int memoryT_ = -1;
     int windStart_ = -1, gusts_ = 0;

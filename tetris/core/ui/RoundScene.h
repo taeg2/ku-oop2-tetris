@@ -3,6 +3,8 @@
 #include "ui/PixelArt.h"
 #include "ui/PlayStateReader.h"
 #include "ui/ToyBlocks.h"
+using namespace std;
+
 // 라운드 하나의 그림. 새 라운드는 이 클래스를 상속하고 drawBackground/drawNext/drawHud를 구현한다
 class RoundScene {
 public:
@@ -19,12 +21,12 @@ public:
         if (clearFrame >= 0) ToyBlocks::flashRows(f, g, boardX(), boardY(), clearFrame);
         drawForeground(f, g, t);
         drawNext(f, g.next(), t);
-        drawHud(f, std::min(lines, goal()), t);
+        drawHud(f, min(lines, goal()), t);
         drawEffects(f, g, t);
     }
     virtual void reset() {}
     virtual void update(const PlayStateReader&, int) {}
-    virtual void onLinesCleared(const std::vector<int>&, int, int) {}
+    virtual void onLinesCleared(const vector<int>&, int, int) {}
     virtual bool endingDone() const { return true; }  // 라운드 끝 연출(페이드)까지 끝났는가
     virtual bool playing(int) const { return true; }  // false면 연출 중이라 블록을 멈춰야 한다
 protected:

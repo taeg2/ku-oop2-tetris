@@ -1,5 +1,7 @@
 #pragma once
 #include "ui/RoundScene.h"
+using namespace std;
+
 class BeachRound : public RoundScene {
 public:
     const char* name() const override { return "Sand Castles"; }
@@ -7,7 +9,7 @@ public:
     int boardY() const override { return 62; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override { return goneT_ >= 0 && lastT_ >= goneT_ + 4 + 52 + 10; }
     void specialEvent(int t);
 protected:
@@ -22,7 +24,7 @@ private:
     Mode mode_ = Idle;
     int mt_ = 0, cur_ = 0, pending_ = 0;
     float kx_ = 0, ky_ = 0;
-    std::vector<std::pair<float, float>> path_;
+    vector<pair<float, float>> path_;
     int halves_[5] = {}, part_[5] = {};
     int pose_ = 0;
     int puffT_ = -1, puffX_ = 0, puffY_ = 0;

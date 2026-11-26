@@ -4,6 +4,7 @@
 #include <mutex>
 #include <thread>
 #include "ui/ISoundPlayer.h"
+using namespace std;
 
 // Windows Beep()로 효과음을 낸다. (Windows 전용, main.cpp에서만 생성)
 // Beep는 소리가 끝날 때까지 멈추므로
@@ -19,16 +20,17 @@ public:
     void play(int frequencyHz, int durationMs) override;
 
 private:
-    struct Note {
+    class Note {
+    public:
         int frequencyHz;
         int durationMs;
     };
     void enqueue(Note note);
     void worker();
 
-    std::deque<Note> m_queue;
-    std::mutex m_mutex;
-    std::condition_variable m_wake;
+    deque<Note> m_queue;
+    mutex m_mutex;
+    condition_variable m_wake;
     bool m_stop = false;
-    std::thread m_thread;
+    thread m_thread;
 };

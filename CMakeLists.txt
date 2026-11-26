@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.20)
 
 project(tetris LANGUAGES CXX)
 
-# C++20 표준만 사용한다 (컴파일러 전용 확장 기능은 끈다)
-set(CMAKE_CXX_STANDARD 20)
+# 강의 기준인 C++17 표준만 사용한다 (컴파일러 전용 확장 기능은 끈다)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 

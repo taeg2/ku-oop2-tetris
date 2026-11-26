@@ -1,5 +1,6 @@
 #pragma once
 #include "ui/ITerminal.h"
+using namespace std;
 
 // Windows 콘솔 API로 출력한다. windows.h는 WindowsTerminal.cpp에서만 include한다.
 // Windows가 아닌 환경에서는 이 클래스를 빌드에서 사용하지 않는다 (main.cpp 참고).
@@ -8,9 +9,9 @@ public:
     void open(int width, int height) override;
     void close() override;
     void clearScreen() override;
-    void write(Point pos, const std::u32string& text, Color fg, Color bg) override;
+    void write(Point pos, const u32string& text, Color fg, Color bg) override;
     void flush() override;
-    void writeRaw(Point pos, const std::string& bytes) override;
+    void writeRaw(Point pos, const string& bytes) override;
 
 private:
     void setCursorVisible(bool visible);

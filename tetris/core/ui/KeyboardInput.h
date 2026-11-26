@@ -1,6 +1,7 @@
 #pragma once
 #include <deque>
 #include "ui/IInputSource.h"
+using namespace std;
 
 // 키보드 입력의 공통 부분: 명령 대기열과 "키 -> 명령" 변환표.
 // 운영체제마다 다른 "키를 읽는 방법"(update)만 자식 클래스가 구현한다.
@@ -20,5 +21,5 @@ protected:
 private:
     static bool translate(int key, Command& command);  // 명령이 있는 키면 command를 채우고 true
 
-    std::deque<Command> m_commands;
+    deque<Command> m_commands;
 };

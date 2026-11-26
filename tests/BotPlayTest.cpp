@@ -1,6 +1,7 @@
 #include <cassert>
-#include <cstdio>
+#include <cstdlib>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include "common/TextUtil.h"
@@ -19,43 +20,51 @@
 #include "flow/StoryArt.h"
 #include "flow/SwitchableSound.h"
 #include "ui/PixelArt.h"
+using namespace std;
 
-#define CHECK(c) do { if (!(c)) { std::printf("CHECK FAILED %s:%d %s\n", __FILE__, __LINE__, #c); std::exit(1); } } while (0)
+// 조건이 거짓이면 어떤 검사가 실패했는지 출력하고 바로 끝낸다
+static void check(bool ok, const string& what) {
+    if (!ok) {
+        cout << "CHECK FAILED " << what << endl;
+        exit(1);
+    }
+}
 
 // 화면 출력을 메모리에 받아 두는 테스트용 터미널 (ITerminal 구현을 바꿔 끼운 예)
 class CaptureTerminal : public ITerminal {
 public:
-    struct Cell { char32_t ch = U' '; int fg = 7; int bg = 0; bool cont = false; };
+    class Cell { public: char32_t ch = U' '; int fg = 7; int bg = 0; bool cont = false; };
     inline static const int W = 100, H = 30;
     void open(int, int) override {}
     void close() override {}
     void clearScreen() override { for (auto& c : screen) c = Cell{}; }
-    void write(Point pos, const std::u32string& text, Color fg, Color bg) override {
+    void write(Point pos, const u32string& text, Color fg, Color bg) override {
         int x = pos.x;
         for (char32_t ch : text) {
             const int w = TextUtil::charWidth(ch);
-            if (x >= 0 && x < W && pos.y >= 0 && pos.y < H) screen[pos.y * W + x] = {ch, (int)fg, (int)bg, false};
-            if (w == 2 && x + 1 < W) screen[pos.y * W + x + 1] = {U' ', (int)fg, (int)bg, true};
+            if (x >= 0 && x < W && pos.y >= 0 && pos.y < H) screen[pos.y * W + x] = {ch, static_cast<int>(fg), static_cast<int>(bg), false};
+            if (w == 2 && x + 1 < W) screen[pos.y * W + x + 1] = {U' ', static_cast<int>(fg), static_cast<int>(bg), true};
             x += w;
         }
     }
     void flush() override {}
-    void writeRaw(Point, const std::string& bytes) override { ++images; imageBytes += bytes.size(); }  // Sixel 그림은 개수만 센다
-    std::vector<Cell> screen = std::vector<Cell>(W * H);
+    void writeRaw(Point, const string& bytes) override { ++images; imageBytes += bytes.size(); }  // Sixel 그림은 개수만 센다
+    vector<Cell> screen = vector<Cell>(W * H);
     int images = 0;
-    std::size_t imageBytes = 0;
+    size_t imageBytes = 0;
 };
 static CaptureTerminal g_terminal;
 
-static void dump(const std::string& name) {
-    std::ofstream out("test_screens/" + name + ".txt");
-    std::ofstream attr("test_screens/" + name + ".attr");
+static void dump(const string& name) {
+    ofstream out("test_screens/" + name + ".txt");
+    ofstream attr("test_screens/" + name + ".attr");
+    attr << hex << setfill('0');
     for (int y = 0; y < CaptureTerminal::H; ++y) {
-        std::u32string line;
+        u32string line;
         for (int x = 0; x < CaptureTerminal::W; ++x) {
             const auto& c = g_terminal.screen[y * CaptureTerminal::W + x];
             if (!c.cont) line.push_back(c.ch);
-            char buf[16]; std::snprintf(buf, 16, "%05x:%02x ", c.cont ? 0u : (unsigned)c.ch, c.fg | (c.bg << 4)); attr << buf;
+            attr << setw(5) << (c.cont ? 0u : static_cast<unsigned>(c.ch)) << ':' << setw(2) << (c.fg | (c.bg << 4)) << ' ';
         }
         attr << "\n";
         out << TextUtil::encode(line) << "\n";
@@ -63,19 +72,19 @@ static void dump(const std::string& name) {
 }
 
 // 그림 View가 방금 render()한 Frame을 PPM 이미지로 저장한다 (팔레트는 render() 직후에만 맞다)
-static void dumpArt(const std::string& name, const Frame& f) {
-    std::ofstream out("test_screens/" + name + ".ppm", std::ios::binary);
+static void dumpArt(const string& name, const Frame& f) {
+    ofstream out("test_screens/" + name + ".ppm", ios::binary);
     out << "P6\n" << Frame::W << " " << Frame::H << "\n255\n";
     const auto& pal = palette();
     for (uint8_t c : f.px) {
         const RGB rgb = c < pal.size() ? pal[c] : RGB{0, 0, 0};
-        out.put((char)rgb.r); out.put((char)rgb.g); out.put((char)rgb.b);
+        out.put(static_cast<char>(rgb.r)); out.put(static_cast<char>(rgb.g)); out.put(static_cast<char>(rgb.b));
     }
 }
 
-struct Counter : IGameEventListener { std::map<int,int> n; void onEvent(const GameEvent& e) override { n[(int)e.type]++; } };
+class Counter : public IGameEventListener { public: map<int,int> n; void onEvent(const GameEvent& e) override { n[static_cast<int>(e.type)]++; } };
 // ---------- 간단한 봇 ----------
-struct Plan { int rot; int x; };
+class Plan { public: int rot; int x; };
 static double evaluate(const Board& b, int lines) {
     int heights[Board::kWidth] = {}; int holes = 0;
     for (int x = 0; x < Board::kWidth; ++x) {
@@ -87,7 +96,7 @@ static double evaluate(const Board& b, int lines) {
         }
     }
     int agg = 0, bump = 0;
-    for (int x = 0; x < Board::kWidth; ++x) { agg += heights[x]; if (x) bump += std::abs(heights[x] - heights[x - 1]); }
+    for (int x = 0; x < Board::kWidth; ++x) { agg += heights[x]; if (x) bump += abs(heights[x] - heights[x - 1]); }
     return -0.51 * agg + 0.76 * lines - 0.36 * holes - 0.18 * bump;
 }
 static Plan plan(const StageSession& s) {
@@ -104,7 +113,7 @@ static Plan plan(const StageSession& s) {
             copy.lock(p);
             auto rows = copy.findFullLines();
             copy.clearRows(rows);
-            double v = evaluate(copy, (int)rows.size());
+            double v = evaluate(copy, static_cast<int>(rows.size()));
             if (v > best) { best = v; bp = {r, x}; }
         }
     }
@@ -122,7 +131,7 @@ static Command botCommand(const StageSession& s, int& stuck) {
 }
 
 int main() {
-    std::mt19937 rng(12345);
+    mt19937 rng(12345);
     MuteSoundPlayer mute;
     SwitchableSound sound(mute);
     StageCatalog catalog;
@@ -136,28 +145,28 @@ int main() {
     for (int t = 0; t < kTetrominoTypeCount; ++t) {
         Tetromino a(static_cast<TetrominoType>(t), {3, 3});
         auto c0 = a.cells(); auto c4 = a.rotated(4).cells();
-        CHECK(c0 == c4);
+        check(c0 == c4, "c0 == c4");
     }
     {
         Board b;
         for (int x = 0; x < Board::kWidth; ++x) { Tetromino o(TetrominoType::O, {0, 0}); (void)o; }
-        CHECK(b.filledCells().empty());
+        check(b.filledCells().empty(), "b.filledCells().empty()");
         Tetromino i(TetrominoType::I, {0, 17});  // 가로 I: y=18
-        CHECK(b.canLock(i)); b.lock(i); b.lock(i.moved({4, 0}));
+        check(b.canLock(i), "b.canLock(i)"); b.lock(i); b.lock(i.moved({4, 0}));
         Tetromino o(TetrominoType::O, {8, 17}); b.lock(o);  // (8..9, 17..18)
-        auto rows = b.findFullLines(); CHECK(rows.size() == 1 && rows[0] == 18);
+        auto rows = b.findFullLines(); check(rows.size() == 1 && rows[0] == 18, "rows.size() == 1 && rows[0] == 18");
         b.clearRows(rows);
-        CHECK(b.cellAt({8, 18}).isFilled() && !b.cellAt({0, 18}).isFilled());
-        bool threw = false; try { b.cellAt({-1, 0}); } catch (const std::out_of_range&) { threw = true; } CHECK(threw);
-        CHECK(b.isRowEmpty(19)); b.clearRow(18); CHECK(b.filledCells().empty());
-        CHECK(!b.canLock(Tetromino(TetrominoType::I, {0, -2})));
+        check(b.cellAt({8, 18}).isFilled() && !b.cellAt({0, 18}).isFilled(), "b.cellAt({8, 18}).isFilled() && !b.cellAt({0, 18}).isFilled()");
+        bool threw = false; try { b.cellAt({-1, 0}); } catch (const out_of_range&) { threw = true; } check(threw, "threw");
+        check(b.isRowEmpty(19), "b.isRowEmpty(19)"); b.clearRow(18); check(b.filledCells().empty(), "b.filledCells().empty()");
+        check(!b.canLock(Tetromino(TetrominoType::I, {0, -2})), "!b.canLock(Tetromino(TetrominoType::I, {0, -2}))");
     }
     {
-        BlockGenerator g(rng, 0); std::map<int, int> counts;
-        for (int i = 0; i < 70; ++i) { counts[(int)g.nextPiece().type()]++; g.advance(); }
-        for (auto& [k, v] : counts) CHECK(v == 10);
+        BlockGenerator g(rng, 0); map<int, int> counts;
+        for (int i = 0; i < 70; ++i) { counts[static_cast<int>(g.nextPiece().type())]++; g.advance(); }
+        for (auto& [k, v] : counts) check(v == 10, "v == 10");
     }
-    std::printf("unit checks ok\n");
+    cout << "unit checks ok" << endl;
 
     // --- 봇으로 3 스테이지 플레이 ---
     for (int stage = 0; stage < 3; ++stage) {
@@ -177,13 +186,15 @@ int main() {
             }
             s.update(16);
         }
-        std::printf("stage %d: cleared=%d frames=%d attempts=%d pieces=%d pillsUsed=%d bossActive=%d\n", stage + 1,
-                    s.isCleared(), frames, attempts, s.progress().pieces(), pillsUsed, s.boss().isActive());
-        CHECK(s.isCleared());
-        CHECK(pillsUsed > 0);
-        std::printf("   bossTriggers=%d pillsGained=%d lines=%d\n", counter.n[(int)GameEvent::Type::BossTriggered], counter.n[(int)GameEvent::Type::PillGained], counter.n[(int)GameEvent::Type::LinesCleared]);
-        CHECK(counter.n[(int)GameEvent::Type::BossTriggered] > 0);
-        CHECK(!s.boss().isActive());
+        cout << "stage " << stage + 1 << ": cleared=" << s.isCleared() << " frames=" << frames << " attempts=" << attempts
+                  << " pieces=" << s.progress().pieces() << " pillsUsed=" << pillsUsed << " bossActive=" << s.boss().isActive() << endl;
+        check(s.isCleared(), "s.isCleared()");
+        check(pillsUsed > 0, "pillsUsed > 0");
+        cout << "   bossTriggers=" << counter.n[static_cast<int>(GameEvent::Type::BossTriggered)]
+                  << " pillsGained=" << counter.n[static_cast<int>(GameEvent::Type::PillGained)]
+                  << " lines=" << counter.n[static_cast<int>(GameEvent::Type::LinesCleared)] << endl;
+        check(counter.n[static_cast<int>(GameEvent::Type::BossTriggered)] > 0, "counter.n[static_cast<int>(GameEvent::Type::BossTriggered)] > 0");
+        check(!s.boss().isActive(), "!s.boss().isActive()");
     }
 
     // --- 장면 흐름: 집 오프닝 -> (앨범 -> 플레이) x 12 라운드 -> 집 -> ... -> 엔딩 ---
@@ -201,9 +212,9 @@ int main() {
         scenes.handle(cmd);
         frame(n);
     };
-    scenes.change(std::make_unique<PrologueScene>(services, 0));  // 게임은 타이틀 없이 집 오프닝부터 시작한다
+    scenes.change(make_unique<PrologueScene>(services, 0));  // 게임은 타이틀 없이 집 오프닝부터 시작한다
     frame(120);
-    CHECK(g_terminal.images > 0);   // 집 오프닝은 그림(Sixel)으로 그린다
+    check(g_terminal.images > 0, "g_terminal.images > 0");   // 집 오프닝은 그림(Sixel)으로 그린다
     story.house().render(); dumpArt("art_house_opening", story.house().frame());
     for (int i = 0; i < 40; ++i) press(Command::Confirm, 20);  // 대사 넘기기
     story.house().render(); dumpArt("art_house_talk", story.house().frame());
@@ -213,8 +224,8 @@ int main() {
     renderEvery = 60;
     bool menuChecked = false, dumpedPlay = false;
     for (int stage = 0; stage < 3; ++stage) {
-        scenes.change(std::make_unique<AlbumScene>(services, stage, AlbumScene::kNoRoundCleared));
-        frame(30); story.album().render(); dumpArt("art_album_stage" + std::to_string(stage + 1), story.album().frame());
+        scenes.change(make_unique<AlbumScene>(services, stage, AlbumScene::kNoRoundCleared));
+        frame(30); story.album().render(); dumpArt("art_album_stage" + to_string(stage + 1), story.album().frame());
         int frames = 0;
         while (frames++ < 100000) {
             // 플레이 장면인지: 세션이 블록을 떨어뜨리는 중이고, 앨범이 닫혀 있고, 라운드 끝 처리가 남지 않았다
@@ -232,17 +243,17 @@ int main() {
                     // 메뉴 -> 기억의 책 -> 닫기 -> 설정에서 소리 끄기 -> 닫기 -> 계속하기
                     menuChecked = true;
                     press(Command::Pause, 5); story.menu().render(); dumpArt("art_menu", story.menu().frame());
-                    CHECK(story.menu().isOpen());
+                    check(story.menu().isOpen(), "story.menu().isOpen()");
                     press(Command::SoftDrop, 5); press(Command::Confirm, 5);
-                    CHECK(story.book().isOpen()); story.book().render(); dumpArt("art_memory_book", story.book().frame());
-                    CHECK(story.book().rememberedCount() == 1);
-                    press(Command::Pause, 5); CHECK(!story.book().isOpen());
+                    check(story.book().isOpen(), "story.book().isOpen()"); story.book().render(); dumpArt("art_memory_book", story.book().frame());
+                    check(story.book().rememberedCount() == 1, "story.book().rememberedCount() == 1");
+                    press(Command::Pause, 5); check(!story.book().isOpen(), "!story.book().isOpen()");
                     press(Command::SoftDrop, 5); press(Command::Confirm, 5);
-                    CHECK(story.settings().isOpen()); press(Command::Confirm, 5); CHECK(!sound.isOn());
+                    check(story.settings().isOpen(), "story.settings().isOpen()"); press(Command::Confirm, 5); check(!sound.isOn(), "!sound.isOn()");
                     story.settings().render(); dumpArt("art_settings", story.settings().frame());
-                    press(Command::Confirm, 5); CHECK(sound.isOn());
-                    press(Command::Pause, 5); CHECK(!story.settings().isOpen());
-                    press(Command::Pause, 5); CHECK(!story.menu().isOpen());
+                    press(Command::Confirm, 5); check(sound.isOn(), "sound.isOn()");
+                    press(Command::Pause, 5); check(!story.settings().isOpen(), "!story.settings().isOpen()");
+                    press(Command::Pause, 5); check(!story.menu().isOpen(), "!story.menu().isOpen()");
                     continue;
                 }
                 if (frames % 14 == 0) { press(botCommand(story.session(), stuck), 1); continue; }
@@ -253,19 +264,19 @@ int main() {
             frame(1);
         }
         int count = 0;
-        for (int slot = 0; slot < (stage + 1) * StoryArt::kRoundsPerStage; ++slot) count += story.remembered()[(std::size_t)slot];
-        std::printf("scene stage %d: frames=%d remembered=%d failures=%d\n", stage + 1, frames, count, failures);
-        CHECK(count == (stage + 1) * StoryArt::kRoundsPerStage);
-        CHECK(story.session().isCleared());
-        if (stage < 2) { frame(30); story.house().render(); dumpArt("art_house_stage" + std::to_string(stage + 2), story.house().frame()); }
+        for (int slot = 0; slot < (stage + 1) * StoryArt::kRoundsPerStage; ++slot) count += story.remembered()[static_cast<size_t>(slot)];
+        cout << "scene stage " << stage + 1 << ": frames=" << frames << " remembered=" << count << " failures=" << failures << endl;
+        check(count == (stage + 1) * StoryArt::kRoundsPerStage, "count == (stage + 1) * StoryArt::kRoundsPerStage");
+        check(story.session().isCleared(), "story.session().isCleared()");
+        if (stage < 2) { frame(30); story.house().render(); dumpArt("art_house_stage" + to_string(stage + 2), story.house().frame()); }
     }
     renderEvery = 1;
-    CHECK(story.ending().finished());
-    CHECK(menuChecked);
+    check(story.ending().finished(), "story.ending().finished()");
+    check(menuChecked, "menuChecked");
     story.ending().render(); dumpArt("art_ending", story.ending().frame());
-    CHECK(album.isComplete());
+    check(album.isComplete(), "album.isComplete()");
     press(Command::Confirm, 5);  // 엔딩 -> 새 게임 (집 오프닝)
-    CHECK(scenes.isRunning());
-    std::printf("scene flow ok, images=%d\n", g_terminal.images);
+    check(scenes.isRunning(), "scenes.isRunning()");
+    cout << "scene flow ok, images=" << g_terminal.images << endl;
     return 0;
 }

@@ -1,13 +1,15 @@
 #pragma once
 #include "ui/RoundScene.h"
 #include <deque>
+using namespace std;
+
 class InterviewRound : public RoundScene {
 public:
     const char* name() const override { return "Interview"; }
     int goal() const override { return 20; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
-    void onLinesCleared(const std::vector<int>& rows, int totalLines, int t) override;
+    void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;
     bool endingDone() const override { return passT_ >= 0 && last_ - passT_ >= END; }
     bool playing(int) const override { return passT_ < 0; }
 protected:
@@ -18,7 +20,7 @@ protected:
     void drawEffects(Frame& f, const PlayStateReader& g, int t) override;
 private:
     static const int ASK = 22, BABBLE = 16, Q_LEN = ASK + BABBLE, SMILE = 18, WELCOME = 34, END = 76;
-    std::deque<int> queue_;
+    deque<int> queue_;
     int pieceNo_ = 0, lastTop_ = -1, cur_ = 0, curT_ = -1, last_ = 0, passT_ = -1, lines_ = 0, shown_ = 0, lineT_ = 0;
     bool odd_ = false, nextOdd_ = false;
     void start(int t);

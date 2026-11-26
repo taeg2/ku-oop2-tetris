@@ -1,12 +1,13 @@
 #include "play/EventBus.h"
 #include <algorithm>
+using namespace std;
 
 void EventBus::subscribe(IGameEventListener& listener) {
     m_listeners.push_back(&listener);
 }
 
 void EventBus::publish(const GameEvent& event) {
-    std::for_each(m_listeners.begin(), m_listeners.end(),
+    for_each(m_listeners.begin(), m_listeners.end(),
                   [&event](IGameEventListener* listener) { listener->onEvent(event); });
 }
 

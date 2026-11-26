@@ -1,6 +1,7 @@
 #include "flow/EndingScene.h"
 #include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
+using namespace std;
 
 EndingScene::EndingScene(GameServices& services) : Scene(services) {}
 
@@ -20,7 +21,7 @@ void EndingScene::handle(Command command) {
     }
     if (command == Command::Confirm || command == Command::HardDrop || command == Command::Pause) {
         m_services.sound.play(SoundId::Select);
-        changeTo(std::make_unique<PrologueScene>(m_services, 0));  // 새 게임: 집 오프닝부터
+        changeTo(make_unique<PrologueScene>(m_services, 0));  // 새 게임: 집 오프닝부터
     }
 }
 

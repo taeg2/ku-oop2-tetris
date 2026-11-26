@@ -3,6 +3,7 @@
 #include "flow/GameServices.h"
 #include "ui/Command.h"
 #include "ui/Console.h"
+using namespace std;
 
 // 장면(게임 상태 머신의 한 상태)의 추상 클래스.
 // 장면은 다음 장면을 직접 만들어 changeTo()로 SceneManager에 전환을 요청한다.
@@ -19,7 +20,7 @@ public:
     virtual void render(Console& console) const = 0;
 
 protected:
-    void changeTo(std::unique_ptr<Scene> next);
+    void changeTo(unique_ptr<Scene> next);
     void quit();
 
     GameServices& m_services;

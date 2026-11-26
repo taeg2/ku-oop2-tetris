@@ -2,7 +2,8 @@
 #include "common/Point.h"
 
 // 직사각형 영역 (왼쪽 위 좌표 + 크기)
-struct Rect {
+class Rect {
+public:
     int x = 0;
     int y = 0;
     int width = 0;

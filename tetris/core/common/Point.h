@@ -1,7 +1,8 @@
 #pragma once
 
 // 정수 좌표 한 점. 보드 칸 좌표, 콘솔 좌표, 사진 픽셀 좌표에 함께 쓴다.
-struct Point {
+class Point {
+public:
     int x = 0;
     int y = 0;
 

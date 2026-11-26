@@ -14,11 +14,12 @@
 #include "ui/AnsiTerminal.h"
 #include "ui/PosixKeyboardInput.h"
 #endif
+using namespace std;
 
 int main(int argc, char* argv[]) {
     bool muted = false;
     for (int i = 1; i < argc; ++i) {
-        const std::string arg = argv[i];
+        const string arg = argv[i];
         if (arg == "--mute") {
             muted = true;
         }
@@ -27,23 +28,23 @@ int main(int argc, char* argv[]) {
 #ifdef _WIN32
         WindowsTerminal terminal;
         WindowsKeyboardInput input;
-        std::unique_ptr<ISoundPlayer> sound;
+        unique_ptr<ISoundPlayer> sound;
         if (muted) {
-            sound = std::make_unique<MuteSoundPlayer>();
+            sound = make_unique<MuteSoundPlayer>();
         } else {
-            sound = std::make_unique<BeepSoundPlayer>();
+            sound = make_unique<BeepSoundPlayer>();
         }
 #else
         AnsiTerminal terminal;
         PosixKeyboardInput input;
-        auto sound = std::make_unique<MuteSoundPlayer>();  // Mac/Linux에서는 효과음 없음
+        auto sound = make_unique<MuteSoundPlayer>();  // Mac/Linux에서는 효과음 없음
         (void)muted;
 #endif
         Game game(terminal, input, *sound);
         game.run();
         return game.exitCode();
-    } catch (const std::exception& e) {  // 화면 준비 단계에서 실패한 경우
-        std::cerr << "게임을 시작할 수 없습니다: " << e.what() << std::endl;
+    } catch (const exception& e) {  // 화면 준비 단계에서 실패한 경우
+        cerr << "게임을 시작할 수 없습니다: " << e.what() << endl;
         return 1;
     }
 }

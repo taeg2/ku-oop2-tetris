@@ -1,4 +1,6 @@
 #include "ui/SessionPlayState.h"
+using namespace std;
+
 SessionPlayState::SessionPlayState(const StageSession& session) : m_session(session) {}
 int SessionPlayState::toArtType(TetrominoType type) {
     switch (type) {
@@ -36,7 +38,7 @@ PlayStateReader::Cells SessionPlayState::ghostCells() const { return toCells(m_s
 PlayStateReader::Cells SessionPlayState::shapeOf(int type) { return toCells(Tetromino(fromArtType(type)).localCells()); }
 PlayStateReader::Cells SessionPlayState::shape(int type) const { return shapeOf(type); }
 int SessionPlayState::next() const { return toArtType(m_session.nextType()); }
-const std::vector<int>& SessionPlayState::clearingRows() const { return m_session.flashingRows(); }
+const vector<int>& SessionPlayState::clearingRows() const { return m_session.flashingRows(); }
 bool SessionPlayState::clearing() const { return !m_session.flashingRows().empty(); }
 bool SessionPlayState::over() const { return m_session.isFailed(); }
 bool SessionPlayState::hasPiece() const { return m_session.hasActivePiece(); }

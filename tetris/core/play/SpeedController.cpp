@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cmath>
 #include "common/GameConfig.h"
+using namespace std;
 
 SpeedController::SpeedController(int baseIntervalMs) : m_baseMs(baseIntervalMs) {}
 
@@ -16,7 +17,7 @@ void SpeedController::speedUp() {
 }
 
 void SpeedController::speedUp(int steps) {
-    m_level += std::max(0, steps);
+    m_level += max(0, steps);
 }
 
 void SpeedController::applySlow(double factor, int durationMs) {
@@ -26,7 +27,7 @@ void SpeedController::applySlow(double factor, int durationMs) {
 
 void SpeedController::update(int dtMs) {
     if (m_slowLeftMs > 0) {
-        m_slowLeftMs = std::max(0, m_slowLeftMs - dtMs);
+        m_slowLeftMs = max(0, m_slowLeftMs - dtMs);
     }
 }
 
@@ -38,7 +39,7 @@ void SpeedController::reset(int baseIntervalMs) {
 }
 
 int SpeedController::dropIntervalMs() const {
-    const double scaled = m_baseMs * std::pow(config::kSpeedUpFactor, m_level);
-    const int interval = std::max(config::kMinDropIntervalMs, static_cast<int>(scaled));
+    const double scaled = m_baseMs * pow(config::kSpeedUpFactor, m_level);
+    const int interval = max(config::kMinDropIntervalMs, static_cast<int>(scaled));
     return isSlowed() ? static_cast<int>(interval * m_slowFactor) : interval;
 }

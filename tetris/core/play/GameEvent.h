@@ -1,7 +1,8 @@
 #pragma once
 
 // 스테이지 안에서 일어난 일. EventBus로 퍼져서 관심 있는 객체만 반응한다.
-struct GameEvent {
+class GameEvent {
+public:
     enum class Type {
         PieceLocked,    // 블록이 바닥에 고정됨
         LinesCleared,   // value = 지운 줄 수, row = 맨 위 줄

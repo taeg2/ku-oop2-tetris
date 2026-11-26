@@ -5,9 +5,11 @@
 #include "ui/Stage3Art.h"
 #include <algorithm>
 #include <cmath>
+using namespace std;
+
 using namespace Stage3Art;
 static const int HERO_X = 286, FLOOR_Y = 216, DESK_X = 316;
-static int rnd(float v) { return (int)std::lround(v); }
+static int rnd(float v) { return static_cast<int>(lround(v)); }
 static void paycheck(Frame& f, int x, int y, int) {
     uint8_t ol = C(OLC);
     f.rect(x - 9, y - 6, 19, 13, ol); f.rect(x - 8, y - 5, 17, 11, C(244, 236, 214)); f.line(x - 8, y - 5, x, y + 1, C(200, 190, 166)); f.line(x + 8, y - 5, x, y + 1, C(200, 190, 166));
@@ -19,9 +21,9 @@ static const Look COWORKER[3] = {
     { {30, 26, 30}, {60, 54, 60}, {90, 130, 110}, {66, 100, 84}, {60, 64, 80}, {44, 48, 60}, {200, 160, 60}, true, false, false, false, false, false } };
 static const int CO_X[3] = { 232, 360, 446 };
 void OfficeRound::reset() { queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; endT_ = -1; lines_ = 0; shown_ = 0; inbox_ = 3; done_ = 0; pileT_ = -100; }
-void OfficeRound::onLinesCleared(const std::vector<int>&, int totalLines, int) { while (lines_ < totalLines && lines_ < 10) queue_.push_back(++lines_); }
+void OfficeRound::onLinesCleared(const vector<int>&, int totalLines, int) { while (lines_ < totalLines && lines_ < 10) queue_.push_back(++lines_); }
 void OfficeRound::start(int t) {
-    cur_ = queue_.front(); queue_.pop_front(); curT_ = t; shown_ = cur_; ++done_; inbox_ = std::max(0, inbox_ - 1);
+    cur_ = queue_.front(); queue_.pop_front(); curT_ = t; shown_ = cur_; ++done_; inbox_ = max(0, inbox_ - 1);
     if (cur_ % 3 == 0 && cur_ < 10) { pileT_ = t + DONE_LEN; inbox_ += 4; }
     if (cur_ == 10) endT_ = t + DONE_LEN;
 }
@@ -34,7 +36,7 @@ void OfficeRound::update(const PlayStateReader&, int t) {
     if (!queue_.empty()) start(t);
 }
 void OfficeRound::drawWindow(Frame& f, int t) {
-    float p = std::min(1.0f, shown_ / 9.0f);
+    float p = min(1.0f, shown_ / 9.0f);
     RGB top = p < 0.5f ? mix(RGB{ 250, 170, 100 }, RGB{ 120, 90, 160 }, p * 2) : mix(RGB{ 120, 90, 160 }, RGB{ 16, 20, 48 }, (p - 0.5f) * 2);
     RGB bot = p < 0.5f ? mix(RGB{ 254, 220, 150 }, RGB{ 220, 130, 140 }, p * 2) : mix(RGB{ 220, 130, 140 }, RGB{ 40, 46, 90 }, (p - 0.5f) * 2);
     int wx = 196, wy = 8, ww = 280, wh = 100;
@@ -89,8 +91,8 @@ void OfficeRound::drawDesk(Frame& f, int t) {
     for (int k = 0; k < 3; ++k) { int sx = cx + 2 + k * 2, sy = y - 14 - (t + k * 3) % 6; f.set(sx + ((t / 3 + k) % 2), sy, C(230, 230, 236)); }
     int ix = x0 + 110, dx = x0 + 132;
     f.rect(ix - 2, y - 2, 22, 3, ol); f.rect(dx - 2, y - 2, 22, 3, ol);
-    drawPapers(f, ix, y - 4, std::min(14, inbox_), inbox_ > 6);
-    drawPapers(f, dx, y - 4, std::min(14, done_), false);
+    drawPapers(f, ix, y - 4, min(14, inbox_), inbox_ > 6);
+    drawPapers(f, dx, y - 4, min(14, done_), false);
     Font::center(f, "IN", ix + 8, y + 8, C(250, 240, 210)); Font::center(f, "DONE", dx + 8, y + 8, C(250, 240, 210));
     uint8_t lampC = endT_ >= 0 && last_ - endT_ >= LAMP ? C(90, 90, 96) : C(255, 236, 160);
     f.rect(x1 - 18, y - 30, 3, 30, ol); f.poly({ {x1 - 26, y - 30}, {x1 - 8, y - 30}, {x1 - 12, y - 38}, {x1 - 22, y - 38} }, ol); f.poly({ {x1 - 25, y - 31}, {x1 - 9, y - 31}, {x1 - 13, y - 37}, {x1 - 21, y - 37} }, C(70, 120, 90)); f.hline(x1 - 24, x1 - 10, y - 30, lampC);
@@ -102,11 +104,11 @@ void OfficeRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawWindow(f, t);
     f.rect(0, FLOOR_Y, 480, 54, floor); f.hline(0, 479, FLOOR_Y, ol); f.hline(0, 479, FLOOR_Y + 1, floorL);
     for (int k = 0; k < 80; ++k) f.set((k * 61) % 480, FLOOR_Y + 4 + (k * 23) % 50, k % 2 ? floorD : floorL);
-    int hour = 18 + std::min(6, shown_ * 6 / 10), cx = 20, cy = 52;
-    f.disc(cx, cy, 13, ol); f.disc(cx, cy, 12, C(250, 248, 238)); for (int k = 0; k < 12; ++k) f.set(cx + rnd(std::cos(k * 0.5236f) * 9), cy + rnd(std::sin(k * 0.5236f) * 9), ol);
+    int hour = 18 + min(6, shown_ * 6 / 10), cx = 20, cy = 52;
+    f.disc(cx, cy, 13, ol); f.disc(cx, cy, 12, C(250, 248, 238)); for (int k = 0; k < 12; ++k) f.set(cx + rnd(cos(k * 0.5236f) * 9), cy + rnd(sin(k * 0.5236f) * 9), ol);
     float ah = (hour % 12) * 0.5236f - 1.5708f, am = (t % 60) * 0.1047f - 1.5708f;
-    f.line(cx, cy, cx + rnd(std::cos(ah) * 5), cy + rnd(std::sin(ah) * 5), ol); f.line(cx, cy, cx + rnd(std::cos(am) * 8), cy + rnd(std::sin(am) * 8), C(200, 60, 60));
-    Font::center(f, std::to_string(hour > 23 ? 12 : hour - 12) + (hour > 23 ? " AM" : " PM"), cx, cy + 16, C(80, 80, 96));
+    f.line(cx, cy, cx + rnd(cos(ah) * 5), cy + rnd(sin(ah) * 5), ol); f.line(cx, cy, cx + rnd(cos(am) * 8), cy + rnd(sin(am) * 8), C(200, 60, 60));
+    Font::center(f, to_string(hour > 23 ? 12 : hour - 12) + (hour > 23 ? " AM" : " PM"), cx, cy + 16, C(80, 80, 96));
     drawCubicles(f, t);
     Stage2UI::pills(f, t);
     drawCommonUI(f);
@@ -126,8 +128,8 @@ void OfficeRound::drawForeground(Frame& f, const PlayStateReader&, int t) {
     else person(f, HERO_X, FLOOR_Y, HERO_SUIT, false, SIT, TYPE, tired ? SLEEPY : CALM, typing ? t : t / 3);
     drawDesk(f, t);
     if (curT_ >= 0 && t - curT_ < DONE_LEN && e < 0) {
-        float u = (t - curT_) / (float)DONE_LEN;
-        int px = rnd(DESK_X + 110 + 22 * u), py = rnd(182 - inbox_ * 2 - std::sin(u * 3.1416f) * 20);
+        float u = (t - curT_) / static_cast<float>(DONE_LEN);
+        int px = rnd(DESK_X + 110 + 22 * u), py = rnd(182 - inbox_ * 2 - sin(u * 3.1416f) * 20);
         f.rect(px - 1, py - 1, 18, 4, ol); f.rect(px, py, 16, 2, C(252, 250, 242));
     }
 }
@@ -138,9 +140,9 @@ void OfficeRound::drawNext(Frame& f, int piece, int t) {
     for (int k = 0; k < 24; ++k) f.set(x + 3 + (k * 17) % 52, y + 3 + (k * 11) % 42, corkD);
     f.rect(x + 8, y + 5, 42, 38, ol); f.rect(x + 9, y + 6, 40, 36, note); f.hline(x + 9, x + 48, y + 41, C(226, 206, 110)); f.disc(x + 29, y + 6, 1, C(220, 60, 60));
     Font::center(f, "NEXT", x + 29, y + 9, C(110, 90, 60));
-    std::vector<std::pair<int, int>> cs = SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
-    for (auto& c : cs) { mx = std::min(mx, c.first); my = std::min(my, c.second); Mx = std::max(Mx, c.first); My = std::max(My, c.second); }
+    for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
     int bw = (Mx - mx + 1) * 6, bh = (My - my + 1) * 6;
     for (auto& c : cs) ToyBlocks::cell6(f, x + 29 - bw / 2 + (c.first - mx) * 6, y + 29 - bh / 2 + (c.second - my) * 6, piece);
     (void)t;
@@ -151,7 +153,7 @@ void OfficeRound::drawHud(Frame& f, int, int t) {
     f.rect(x - 1, y - 1, 60, 32, ol); f.rect(x, y, 58, 30, paper);
     Font::center(f, "TO DO", x + 29, y + 3, ink);
     for (int i = 0; i < 10; ++i) { int cx = x + 4 + i * 5; f.rect(cx, y + 12, 4, 4, ol); f.rect(cx + 1, y + 13, 2, 2, i < shown_ ? done : todo); }
-    Font::center(f, std::to_string(shown_) + "/10", x + 29, y + 20, shown_ >= 10 ? done : ink);
+    Font::center(f, to_string(shown_) + "/10", x + 29, y + 20, shown_ >= 10 ? done : ink);
     (void)t;
 }
 void OfficeRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
@@ -175,7 +177,7 @@ void OfficeRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
         if (e >= PAY - 8 && e < PAY) { paycheck(f, DESK_X + 70, 178, t); for (int k = 0; k < 4; ++k) star(f, DESK_X + 70 + ((k % 2) ? 12 : -12), 172 + (k / 2) * 10 - (t % 3)); }
         if (e >= PAY - 8 && e < PAY - 2) Font::center(f, "PAYDAY!", DESK_X + 70, 150, C(250, 220, 120), ol);
         flyToBook(f, e - PAY, DESK_X + 70, 178, paycheck, "PAYCHECK!", t);
-        if (e >= LAMP) shade(f, 0, 0, 480, 270, std::min(3, 2 + (e - LAMP) / 3));
-        if (e >= END - 12) { float k = std::min(1.0f, (e - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
+        if (e >= LAMP) shade(f, 0, 0, 480, 270, min(3, 2 + (e - LAMP) / 3));
+        if (e >= END - 12) { float k = min(1.0f, (e - END + 13) / 12.0f); for (auto& c : palette()) c = RGB{ rnd(c.r * (1 - k)), rnd(c.g * (1 - k)), rnd(c.b * (1 - k)) }; }
     }
 }

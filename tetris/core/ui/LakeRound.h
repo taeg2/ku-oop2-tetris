@@ -5,6 +5,7 @@ using namespace std;
 class LakeRound : public RoundScene {
 public:
     const char* name() const override { return "Breeze"; }
+    bool pillPanel() const override { return true; }
     void reset() override;
     void update(const PlayStateReader& g, int t) override;
     void onLinesCleared(const vector<int>& rows, int totalLines, int t) override;

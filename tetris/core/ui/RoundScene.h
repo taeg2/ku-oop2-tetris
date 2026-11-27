@@ -1,7 +1,10 @@
 #pragma once
+#include <array>
 #include <vector>
+#include "ui/BoardOverlay.h"
 #include "ui/PixelArt.h"
 #include "ui/PlayStateReader.h"
+#include "ui/Stage2UI.h"
 #include "ui/ToyBlocks.h"
 using namespace std;
 
@@ -18,11 +21,15 @@ public:
         drawBackground(f, g, t);
         drawBoardFrame(f, t);
         ToyBlocks::board(f, g, boardX(), boardY(), playing(t));
+        drawBoardOverlay(f, g, t);
         if (clearFrame >= 0) ToyBlocks::flashRows(f, g, boardX(), boardY(), clearFrame);
         drawForeground(f, g, t);
         drawNext(f, g.next(), t);
         drawHud(f, min(lines, goal()), t);
+        if (pillPanel()) Stage2UI::pills(f, t, g, pillX(), pillY());
         drawEffects(f, g, t);
+        trackPills(g, t);
+        drawPillFlights(f, t);
     }
     virtual void reset() {}
     virtual void update(const PlayStateReader&, int) {}
@@ -36,12 +43,25 @@ protected:
     virtual void drawNext(Frame& f, int piece, int t) = 0;
     virtual void drawHud(Frame& f, int lines, int t) = 0;
     virtual void drawEffects(Frame&, const PlayStateReader&, int) {}
+    virtual void drawBoardOverlay(Frame& f, const PlayStateReader& g, int t) { BoardOverlay::draw(f, g, boardX(), boardY(), 8, t); }
     static void drawSign(Frame& f, int x, int y, int w, const char* label);
     static void drawMemoryBook(Frame& f, int x, int y);
     static void drawCommonUI(Frame& f);
     using ItemDraw = void (*)(Frame& f, int x, int y, int t);
     static void flyToBook(Frame& f, int m, int sx, int sy, ItemDraw item, const char* label, int t);  // m: 연출 시작 후 프레임, 26프레임 동안 sx,sy에서 앨범으로 날아간다
     const PlayStateReader& state() const { return *m_state; }
+    virtual bool pillPanel() const { return false; }
+    virtual int pillX() const { return boardX() - 56; }
+    virtual int pillY() const { return boardY() + 72; }
+    virtual int cellX(int x, int) const { return boardX() + x * 8 + 4; }
+    virtual int cellY(int y, int) const { return boardY() + y * 8 + 4; }
 private:
+    class PillFlight { public: int kind, sx, sy, t0; };
+    void trackPills(const PlayStateReader& g, int t);
+    void drawPillFlights(Frame& f, int t);
     const PlayStateReader* m_state = nullptr;
+    vector<PillFlight> m_flights;
+    vector<array<int, 3>> m_pills;
+    int m_counts[2] = {-1, -1};
+    int m_lastT = -1;
 };

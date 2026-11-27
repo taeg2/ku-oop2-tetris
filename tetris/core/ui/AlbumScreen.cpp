@@ -15,11 +15,8 @@ void AlbumScreen::open(int cleared, int t) {
     if (cleared >= 0 && cleared < SLOTS) { newSlot_ = done_[stage_][cleared] ? -1 : cleared; done_[stage_][cleared] = true; }
     unlocked_ = 0;
     while (unlocked_ < available(stage_) - 1 && done_[stage_][unlocked_]) ++unlocked_;
-    sel_ = min(cleared + 1, SLOTS - 1);
-    sel_ = min(sel_, unlocked_);
+    sel_ = unlocked_;
 }
-void AlbumScreen::left() { if (sel_ > 0) --sel_; }
-void AlbumScreen::right() { if (sel_ < (detail_ ? available(stage_) - 1 : unlocked_)) ++sel_; }
 void AlbumScreen::drawIcon(Frame& f, int slot, int cx, int cy) {
     uint8_t ol = C(OL);
     if (slot == 0) {
@@ -259,9 +256,6 @@ void AlbumScreen::drawDetail(Frame& f, int t, const Frame* preview) const {
         f.rect(cx - 10, cy - 4, 20, 16, ol); f.rect(cx - 9, cy - 3, 18, 14, gold); f.rect(cx - 7, cy - 14, 14, 3, ol); f.rect(cx - 7, cy - 14, 3, 11, ol); f.rect(cx + 4, cy - 14, 3, 11, ol); f.rect(cx - 1, cy + 2, 2, 5, ol);
     }
     Font::center(f, done ? MEMORIES[stage_][sel_] : (open ? "NEXT" : "LOCKED"), Frame::W / 2, py + PH + 7, done ? C(90, 120, 70) : ink);
-    int bob = (t / 4) % 2;
-    if (sel_ > 0) { int ax = px - 34 - bob, ay = py + PH / 2; f.poly({ {ax, ay}, {ax + 14, ay - 14}, {ax + 14, ay + 14} }, ol); f.poly({ {ax + 3, ay}, {ax + 12, ay - 9}, {ax + 12, ay + 9} }, gold); }
-    if (sel_ < available(stage_) - 1) { int ax = px + PW + 34 + bob, ay = py + PH / 2; f.poly({ {ax, ay}, {ax - 14, ay - 14}, {ax - 14, ay + 14} }, ol); f.poly({ {ax - 3, ay}, {ax - 12, ay - 9}, {ax - 12, ay + 9} }, gold); }
     const char* label[2] = { "CANCEL", "PLAY" };
     for (int b = 0; b < 2; ++b) {
         int bx = b == 0 ? px : px + PW - 84, by = 236;

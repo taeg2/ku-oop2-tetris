@@ -10,8 +10,6 @@ public:
     void open(int cleared, int t);
     bool isOpen() const { return open_; }
     void close() { open_ = false; }
-    void left();
-    void right();
     int selected() const { return sel_; }
     void draw(Frame& f, int t, const Frame* preview = nullptr) const;
     bool inDetail() const { return detail_; }

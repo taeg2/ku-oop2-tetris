@@ -38,8 +38,6 @@ int AlbumView::takePick() { int p = m_pick; m_pick = -1; return p; }
 void AlbumView::handle(Command command) {
     if (!m_album.isOpen() || m_album.flipping()) return;
     switch (command) {
-        case Command::MoveLeft: m_album.left(); break;
-        case Command::MoveRight: m_album.right(); break;
         case Command::Rotate: m_album.up(); break;
         case Command::SoftDrop: m_album.down(); break;
         case Command::Pause: if (m_album.inDetail()) m_album.closeDetail(); break;

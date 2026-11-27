@@ -21,4 +21,10 @@ public:
     virtual bool clearing() const = 0;
     virtual bool over() const = 0;
     virtual bool hasPiece() const = 0;
+    virtual int pillAt(int x, int y) const = 0;
+    virtual int piecePill() const = 0;
+    virtual int piecePillIndex() const = 0;
+    virtual int pillCount(int kind) const = 0;
+    virtual bool hidden(int x, int y) const = 0;
+    virtual bool marked(int x, int y) const = 0;
 };

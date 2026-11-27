@@ -347,7 +347,7 @@ void ClassroomRound::drawBagOnHook(Frame& f, int n, int t) {
     Font::center(f, to_string(n) + "/10", bx + 56, by + 13, n >= 10 ? red : ink);
 }
 void ClassroomRound::drawHud(Frame& f, int lines, int t) {
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     int x = MX - 22, y = 211, w = 44, h = 14;
     uint8_t ol = C(OL);
     int n = min(max(lines, lines_), 10), a = t - clearT_, e = endT_ >= 0 ? t - endT_ : -1;

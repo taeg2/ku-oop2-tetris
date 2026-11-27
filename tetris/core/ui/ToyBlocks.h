@@ -49,6 +49,15 @@ public:
         f.set(x + 1, y + 1, c4); f.set(x + 2, y + 2, c3); f.set(x + 3, y + 3, c1);
         f.set(x + 5, y, c1); f.set(x, y + 5, c1);
     }
+    static void pill(Frame& f, int x, int y, int cs, int kind) {
+        uint8_t ol = C(42, 26, 28), half = kind == 0 ? C(70, 130, 230) : C(226, 70, 70), white = C(250, 248, 240);
+        int w = cs - 2, ox = x + 1, oy = y + (cs - 4) / 2;
+        for (int r = 0; r < 4; ++r) for (int c = 0; c < w; ++c) {
+            bool rim = r == 0 || r == 3 || c == 0 || c == w - 1;
+            if (rim && (c == 0 || c == w - 1) && (r == 0 || r == 3)) continue;
+            f.set(ox + c, oy + r, rim ? ol : (c < w / 2 ? half : white));
+        }
+    }
     static void nextPiece(Frame& f, const PlayStateReader& g, int type, int cx, int cy) {
         auto cs = g.shape(type);
         int minx = 9, maxx = -9, miny = 9, maxy = -9;
@@ -64,9 +73,17 @@ public:
     }
     static void board(Frame& f, const PlayStateReader& g, int bx, int by, bool piece = true) {
         for (int y = 0; y < PlayStateReader::kRows; ++y) for (int x = 0; x < PlayStateReader::kCols; ++x)
-            if (g.at(x, y) >= 0) cell8(f, bx + x * 8, by + y * 8, g.over() ? 7 : g.at(x, y));
+            if (g.at(x, y) >= 0) {
+                cell8(f, bx + x * 8, by + y * 8, g.over() ? 7 : g.at(x, y));
+                if (g.pillAt(x, y) >= 0) pill(f, bx + x * 8, by + y * 8, 8, g.pillAt(x, y));
+            }
         if (g.over() || g.clearing() || !g.hasPiece() || !piece) return;
         for (auto& c : g.ghostCells()) if (c.second >= 0) ghost8(f, bx + c.first * 8, by + c.second * 8, g.current());
-        for (auto& c : g.pieceCells()) if (c.second >= 0) cell8(f, bx + c.first * 8, by + c.second * 8, g.current());
+        PlayStateReader::Cells cs = g.pieceCells();
+        for (size_t i = 0; i < cs.size(); ++i) {
+            if (cs[i].second < 0) continue;
+            cell8(f, bx + cs[i].first * 8, by + cs[i].second * 8, g.current());
+            if (g.piecePill() >= 0 && static_cast<int>(i) == g.piecePillIndex()) pill(f, bx + cs[i].first * 8, by + cs[i].second * 8, 8, g.piecePill());
+        }
     }
 };

@@ -66,7 +66,7 @@ static void seated(Frame& f, int cx, int floor, const Seat& lk, bool flip, int m
 }
 static const char* QUESTIONS[20] = { "INTRODUCE YOURSELF", "WHY OUR COMPANY?", "YOUR STRENGTHS?", "YOUR WEAKNESS?", "IN 5 YEARS?", "TEAMWORK?", "BIGGEST FAILURE?", "WHY HIRE YOU?", "SALARY?", "ANY PRESSURE?", "LEADERSHIP?", "A HARD DECISION?", "WHY THIS FIELD?", "A CONFLICT?", "YOUR DREAM?", "WORK OVERTIME?", "YOUR HOBBIES?", "DESCRIBE YOURSELF", "LAST WORDS?", "ANY QUESTIONS?" };
 static const char* BABBLES[4] = { "UGA BUGA", "UHH... UM...", "UGA UGA BUGA", "I... UHH..." };
-void InterviewRound::reset() { pieceNo_ = 0; lastTop_ = -1; odd_ = false; nextOdd_ = false; queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; passT_ = -1; lines_ = 0; shown_ = 0; lineT_ = 0; }
+void InterviewRound::reset() { queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; passT_ = -1; lines_ = 0; shown_ = 0; lineT_ = 0; }
 void InterviewRound::onLinesCleared(const vector<int>&, int totalLines, int) {
     while (lines_ < totalLines && lines_ < 20) queue_.push_back(++lines_);
 }
@@ -74,22 +74,13 @@ void InterviewRound::start(int t) {
     cur_ = queue_.front(); queue_.pop_front(); curT_ = t; shown_ = cur_; lineT_ = t;
     if (cur_ == 20) passT_ = t;
 }
-void InterviewRound::update(const PlayStateReader& g, int t) {
+void InterviewRound::update(const PlayStateReader&, int t) {
     last_ = t;
     if (passT_ >= 0) return;
-    if (!g.hasPiece()) lastTop_ = -1;
-    else {
-        int top = PlayStateReader::kRows;
-        for (auto& c : g.pieceCells()) top = min(top, c.second);
-        if (lastTop_ < 0 || top < lastTop_) { ++pieceNo_; odd_ = nextOdd_ || shown_ >= 7; nextOdd_ = shown_ >= 7; }
-        lastTop_ = top;
-    }
-    if (babbling(t)) { odd_ = true; nextOdd_ = true; }
     if (curT_ >= 0 && t - curT_ < Q_LEN && queue_.empty()) return;
     if (curT_ >= 0 && t - curT_ < 6) return;
     if (!queue_.empty()) start(t);
 }
-bool InterviewRound::blank(int t) const { return shown_ >= 10 && passT_ < 0 && t % 80 >= 54; }
 void InterviewRound::bubble(Frame& f, int x, int y, int w, const char* text, bool tailRight, uint8_t ink) {
     uint8_t ol = C(OL), paper = C(252, 250, 244);
     f.rect(x - 1, y - 1, w + 2, 13, ol); f.rect(x, y, w, 11, paper); f.hline(x + 1, x + w - 2, y + 10, C(222, 218, 206));
@@ -173,15 +164,6 @@ void InterviewRound::drawMain(Frame& f, int t) {
         if (a < 12) { f.set(sx, sy, C(255, 236, 140)); f.set(sx - 1, sy, C(255, 250, 210)); f.set(sx + 1, sy, C(255, 250, 210)); f.set(sx, sy - 1, C(255, 250, 210)); f.set(sx, sy + 1, C(255, 250, 210)); }
     }
 }
-static const vector<pair<int, int>> WEIRD[6] = {
-    { {1, 0}, {0, 1}, {1, 1}, {2, 1}, {1, 2} },
-    { {0, 0}, {2, 0}, {1, 1}, {0, 2}, {2, 2} },
-    { {0, 0}, {1, 0} },
-    { {1, 0}, {0, 1}, {1, 1}, {2, 1} },
-    { {0, 0}, {2, 0}, {0, 1}, {1, 1}, {2, 1} },
-    { {0, 0}, {1, 1}, {2, 2} },
-};
-static const vector<pair<int, int>>& weirdShape(int k) { return WEIRD[((k % 6) + 6) % 6]; }
 static void paperCell(Frame& f, int x, int y, int type) {
     const RGB* r = ToyBlocks::ramp(type);
     uint8_t ol = C(r[0]), tab = C(r[2]), tabD = C(r[1]), paper = C(mix(r[4], RGB{ 252, 250, 242 }, 0.55f)), line = C(r[3]), fold = C(mix(r[3], RGB{ 230, 224, 210 }, 0.5f));
@@ -193,43 +175,23 @@ static void paperCell(Frame& f, int x, int y, int type) {
 }
 void InterviewRound::drawPaperBlocks(Frame& f, const PlayStateReader& g, int t) {
     int bx = boardX(), by = boardY();
-    uint8_t cell = C(22, 26, 42), line = C(32, 38, 58);
-    bool hide = blank(t);
     vector<int> skip;
     if (g.clearing()) skip = g.clearingRows();
     for (int y = 0; y < PlayStateReader::kRows; ++y) {
         if (find(skip.begin(), skip.end(), y) != skip.end()) continue;
         for (int x = 0; x < PlayStateReader::kCols; ++x) {
             if (g.at(x, y) < 0) continue;
-            if (hide) {
-                int px = bx + x * 8, py = by + y * 8;
-                f.rect(px, py, 8, 8, cell); if (x) f.vline(px, py, py + 7, line); if (y) f.hline(px, px + 7, py, line);
-                if ((x + y + t / 2) % 5 == 0) f.set(px + 3, py + 4, C(60, 66, 96));
-                continue;
-            }
             paperCell(f, bx + x * 8, by + y * 8, g.over() ? 7 : g.at(x, y));
+            if (g.pillAt(x, y) >= 0) ToyBlocks::pill(f, bx + x * 8, by + y * 8, 8, g.pillAt(x, y));
         }
     }
-    if (!babbling(t) && !odd_) {
-        for (auto& c : g.pieceCells()) if (c.second >= 0) paperCell(f, bx + c.first * 8, by + c.second * 8, g.current());
-        return;
+    PlayStateReader::Cells cs = g.pieceCells();
+    for (size_t i = 0; i < cs.size(); ++i) {
+        if (cs[i].second < 0) continue;
+        paperCell(f, bx + cs[i].first * 8, by + cs[i].second * 8, g.current());
+        if (g.piecePill() >= 0 && static_cast<int>(i) == g.piecePillIndex()) ToyBlocks::pill(f, bx + cs[i].first * 8, by + cs[i].second * 8, 8, g.piecePill());
     }
-    auto erase = [&](int x, int y) {
-        if (x < 0 || x >= PlayStateReader::kCols || y < 0 || y >= PlayStateReader::kRows || g.at(x, y) >= 0) return;
-        int px = bx + x * 8, py = by + y * 8;
-        f.rect(px, py, 8, 8, cell); if (x) f.vline(px, py, py + 7, line); if (y) f.hline(px, px + 7, py, line);
-    };
-    for (auto& c : g.ghostCells()) erase(c.first, c.second);
-    for (auto& c : g.pieceCells()) erase(c.first, c.second);
-    int mx = 99, my = 99;
-    for (auto& c : g.pieceCells()) { mx = min(mx, c.first); my = min(my, c.second); }
-    if (mx == 99) return;
-    bool flick = babbling(t);
-    const auto& w = weirdShape(flick ? cur_ + t / 4 : pieceNo_ * 7 + 3);
-    for (auto& c : w) {
-        int x = min(PlayStateReader::kCols - 1, mx + c.first), y = my + c.second;
-        if (y >= 0 && y < PlayStateReader::kRows) paperCell(f, bx + x * 8, by + y * 8, flick ? (g.current() + t / 4) % 7 : (pieceNo_ * 5 + 1) % 7);
-    }
+    BoardOverlay::draw(f, g, bx, by, 8, t);
 }
 void InterviewRound::warpBoard(Frame& f, int t) {
     int bx = boardX(), by = boardY();
@@ -243,7 +205,7 @@ void InterviewRound::warpBoard(Frame& f, int t) {
 }
 void InterviewRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawRoom(f, t);
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
 }
 void InterviewRound::drawForeground(Frame& f, const PlayStateReader& g, int t) {
@@ -263,12 +225,11 @@ void InterviewRound::drawNext(Frame& f, int piece, int t) {
     f.rect(x + 3, y + 66, 48, 3, C(244, 240, 226));
     if (passT_ >= 0) { Font::center(f, "PASS", x + 27, y + 26, C(60, 150, 80)); f.rect(x + 8, y + 22, 38, 1, C(60, 150, 80)); f.rect(x + 8, y + 36, 38, 1, C(60, 150, 80)); return; }
     Font::center(f, "NEXT", x + 27, y + 5, ink);
-    bool odd = babbling(t) || nextOdd_;
-    vector<pair<int, int>> cs = babbling(t) ? weirdShape(cur_ + t / 4 + 3) : nextOdd_ ? weirdShape((pieceNo_ + 1) * 7 + 3) : SessionPlayState::shapeOf(piece);
+    vector<pair<int, int>> cs = SessionPlayState::shapeOf(piece);
     int mx = 9, my = 9, Mx = 0, My = 0;
     for (auto& c : cs) { mx = min(mx, c.first); my = min(my, c.second); Mx = max(Mx, c.first); My = max(My, c.second); }
     int bw = (Mx - mx + 1) * 8, bh = (My - my + 1) * 8;
-    for (auto& c : cs) paperCell(f, x + 27 - bw / 2 + (c.first - mx) * 8, y + 26 - bh / 2 + (c.second - my) * 8, babbling(t) ? (piece + t / 4 + 2) % 7 : odd ? ((pieceNo_ + 1) * 5 + 1) % 7 : piece);
+    for (auto& c : cs) paperCell(f, x + 27 - bw / 2 + (c.first - mx) * 8, y + 26 - bh / 2 + (c.second - my) * 8, piece);
     (void)t;
 }
 void InterviewRound::drawHud(Frame& f, int, int t) {
@@ -291,8 +252,6 @@ void InterviewRound::drawEffects(Frame& f, const PlayStateReader&, int t) {
     int bx = boardX(), by = boardY();
     if (passT_ < 0) {
         if (shown_ >= 4 && t - lineT_ < 14 && shown_ < 7) Font::center(f, "FASTER", bx + 40, by - 18, C(250, 220, 120), ol);
-        if (shown_ >= 7 && shown_ < 10 && t - lineT_ < 14) Font::center(f, "WEIRD SHAPES", bx + 40, by - 18, C(200, 160, 250), ol);
-        if (blank(t)) Font::center(f, "MIND BLANK", bx + 40, by - 18, C(240, 240, 250), ol);
         if (shown_ >= 15 && t % 100 >= 60 && t % 100 < 64 && (t / 2) % 2) Font::center(f, "!!", MAIN_X, 134, C(250, 90, 80), ol);
     }
     if (passT_ >= 0) {

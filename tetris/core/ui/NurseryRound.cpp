@@ -87,7 +87,7 @@ void NurseryRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawRoom(f, t);
     drawCrib(f, t);
     if (endT_ < 0 && dark() > 0) shade(f, 0, 0, 480, 270, dark());
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
 }
 void NurseryRound::drawForeground(Frame& f, const PlayStateReader&, int t) {

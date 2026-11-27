@@ -16,6 +16,12 @@ public:
     bool clearing() const override { return false; }
     bool over() const override { return false; }
     bool hasPiece() const override { return false; }
+    int pillAt(int, int) const override { return -1; }
+    int piecePill() const override { return -1; }
+    int piecePillIndex() const override { return -1; }
+    int pillCount(int) const override { return 0; }
+    bool hidden(int, int) const override { return false; }
+    bool marked(int, int) const override { return false; }
 private:
     vector<int> m_rows;
 };

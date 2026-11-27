@@ -18,15 +18,14 @@ protected:
     void drawNext(Frame& f, int piece, int t) override;
     void drawHud(Frame& f, int lines, int t) override;
     void drawEffects(Frame& f, const PlayStateReader& g, int t) override;
+    void drawBoardOverlay(Frame&, const PlayStateReader&, int) override {}
 private:
     static const int ASK = 22, BABBLE = 16, Q_LEN = ASK + BABBLE, SMILE = 18, WELCOME = 34, END = 76;
     deque<int> queue_;
-    int pieceNo_ = 0, lastTop_ = -1, cur_ = 0, curT_ = -1, last_ = 0, passT_ = -1, lines_ = 0, shown_ = 0, lineT_ = 0;
-    bool odd_ = false, nextOdd_ = false;
+    int cur_ = 0, curT_ = -1, last_ = 0, passT_ = -1, lines_ = 0, shown_ = 0, lineT_ = 0;
     void start(int t);
     bool asking(int t) const { return passT_ < 0 && curT_ >= 0 && t - curT_ < ASK; }
     bool babbling(int t) const { return passT_ < 0 && curT_ >= 0 && t - curT_ >= ASK && t - curT_ < Q_LEN; }
-    bool blank(int t) const;
     int whiteout(int t) const;
     void drawRoom(Frame& f, int t);
     void drawClock(Frame& f, int t);

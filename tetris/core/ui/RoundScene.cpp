@@ -79,3 +79,70 @@ void RoundScene::flyToBook(Frame& f, int m, int sx, int sy, ItemDraw item, const
         if (m < 20) Font::center(f, label, 40, 212 - (m - 14), C(252, 228, 152), ol);
     }
 }
+void RoundScene::trackPills(const PlayStateReader& g, int t) {
+    if (t == m_lastT) return;
+    if (t < m_lastT) { m_flights.clear(); m_counts[0] = m_counts[1] = -1; }
+    m_lastT = t;
+    vector<array<int, 3>> now;
+    for (int y = 0; y < PlayStateReader::kRows; ++y) for (int x = 0; x < PlayStateReader::kCols; ++x) if (g.at(x, y) >= 0 && g.pillAt(x, y) >= 0) now.push_back({x, y, g.pillAt(x, y)});
+    for (int k = 0; k < 2; ++k) {
+        int c = g.pillCount(k);
+        if (m_counts[k] >= 0 && c > m_counts[k]) {
+            int sx = cellX(4, t), sy = cellY(10, t);
+            bool found = false;
+            for (int row : g.clearingRows()) for (const auto& p : now) if (!found && p[1] == row && p[2] == k) { sx = cellX(p[0], t); sy = cellY(p[1], t); found = true; }
+            for (const auto& p : m_pills) {
+                if (found || p[2] != k) continue;
+                bool still = false;
+                for (const auto& q : now) if (q == p) still = true;
+                if (!still) { sx = cellX(p[0], t); sy = cellY(p[1], t); found = true; }
+            }
+            for (int n = m_counts[k]; n < c; ++n) m_flights.push_back({k, sx, sy, t + (n - m_counts[k]) * 3});
+        }
+        m_counts[k] = c;
+    }
+    m_pills = now;
+    for (size_t i = 0; i < m_flights.size();) {
+        if (t - m_flights[i].t0 > 14) m_flights.erase(m_flights.begin() + static_cast<long>(i));
+        else ++i;
+    }
+}
+void RoundScene::drawPillFlights(Frame& f, int t) {
+    const int fly = 10;
+    uint8_t ol = C(42, 26, 28), white = C(250, 248, 240), spark = C(255, 240, 170), shine = C(255, 255, 255);
+    for (const auto& p : m_flights) {
+        int m = t - p.t0;
+        if (m < 0) continue;
+        int ex = pillX() + 12, ey = pillY() + 9 + p.kind * 26;
+        if (m < fly) {
+            auto at = [&](float u, int& x, int& y) {
+                u = u * u * (3 - 2 * u);
+                float cx = (p.sx + ex) / 2.0f, cy = static_cast<float>(min(p.sy, ey) - 60);
+                x = static_cast<int>((1 - u) * (1 - u) * p.sx + 2 * (1 - u) * u * cx + u * u * ex + 0.5f);
+                y = static_cast<int>((1 - u) * (1 - u) * p.sy + 2 * (1 - u) * u * cy + u * u * ey + 0.5f);
+            };
+            int x, y;
+            for (int k = 1; k <= 3; ++k) {
+                float u = (m - k * 0.6f) / (fly - 1);
+                if (u < 0) continue;
+                at(u, x, y);
+                f.set(x, y, k % 2 ? spark : shine);
+            }
+            at(static_cast<float>(m) / (fly - 1), x, y);
+            uint8_t body = p.kind == 0 ? C(70, 130, 230) : C(226, 70, 70), lit = p.kind == 0 ? C(170, 210, 255) : C(255, 170, 160);
+            f.disc(x - 3, y, 3, ol); f.disc(x + 3, y, 3, ol); f.rect(x - 3, y - 3, 7, 7, ol);
+            f.disc(x - 3, y, 2, body); f.rect(x - 3, y - 2, 4, 5, body);
+            f.disc(x + 3, y, 2, white); f.rect(x + 1, y - 2, 3, 5, white);
+            f.hline(x - 4, x - 2, y - 1, lit);
+            if (m < 2) for (int a = 0; a < 8; ++a) {
+                static const int dx[8] = {1, 1, 0, -1, -1, -1, 0, 1}, dy[8] = {0, 1, 1, 1, 0, -1, -1, -1};
+                f.set(p.sx + dx[a] * (5 + 2 * m), p.sy + dy[a] * (5 + 2 * m), shine);
+            }
+        } else if (m < fly + 4) {
+            int k = m - fly, x0 = pillX() - 1 - k, y0 = pillY() - 1 + p.kind * 26 - k, w = 36 + 2 * k, h = 20 + 2 * k;
+            uint8_t c = k % 2 == 0 ? shine : spark;
+            f.hline(x0, x0 + w - 1, y0, c); f.hline(x0, x0 + w - 1, y0 + h - 1, c);
+            f.vline(x0, y0, y0 + h - 1, c); f.vline(x0 + w - 1, y0, y0 + h - 1, c);
+        }
+    }
+}

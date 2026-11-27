@@ -78,9 +78,9 @@ void GameOverView::render() const {
     int a = m_t - m_openT;
     if (a >= 6 || a % 2 == 0) bigText(f, "GAME OVER", Frame::W / 2, 52, 5, C(230, 70, 70), C(80, 20, 34));
     if (a >= 8) Font::center(f, "THE MEMORY SLIPPED AWAY...", Frame::W / 2, 102, C(204, 198, 226), C(20, 16, 34));
-    if (a >= 12) {
+    if (a >= kInputLockFrames) {
         button(f, Frame::W / 2 - 80, 140, 120, "RETRY", m_focus == 0, m_t);
         button(f, Frame::W / 2 + 80, 140, 120, "BACK TO START", m_focus == 1, m_t);
-        Font::center(f, "LEFT RIGHT - MOVE   ENTER - SELECT", Frame::W / 2, 178, C(150, 146, 176), C(20, 16, 34));
+        Font::center(f, "LEFT RIGHT - MOVE   ENTER - SELECT   Q - QUIT", Frame::W / 2, 178, C(150, 146, 176), C(20, 16, 34));
     }
 }

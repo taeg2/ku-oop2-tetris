@@ -205,7 +205,7 @@ void InterviewRound::warpBoard(Frame& f, int t) {
 }
 void InterviewRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawRoom(f, t);
-    Stage2UI::pills(f, t, state());
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
 }
 void InterviewRound::drawForeground(Frame& f, const PlayStateReader& g, int t) {

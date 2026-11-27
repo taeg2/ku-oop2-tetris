@@ -29,12 +29,12 @@ inline void idItem(Frame& f, int x, int y, int) {
     f.rect(x - 4, y, 4, 5, C(206, 222, 238)); f.set(x - 2, y + 1, C(168, 92, 44)); f.hline(x + 1, x + 4, y + 1, C(150, 150, 170)); f.hline(x + 1, x + 3, y + 3, C(150, 150, 170));
 }
 
-inline void pills(Frame& f, int t, const PlayStateReader& g) {
+inline void pills(Frame& f, int t, const PlayStateReader& g, int x0 = 28, int y0 = 132) {
     uint8_t ol = C(42, 26, 28);
     class P { public: RGB a, b, lit; const char* key; };
     const P ps[2] = { { {70, 130, 230}, {40, 88, 186}, {170, 210, 255}, "1" }, { {226, 70, 70}, {168, 40, 48}, {255, 170, 160}, "2" } };
     for (int k = 0; k < 2; ++k) {
-        int x = 28, y = 132 + k * 26, have = g.pillCount(k);
+        int x = x0, y = y0 + k * 26, have = g.pillCount(k);
         bool empty = have == 0;
         RGB a = empty ? RGB{ 150, 150, 156 } : ps[k].a, b = empty ? RGB{ 120, 120, 126 } : ps[k].b, lit = empty ? RGB{ 190, 190, 196 } : ps[k].lit;
         f.rect(x - 1, y - 1, 36, 20, ol); f.rect(x, y, 34, 18, empty ? C(214, 208, 198) : C(244, 236, 214)); f.hline(x, x + 33, y, empty ? C(228, 222, 212) : C(255, 250, 236));

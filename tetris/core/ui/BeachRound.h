@@ -5,6 +5,7 @@ using namespace std;
 class BeachRound : public RoundScene {
 public:
     const char* name() const override { return "Sand Castles"; }
+    bool pillPanel() const override { return true; }
     int boardX() const override { return 380; }
     int boardY() const override { return 62; }
     void reset() override;

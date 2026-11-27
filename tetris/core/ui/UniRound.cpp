@@ -307,13 +307,13 @@ void UniRound::drawTree(Frame& f, int t) {
     for (int k = 0; k < 12; ++k) for (int j = 0; j < 3; ++j) f.set(x + bx[k] + sway + (j * 5 - 5), feet + by[k] + br[k] - 3 - j % 2, C(s.leafD));
 }
 void UniRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
-    if (ceremony(t)) { drawHall(f, t); Stage2UI::pills(f, t, state()); drawCommonUI(f); return; }
+    if (ceremony(t)) { drawHall(f, t); Stage2UI::pills(f, t, state(), pillX(), pillY()); drawCommonUI(f); return; }
     int n = night(t);
     drawSky(f, t, n);
     drawCampus(f, t, n);
     drawTree(f, t);
     shade(f, 0, 0, 480, 270, n);
-    Stage2UI::pills(f, t, state());
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
 }
 void UniRound::drawBoardFrame(Frame& f, int t) {

@@ -250,7 +250,7 @@ void FadingRound::drawMiniBoard(Frame& f, const PlayStateReader& g, int t) {
 void FadingRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     bool office = !old(t) || (laterT_ >= 0 && t - laterT_ >= 0 && t - laterT_ < LATER / 2);
     if (office) drawOffice(f, t); else drawLiving(f, t);
-    Stage2UI::pills(f, t, state());
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
     if (!office) room_ = f;
 }

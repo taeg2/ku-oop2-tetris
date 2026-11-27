@@ -35,6 +35,8 @@ private:
     void stepBusy(int t);
     void start(int t);
     int part2() const { return shown_ - PART1; }
+    int cellX(int x, int t) const override { return officeBoard(t) ? RoundScene::cellX(x, t) : MX + x * CS + CS / 2; }
+    int cellY(int y, int t) const override { return officeBoard(t) ? RoundScene::cellY(y, t) : MY + y * CS + CS / 2; }
     bool officeBoard(int t) const { return (laterT_ >= 0 && t - laterT_ >= 0 && t - laterT_ < LATER / 2) || !old(t); }
     bool old(int t) const { return shown_ > PART1 || (laterT_ >= 0 && t - laterT_ >= LATER / 2); }
     float drain(int t) const;

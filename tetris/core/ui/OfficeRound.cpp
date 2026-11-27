@@ -110,7 +110,7 @@ void OfficeRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     f.line(cx, cy, cx + rnd(cos(ah) * 5), cy + rnd(sin(ah) * 5), ol); f.line(cx, cy, cx + rnd(cos(am) * 8), cy + rnd(sin(am) * 8), C(200, 60, 60));
     Font::center(f, to_string(hour > 23 ? 12 : hour - 12) + (hour > 23 ? " AM" : " PM"), cx, cy + 16, C(80, 80, 96));
     drawCubicles(f, t);
-    Stage2UI::pills(f, t, state());
+    Stage2UI::pills(f, t, state(), pillX(), pillY());
     drawCommonUI(f);
 }
 void OfficeRound::drawForeground(Frame& f, const PlayStateReader&, int t) {

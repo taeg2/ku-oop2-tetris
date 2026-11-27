@@ -88,7 +88,7 @@ void WeddingRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     drawGarden(f, t);
     drawGuests(f, t, false);
     drawArch(f, t);
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state());
     drawCommonUI(f);
 }
 void WeddingRound::drawForeground(Frame& f, const PlayStateReader&, int t) {

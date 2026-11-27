@@ -308,11 +308,11 @@ void SoccerRound::drawPlayers(Frame& f, int t) {
 }
 void SoccerRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     f.gradient(0, 0, 480, 16, { {150, 206, 244}, {176, 220, 246} });
-    if (older(t)) { drawSchool(f, t); drawPlaza(f, t); Stage2UI::pills(f, t); drawCommonUI(f); return; }
+    if (older(t)) { drawSchool(f, t); drawPlaza(f, t); Stage2UI::pills(f, t, state()); drawCommonUI(f); return; }
     drawField(f);
     drawSchool(f, t);
     drawGoal(f, t, false);
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state());
     drawCommonUI(f);
 }
 void SoccerRound::drawForeground(Frame& f, const PlayStateReader&, int t) {

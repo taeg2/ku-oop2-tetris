@@ -42,3 +42,13 @@ const vector<int>& SessionPlayState::clearingRows() const { return m_session.fla
 bool SessionPlayState::clearing() const { return !m_session.flashingRows().empty(); }
 bool SessionPlayState::over() const { return m_session.isFailed(); }
 bool SessionPlayState::hasPiece() const { return m_session.hasActivePiece(); }
+int SessionPlayState::pillAt(int x, int y) const {
+    const Cell& cell = m_session.board().cellAt(Point{x, y});
+    if (!cell.isFilled() || !cell.hasPill()) return -1;
+    return static_cast<int>(cell.pill());
+}
+int SessionPlayState::piecePill() const { return m_session.current().hasPill() ? static_cast<int>(m_session.current().pill()) : -1; }
+int SessionPlayState::piecePillIndex() const { return m_session.current().pillCellIndex(); }
+int SessionPlayState::pillCount(int kind) const { return m_session.inventory().count(kind == 0 ? PillType::Blue : PillType::Red); }
+bool SessionPlayState::hidden(int x, int y) const { return m_session.board().isHidden(Point{x, y}); }
+bool SessionPlayState::marked(int x, int y) const { return m_session.board().isMarked(Point{x, y}); }

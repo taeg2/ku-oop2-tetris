@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "ui/BoardOverlay.h"
 #include "ui/PixelArt.h"
 #include "ui/PlayStateReader.h"
 #include "ui/ToyBlocks.h"
@@ -18,6 +19,7 @@ public:
         drawBackground(f, g, t);
         drawBoardFrame(f, t);
         ToyBlocks::board(f, g, boardX(), boardY(), playing(t));
+        drawBoardOverlay(f, g, t);
         if (clearFrame >= 0) ToyBlocks::flashRows(f, g, boardX(), boardY(), clearFrame);
         drawForeground(f, g, t);
         drawNext(f, g.next(), t);
@@ -36,6 +38,7 @@ protected:
     virtual void drawNext(Frame& f, int piece, int t) = 0;
     virtual void drawHud(Frame& f, int lines, int t) = 0;
     virtual void drawEffects(Frame&, const PlayStateReader&, int) {}
+    virtual void drawBoardOverlay(Frame& f, const PlayStateReader& g, int t) { BoardOverlay::draw(f, g, boardX(), boardY(), 8, t); }
     static void drawSign(Frame& f, int x, int y, int w, const char* label);
     static void drawMemoryBook(Frame& f, int x, int y);
     static void drawCommonUI(Frame& f);

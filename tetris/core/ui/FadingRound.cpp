@@ -23,11 +23,11 @@ static void familyPhoto(Frame& f, int x, int y, int) {
     auto who = [&](int px, int h, RGB hair, RGB top) { f.disc(px, y + 4 - h, 2, C(246, 204, 164)); f.set(px, y + 2 - h, C(hair)); f.set(px - 1, y + 2 - h, C(hair)); f.rect(px - 1, y + 6 - h, 3, h - 2, C(top)); };
     who(x - 5, 8, { 168, 92, 44 }, { 120, 150, 110 }); who(x, 8, { 120, 70, 46 }, { 214, 120, 140 }); who(x + 5, 5, { 120, 70, 46 }, { 250, 200, 90 });
 }
-void FadingRound::reset() { queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; endT_ = -1; lines_ = 0; shown_ = 0; laterT_ = -1; sweepT_ = -100; fastT_ = -100; money_ = 5000; evT_ = -100; ev_ = NONE; act_ = WANDER; actT_ = 0; px_ = 330; target_ = 384; wanderTo_ = 372; faceL_ = false; for (int& k : shred_) k = 0; }
+void FadingRound::reset() { queue_.clear(); cur_ = 0; curT_ = -1; last_ = 0; endT_ = -1; lines_ = 0; shown_ = 0; laterT_ = -1; fastT_ = -100; money_ = 5000; evT_ = -100; ev_ = NONE; act_ = WANDER; actT_ = 0; px_ = 330; target_ = 384; wanderTo_ = 372; faceL_ = false; for (int& k : shred_) k = 0; }
 void FadingRound::onLinesCleared(const vector<int>&, int totalLines, int) { while (lines_ < totalLines && lines_ < 25) queue_.push_back(++lines_); }
 FadingRound::Event FadingRound::eventFor(int line) {
     static const Event BUSY[11] = { NONE, FASTER, BILLS, YEARS, DEADLINE, BILLS, YEARS, OVERTIME, BILLS, YEARS, FASTER };
-    static const Event OLD[16] = { NONE, NONE, NONE, NONE, FORGOT, NONE, NONE, NONE, BLUR, NONE, NONE, NONE, STATIC, NONE, NONE, NONE };
+    static const Event OLD[16] = { NONE, NONE, NONE, NONE, NONE, NONE, NONE, NONE, BLUR, NONE, NONE, NONE, STATIC, NONE, NONE, NONE };
     if (line <= PART1) return BUSY[line];
     return line - PART1 < 16 ? OLD[line - PART1] : NONE;
 }
@@ -37,7 +37,6 @@ void FadingRound::start(int t) {
     ev_ = eventFor(cur_); evT_ = t + 4;
     for (int& k : shred_) k = 0;
     if (cur_ <= PART1) { act_ = ALERT; actT_ = t; target_ = ev_ == DEADLINE ? 340 : (ev_ == FASTER || ev_ == OVERTIME) ? 353 : ev_ == YEARS ? 306 : 384; }
-    if (ev_ == BILLS) sweepT_ = evT_;
     if (ev_ == FASTER || ev_ == OVERTIME) fastT_ = evT_;
     if (cur_ == PART1) laterT_ = t + POP;
     if (cur_ == 25) { endT_ = t; ev_ = NONE; }
@@ -67,12 +66,6 @@ float FadingRound::drain(int t) const {
     float k = min(0.9f, (part2() - 2) / 10.0f * 0.9f);
     if (endT_ >= 0) { int e = t - endT_; k *= max(0.0f, 1.0f - max(0, e - DRINK) / 10.0f); }
     return k;
-}
-float FadingRound::forgotten(int t) const {
-    if (part2() < 4) return 0;
-    float now = min(1.0f, 0.15f + (part2() - 4) / 9.0f), before = part2() == 4 ? 0.0f : min(1.0f, 0.15f + (part2() - 5) / 9.0f);
-    float k = curT_ >= 0 ? min(1.0f, (t - curT_) / 24.0f) : 1.0f;
-    return before + (now - before) * k;
 }
 int FadingRound::fade(int t) const {
     (void)t;
@@ -243,16 +236,21 @@ void FadingRound::drawMiniBoard(Frame& f, const PlayStateReader& g, int t) {
     f.rect(MX, MY, W, H, C(22, 26, 42));
     for (int x = CS; x < W; x += CS) f.vline(MX + x, MY, MY + H - 1, C(32, 38, 58));
     for (int y = CS; y < H; y += CS) f.hline(MX, MX + W - 1, MY + y, C(32, 38, 58));
-    for (int y = 0; y < PlayStateReader::kRows; ++y) for (int x = 0; x < PlayStateReader::kCols; ++x) if (g.at(x, y) >= 0) ToyBlocks::cell6(f, MX + x * CS, MY + y * CS, g.over() ? 7 : g.at(x, y));
+    for (int y = 0; y < PlayStateReader::kRows; ++y) for (int x = 0; x < PlayStateReader::kCols; ++x) if (g.at(x, y) >= 0) { ToyBlocks::cell6(f, MX + x * CS, MY + y * CS, g.over() ? 7 : g.at(x, y)); if (g.pillAt(x, y) >= 0) ToyBlocks::pill(f, MX + x * CS, MY + y * CS, CS, g.pillAt(x, y)); }
     if (g.clearing()) { uint8_t c = (t / 2) % 2 ? C(255, 236, 140) : C(250, 248, 255); for (int y : g.clearingRows()) f.rect(MX, MY + y * CS, W, CS, c); return; }
     if (g.over() || !g.hasPiece() || !playing(t)) return;
     for (auto& c : g.ghostCells()) if (c.second >= 0) { const RGB* r = ToyBlocks::ramp(g.current()); uint8_t c3 = C(r[3]); int gx = MX + c.first * CS, gy = MY + c.second * CS; for (int i = 0; i < CS; i += 2) { f.set(gx + i, gy, c3); f.set(gx, gy + i, c3); f.set(gx + i + 1, gy + CS - 1, c3); f.set(gx + CS - 1, gy + i + 1, c3); } }
-    for (auto& c : g.pieceCells()) if (c.second >= 0) ToyBlocks::cell6(f, MX + c.first * CS, MY + c.second * CS, g.current());
+    PlayStateReader::Cells pc = g.pieceCells();
+    for (size_t i = 0; i < pc.size(); ++i) {
+        if (pc[i].second < 0) continue;
+        ToyBlocks::cell6(f, MX + pc[i].first * CS, MY + pc[i].second * CS, g.current());
+        if (g.piecePill() >= 0 && static_cast<int>(i) == g.piecePillIndex()) ToyBlocks::pill(f, MX + pc[i].first * CS, MY + pc[i].second * CS, CS, g.piecePill());
+    }
 }
 void FadingRound::drawBackground(Frame& f, const PlayStateReader&, int t) {
     bool office = !old(t) || (laterT_ >= 0 && t - laterT_ >= 0 && t - laterT_ < LATER / 2);
     if (office) drawOffice(f, t); else drawLiving(f, t);
-    Stage2UI::pills(f, t);
+    Stage2UI::pills(f, t, state());
     drawCommonUI(f);
     if (!office) room_ = f;
 }
@@ -260,6 +258,7 @@ void FadingRound::drawForeground(Frame& f, const PlayStateReader& g, int t) {
     if (laterT_ >= 0 && t - laterT_ >= 0 && t - laterT_ < LATER / 2) { drawBusy(f, t); return; }
     if (!old(t)) { drawBusy(f, t); return; }
     drawMiniBoard(f, g, t);
+    BoardOverlay::draw(f, g, MX, MY, CS, t);
     drawOld(f, t);
     drawThought(f, t);
 }
@@ -329,13 +328,6 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
         }
         if (t - fastT_ >= 0 && t - fastT_ < FAST && ((t - fastT_) / 3) % 2 == 0) Font::center(f, ev_ == OVERTIME ? "OVERTIME! SHRED IT ALL!" : "FASTER! SHRED IT!", bx + BW / 2, by - 18, C(250, 220, 120), ol);
     }
-    if (t - sweepT_ >= 0 && t - sweepT_ < SWEEP && !old(t)) {
-        int a = t - sweepT_, ry = by + 144, ex = bx - 18 + a * 6;
-        for (int y = ry; y < ry + 16; ++y) for (int x = bx; x < min(bx + BW, ex); ++x) if ((x + y) % 2) f.set(x, y, C(200, 60, 60));
-        for (int k = 0; k < 2; ++k) { int px = ex + k * 6, py = ry - 2 + k * 9; f.rect(px - 1, py - 1, 16, 11, ol); f.rect(px, py, 14, 9, C(250, 236, 236)); f.rect(px, py, 14, 3, C(210, 70, 70)); }
-        if ((a / 3) % 2 == 0) Font::center(f, "BILLS! -2 ROWS", bx + BW / 2, by - 18, C(250, 120, 110), ol);
-        if (a > 8) Font::center(f, "NO POINTS", bx + BW / 2, by + 132, C(250, 200, 190), ol);
-    }
     if (curT_ >= 0 && t - curT_ < 12 && !old(t) && shown_ % 3 == 0 && shown_ < PART1) Font::center(f, "YEARS GO BY", 320, 104, C(250, 240, 210), ol);
     if (laterT_ >= 0 && t - laterT_ >= 0 && t - laterT_ < LATER) {
         int a = t - laterT_;
@@ -361,23 +353,6 @@ void FadingRound::drawEffects(Frame& f, const PlayStateReader& g, int t) {
         if ((a / 2) % 2 == 0) { for (int k = 0; k < 4; ++k) { f.hline(0, 479, k, red); f.hline(0, 479, 269 - k, red); f.vline(k, 0, 269, red); f.vline(479 - k, 0, 269, red); } }
         Font::center(f, "DEADLINE!", bx + BW / 2, by - 18, (a / 3) % 2 ? C(250, 120, 110) : C(250, 236, 140), ol);
         if (a > 6) Font::center(f, "DUE TODAY", bx + BW / 2, by + 70, C(250, 200, 190), ol);
-    }
-    float fg = forgotten(t);
-    if (fg > 0) {
-        uint8_t bg = C(22, 26, 42), gl = C(32, 38, 58), poof = C(250, 250, 255);
-        for (int y = 0; y < PlayStateReader::kRows; ++y) for (int x = 0; x < PlayStateReader::kCols; ++x) {
-            if (g.at(x, y) < 0) continue;
-            bool piece = false;
-            if (playing(t)) for (auto& pc : g.pieceCells()) if (pc.first == x && pc.second == y) piece = true;
-            if (piece) continue;
-            unsigned hsh = (static_cast<unsigned>(x) * 2654435761u) ^ (static_cast<unsigned>(PlayStateReader::kRows - y) * 40503u);
-            float v = (hsh % 1000) / 1000.0f;
-            if (v >= fg) continue;
-            int cx = bx + x * cs, cy = by + y * cs;
-            if (fg - v < 0.04f && endT_ < 0 && curT_ >= 0 && t - curT_ < 24 && fg < 0.999f) { f.rect(cx, cy, cs, cs, poof); continue; }
-            f.rect(cx, cy, cs, cs, bg); f.hline(cx, cx + cs - 1, cy, gl); f.vline(cx, cy, cy + cs - 1, gl);
-        }
-        if (on(FORGOT, t) && ((t - evT_) / 3) % 2 == 0) Font::center(f, "FORGETTING...", bx + BW / 2, by - 18, C(220, 210, 240), ol);
     }
     if (on(BLUR, t)) {
         int a = t - evT_, r = a < 8 ? 1 + a / 3 : a > dur() - 8 ? 1 + (dur() - a) / 3 : 3;

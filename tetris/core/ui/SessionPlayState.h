@@ -17,6 +17,12 @@ public:
     bool clearing() const override;
     bool over() const override;
     bool hasPiece() const override;
+    int pillAt(int x, int y) const override;
+    int piecePill() const override;
+    int piecePillIndex() const override;
+    int pillCount(int kind) const override;
+    bool hidden(int x, int y) const override;
+    bool marked(int x, int y) const override;
     static int toArtType(TetrominoType type);
     static Cells shapeOf(int type);
     static TetrominoType fromArtType(int type);

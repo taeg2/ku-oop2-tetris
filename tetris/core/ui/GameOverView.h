@@ -10,7 +10,7 @@ public:
     enum class Choice { None, Retry, Home };
     inline static const int kScale = 2;
     inline static const int kFrameMs = 100;
-    inline static const int kInputLockFrames = 8;
+    inline static const int kInputLockFrames = 12;
     explicit GameOverView(Point origin);
     void open();
     void handle(Command command);

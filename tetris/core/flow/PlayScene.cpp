@@ -1,6 +1,7 @@
 #include "flow/PlayScene.h"
 #include "common/GameConfig.h"
 #include "flow/AlbumScene.h"
+#include "flow/GameOverScene.h"
 #include "flow/PrologueScene.h"
 #include "flow/StoryArt.h"
 #include "stage/Album.h"
@@ -104,7 +105,7 @@ void PlayScene::update(int dtMs) {
         case Phase::Failing:
             art().update(dtMs);
             if (m_phaseMs >= config::kStageFailMs) {
-                changeTo(make_unique<PlayScene>(m_services, m_stageIndex));  // 재도전: 지금 라운드부터 보드를 비우고 다시
+                changeTo(make_unique<GameOverScene>(m_services, m_stageIndex));
             }
             break;
     }

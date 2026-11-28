@@ -19,6 +19,7 @@
 #include "flow/SceneManager.h"
 #include "flow/StoryArt.h"
 #include "flow/SwitchableSound.h"
+#include "ui/GameOverView.h"
 #include "ui/PixelArt.h"
 using namespace std;
 
@@ -212,6 +213,17 @@ int main() {
         scenes.handle(cmd);
         frame(n);
     };
+    auto enterGameOver = [&] {
+        const int playingScene = scenes.changeCount();
+        for (int i = 0; i < config::kStageFailMs / 16 + 2 && scenes.changeCount() == playingScene; ++i) {
+            frame(1);
+        }
+        check(scenes.changeCount() == playingScene + 1, "failure opens a new scene");
+        check(story.session().isFailed(), "game over keeps the failed board until selection");
+    };
+    auto waitForGameOverChoices = [&] {
+        frame((GameOverView::kInputLockFrames * GameOverView::kFrameMs + 15) / 16);
+    };
     scenes.change(make_unique<PrologueScene>(services, 0));  // 게임은 타이틀 없이 집 오프닝부터 시작한다
     frame(120);
     check(g_terminal.images > 0, "g_terminal.images > 0");   // 집 오프닝은 그림(Sixel)으로 그린다
@@ -222,7 +234,7 @@ int main() {
     // 집 안을 걸어 다니는 건 봇이 하기 어려우므로, 스테이지마다 앨범부터 시작한다
     int stuck = 0, failures = 0;
     renderEvery = 60;
-    bool menuChecked = false, dumpedPlay = false;
+    bool menuChecked = false, dumpedPlay = false, forcedRetry = false;
     for (int stage = 0; stage < 3; ++stage) {
         scenes.change(make_unique<AlbumScene>(services, stage, AlbumScene::kNoRoundCleared));
         frame(30); story.album().render(); dumpArt("art_album_stage" + to_string(stage + 1), story.album().frame());
@@ -233,8 +245,38 @@ int main() {
                                 !story.album().isOpen() && !story.roundEndPending();
             if (stage == 2 && story.ending().finished()) break;
             if (stage < 2 && story.house().stage() == stage + 1) break;  // 다음 집 장면이 열렸다
-            if (story.hasSession() && story.session().isFailed()) { ++failures; frame(100); continue; }  // 실패 연출 뒤 저절로 같은 라운드를 다시 한다
+            if (story.hasSession() && story.session().isFailed()) {
+                ++failures;
+                enterGameOver();
+                waitForGameOverChoices();
+                StageSession& session = story.session();
+                const int pieces = session.progress().pieces();
+                const int linesToNext = session.progress().linesUntilNextPiece();
+                const int dropMs = session.speed().dropIntervalMs();
+                const bool bossActive = session.boss().isActive();
+                const int blue = session.inventory().count(PillType::Blue);
+                const int red = session.inventory().count(PillType::Red);
+                const auto remembered = story.remembered();
+                press(Command::Confirm, 0);
+                check(story.stageIndex() == stage && &story.session() == &session, "retry reuses the same stage session");
+                check(session.hasActivePiece() && session.board().filledCells().empty(), "retry starts on an empty board");
+                check(session.progress().pieces() == pieces && session.progress().linesUntilNextPiece() == linesToNext &&
+                      story.remembered() == remembered, "retry preserves photo progress");
+                check(session.speed().dropIntervalMs() == dropMs && session.boss().isActive() == bossActive &&
+                      session.inventory().count(PillType::Blue) == blue && session.inventory().count(PillType::Red) == red,
+                      "retry preserves speed, boss and pills");
+                stuck = 0;
+                continue;
+            }
             if (inPlay && !story.stageArt().wantsPause()) {
+                if (!forcedRetry && story.session().progress().pieces() == 2 && story.session().boss().isActive()) {
+                    for (int i = 0; i < 600 && !story.session().isFailed(); ++i) {
+                        press(Command::HardDrop, 1);
+                    }
+                    check(story.session().isFailed(), "force a retry with photo progress and an active boss");
+                    forcedRetry = true;
+                    continue;
+                }
                 if (!dumpedPlay && story.session().board().filledCells().size() > 20) {
                     dumpedPlay = true;
                     story.stageArt().render(); dumpArt("art_play_lake", story.stageArt().frame());
@@ -273,10 +315,49 @@ int main() {
     renderEvery = 1;
     check(story.ending().finished(), "story.ending().finished()");
     check(menuChecked, "menuChecked");
+    check(forcedRetry, "bot exercised retry after earning photo progress");
     story.ending().render(); dumpArt("art_ending", story.ending().frame());
     check(album.isComplete(), "album.isComplete()");
     press(Command::Confirm, 5);  // 엔딩 -> 새 게임 (집 오프닝)
     check(scenes.isRunning(), "scenes.isRunning()");
+
+    // 같은 위치에 계속 떨어뜨려 탑아웃을 일으킨다.
+    auto forceGameOver = [&] {
+        scenes.change(make_unique<PlayScene>(services, 0));
+        for (int i = 0; i < 600 && !story.session().isFailed(); ++i) {
+            press(Command::HardDrop, 1);
+        }
+        check(story.session().isFailed(), "stacking in the center causes a top-out");
+        const int failedScene = scenes.changeCount();
+        scenes.update(config::kStageFailMs - 1);
+        check(scenes.changeCount() == failedScene, "failure animation lasts for kStageFailMs");
+        enterGameOver();
+    };
+    renderEvery = 60;
+    forceGameOver();
+    const int imageCount = g_terminal.images;
+    scenes.update(GameOverView::kFrameMs);
+    scenes.render(console);
+    console.present();
+    check(g_terminal.images == imageCount + 1, "game over draws a Sixel image");
+    press(Command::Confirm, 0);
+    check(story.session().isFailed(), "confirm is ignored before choices are visible");
+    waitForGameOverChoices();
+    press(Command::SoftDrop, 0);
+    press(Command::HardDrop, 0);
+    check(!story.hasSession() && story.house().stage() == 0, "back to start opens a new prologue");
+
+    forceGameOver();
+    waitForGameOverChoices();
+    press(Command::MoveRight, 0);
+    press(Command::MoveLeft, 0);
+    press(Command::HardDrop, 0);
+    check(story.hasSession() && story.session().hasActivePiece() && story.session().board().filledCells().empty(),
+          "selecting retry with left and space starts an empty board");
+
+    forceGameOver();
+    press(Command::Quit, 0);
+    check(!scenes.isRunning(), "Q quits from game over");
     cout << "scene flow ok, images=" << g_terminal.images << endl;
     return 0;
 }
